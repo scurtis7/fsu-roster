@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FsuRosterApplication {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FsuRosterApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 }
