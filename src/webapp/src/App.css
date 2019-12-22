@@ -1,0 +1,24 @@
+
+.navlink {
+    color: #6c757d;
+    padding: 10px;
+    margin: 10px;
+}
+
+.navlink:hover {
+    background-color: #782F40;
+    color: white;
+    text-decoration: none;
+}
+
+.navlink:active {
+    background-color: #782F40;
+    color: white;
+    text-decoration: none;
+}
+
+.navlinkactive {
+    background-color: #782F40;
+    color: white;
+    text-decoration: none;
+}

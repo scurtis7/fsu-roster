@@ -1,0 +1,20 @@
+server:
+  port: 8080
+logging:
+  level:
+    root: INFO
+    com:
+      scurtis:
+        roster: TRACE
+
+spring:
+  jpa:
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    database: postgresql
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: curtis
+    password: curtis
