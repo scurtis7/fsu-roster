@@ -1,10 +1,11 @@
 import React, {Component} from "react";
+import "./Roster.css"
 import {Container, Row, Badge} from 'reactstrap';
 
 class Roster extends Component {
     render() {
         return (
-            <div>
+            <div className="Roster-div">
                 <Container fluid>
                     <Row>
                         <h1><Badge color="info">Roster</Badge></h1>

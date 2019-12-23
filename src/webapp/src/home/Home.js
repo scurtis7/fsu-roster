@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import logo from './FSU_Logo.png';
 import './Home.css';
-import {Container, Row, Badge} from 'reactstrap';
+import {Container} from 'reactstrap';
 
 class Home extends Component {
     render() {
