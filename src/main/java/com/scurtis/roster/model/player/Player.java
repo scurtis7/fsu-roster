@@ -41,7 +41,10 @@ public class Player {
     private int jersey;
 
     @Column(name = "Sport", nullable = false)
-    private int sport;
+    private String sport;
+
+    @Column(name = "Status", nullable = false)
+    private String status;
 
     @Column(name = "Height")
     private String height;
@@ -57,6 +60,15 @@ public class Player {
 
     @Column(name = "OtherCollege")
     private String otherCollege;
+
+    @Column(name = "Stars")
+    private int stars;
+
+    @Column(name = "DraftPick")
+    private int draftPick;
+
+    @Column(name = "NFLTeam")
+    private String nflTeam;
 
     @Column(name = "Notes")
     private String notes;

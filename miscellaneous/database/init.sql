@@ -75,11 +75,6 @@ VALUES (1, 'Mike Norvell', 'Head Coach', 'Football'),
 
 COMMIT;
 
-
---     Stars           INT,
---     DraftPick       INT,
---     NFLTeam         VARCHAR(100),
-
 INSERT INTO fsu_roster.Player (Id, Name, Position, Year, Jersey, Sport, Status, Height, Weight, HomeTown, HighSchool, OtherCollege, Stars, DraftPick, NFLTeam, Notes)
 VALUES (1, 'James Blackman', 'Quarterback', 'Redshirt Sophomore', 1, 'Football', 'active', '6 5', 195, 'South Bay, Fla.', 'Glades Central', '', 0, 0, '', ''),
        (2, 'Levonta Taylor', 'Defensive Back', 'Senior', 1, 'Football', 'active', '5 10', 190, 'Virginia Beach, Va.', 'Ocean Lakes', '', 0, 0, '', ''),

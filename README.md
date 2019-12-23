@@ -6,6 +6,9 @@ database.  The official roster can be found on the [fsu seminoles](https://semin
 Here is a link to the [fsu communications](http://unicomm.fsu.edu/brand/applying/colors/) site that contains all of 
 the official branding information.
 
+## Version 0.0.3
+Add players page to list all of the players in the database.  Added the players to the database
+
 ## Version 0.0.2
 Add coaches page to list all of the coaches in the database.
 
