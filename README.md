@@ -6,6 +6,9 @@ database.  The official roster can be found on the [fsu seminoles](https://semin
 Here is a link to the [fsu communications](http://unicomm.fsu.edu/brand/applying/colors/) site that contains all of 
 the official branding information.
 
+## Version 0.0.2
+Add coaches page to list all of the coaches in the database.
+
 ## Version 0.0.1
 This is the initial version with all of the three main pieces (Spring Boot, ReactJS & Postgresql) working together.
 Not much functionality yet just the initial shell of the application.
