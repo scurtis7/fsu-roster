@@ -1,6 +1,7 @@
 package com.scurtis.roster.controller;
 
-import com.scurtis.roster.model.player.Player;
+import com.scurtis.roster.converter.PlayerConverter;
+import com.scurtis.roster.dto.PlayerDto;
 import com.scurtis.roster.model.player.PlayerRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,11 +24,12 @@ import java.util.List;
 public class PlayerRestController {
 
     private final PlayerRepository playerRepository;
+    private final PlayerConverter playerConverter;
 
     @GetMapping(value = "/players", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Player> getAllPlayers() {
+    public List<PlayerDto> getAllPlayers() {
         log.info("Method: getAllPlayers");
-        return playerRepository.findAll();
+        return playerConverter.playerEntityToPlayerDto(playerRepository.findAll());
     }
 
 }
