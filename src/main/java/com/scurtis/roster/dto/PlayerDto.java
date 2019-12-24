@@ -25,7 +25,6 @@ public class PlayerDto {
     private String homeTown;
     private String highSchool;
     private String otherCollege;
-    private int stars;
     private int draftPick;
     private String nflTeam;
     private String notes;

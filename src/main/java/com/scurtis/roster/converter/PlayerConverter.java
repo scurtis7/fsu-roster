@@ -42,7 +42,6 @@ public class PlayerConverter {
                     .homeTown(player.getHomeTown())
                     .highSchool(player.getHighSchool())
                     .otherCollege(player.getOtherCollege())
-                    .stars(player.getStars())
                     .draftPick(player.getDraftPick())
                     .nflTeam(player.getNflTeam())
                     .notes(player.getNotes())

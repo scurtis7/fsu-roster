@@ -22,15 +22,6 @@ import javax.persistence.Table;
 @NoArgsConstructor
 public class Player {
 
-    private static final String CLASS_FRESHMAN = "Freshman";
-    private static final String CLASS_REDSHIRT_FRESHMAN = "Redshirt Freshman";
-    private static final String CLASS_SOPHOMORE = "Sophomore";
-    private static final String CLASS_REDSHIRT_SOPHOMORE = "Redshirt Sophomore";
-    private static final String CLASS_JUNIOR = "Junior";
-    private static final String CLASS_REDSHIRT_JUNIOR = "Redshirt Junior";
-    private static final String CLASS_SENIOR = "Senior";
-    private static final String CLASS_REDSHIRT_SENIOR = "Redshirt Senior";
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence-generator")
     @SequenceGenerator(name = "sequence-generator", sequenceName = "team_sequence")
@@ -73,9 +64,6 @@ public class Player {
     @Column(name = "OtherCollege")
     private String otherCollege;
 
-    @Column(name = "Stars")
-    private int stars;
-
     @Column(name = "DraftPick")
     private int draftPick;
 
@@ -84,44 +72,5 @@ public class Player {
 
     @Column(name = "Notes")
     private String notes;
-
-//    private String classStanding;
-//
-//    public String getClassStanding() {
-//        if (classStanding == null) {
-//            setClassStanding();
-//        }
-//        return classStanding;
-//    }
-//
-//    private void setClassStanding() {
-//        classStanding = "";
-//        int currentYear = LocalDate.now().getYear();
-//        if (getYear() == currentYear) {
-//            classStanding = CLASS_FRESHMAN;
-//        } else if (getYear() == (currentYear - 1)) {
-//            if (getRedshirt()) {
-//                classStanding = CLASS_REDSHIRT_FRESHMAN;
-//            } else {
-//                classStanding = CLASS_SOPHOMORE;
-//            }
-//        } else if (getYear() == (currentYear - 2)) {
-//            if (getRedshirt()) {
-//                classStanding = CLASS_REDSHIRT_SOPHOMORE;
-//            } else {
-//                classStanding = CLASS_JUNIOR;
-//            }
-//        } else if (getYear() == (currentYear - 3)) {
-//            if (getRedshirt()) {
-//                classStanding = CLASS_REDSHIRT_JUNIOR;
-//            } else {
-//                classStanding = CLASS_SENIOR;
-//            }
-//        } else if (getYear() == (currentYear - 4)) {
-//            if (getRedshirt()) {
-//                classStanding = CLASS_REDSHIRT_SENIOR;
-//            }
-//        }
-//    }
 
 }
