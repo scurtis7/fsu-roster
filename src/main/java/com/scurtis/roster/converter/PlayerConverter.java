@@ -2,6 +2,7 @@ package com.scurtis.roster.converter;
 
 import com.scurtis.roster.dto.PlayerDto;
 import com.scurtis.roster.model.player.Player;
+import com.scurtis.roster.model.player.Recruit;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -28,7 +29,7 @@ public class PlayerConverter {
         List<PlayerDto> playerDtos = new ArrayList<>();
         players.forEach(player -> {
             PlayerDto playerDto = PlayerDto.builder()
-                    .id(player.getId())
+                    .playerId(player.getPlayerId())
                     .name(player.getName())
                     .position(player.getPosition())
                     .year(player.getYear())
@@ -45,6 +46,39 @@ public class PlayerConverter {
                     .draftPick(player.getDraftPick())
                     .nflTeam(player.getNflTeam())
                     .notes(player.getNotes())
+                    .build();
+            playerDtos.add(playerDto);
+        });
+        return playerDtos;
+    }
+
+    public List<PlayerDto> recruitEntityToPlayerDto(List<Recruit> recruits) {
+        List<PlayerDto> playerDtos = new ArrayList<>();
+        recruits.forEach(recruit -> {
+            PlayerDto playerDto = PlayerDto.builder()
+                    .playerId(recruit.getPlayer().getPlayerId())
+                    .name(recruit.getPlayer().getName())
+                    .position(recruit.getPlayer().getPosition())
+                    .year(recruit.getPlayer().getYear())
+                    .redshirt(recruit.getPlayer().getRedshirt())
+                    .classStanding(setClassStanding(recruit.getPlayer().getYear(), recruit.getPlayer().getRedshirt()))
+                    .jersey(recruit.getPlayer().getJersey())
+                    .sport(recruit.getPlayer().getSport())
+                    .status(recruit.getPlayer().getStatus())
+                    .height(recruit.getPlayer().getHeight())
+                    .weight(recruit.getPlayer().getWeight())
+                    .homeTown(recruit.getPlayer().getHomeTown())
+                    .highSchool(recruit.getPlayer().getHighSchool())
+                    .otherCollege(recruit.getPlayer().getOtherCollege())
+                    .draftPick(recruit.getPlayer().getDraftPick())
+                    .nflTeam(recruit.getPlayer().getNflTeam())
+                    .notes(recruit.getPlayer().getNotes())
+                    .stars(recruit.getStars())
+                    .rating(recruit.getRating())
+                    .rankNational(recruit.getRankNational())
+                    .rankPosition(recruit.getRankPosition())
+                    .rankState(recruit.getRankState())
+                    .link(recruit.getLink())
                     .build();
             playerDtos.add(playerDto);
         });

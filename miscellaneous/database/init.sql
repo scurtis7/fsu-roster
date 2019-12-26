@@ -3,7 +3,7 @@
 -- CREATE SCHEMA fsu_roster;
 
 DROP TABLE IF EXISTS
-    fsu_roster.Player, fsu_roster.Coach, fsu_roster.Recruiting;
+    fsu_roster.Player, fsu_roster.Coach, fsu_roster.Recruit;
 
 CREATE OR REPLACE FUNCTION trigger_set_timestamp()
               RETURNS TRIGGER AS $$
@@ -16,7 +16,7 @@ $$ LANGUAGE plpgsql;
 -- Create the Player table
 CREATE TABLE fsu_roster.Player
 (
-    Id              SERIAL PRIMARY KEY,
+    PlayerId        SERIAL PRIMARY KEY,
     Name            VARCHAR(100) NOT NULL,
     Position        VARCHAR(50) NOT NULL,
     Year            INT NOT NULL,
@@ -40,11 +40,11 @@ CREATE TRIGGER set_player_timestamp
     FOR EACH ROW
     EXECUTE PROCEDURE trigger_set_timestamp();
 
--- Create the Recruiting table
-CREATE TABLE fsu_roster.Recruiting
+-- Create the Recruit table
+CREATE TABLE fsu_roster.Recruit
 (
-    Id              SERIAL PRIMARY KEY,
-    PlayerId        BIGINT NOT NULL REFERENCES fsu_roster.Player (Id),
+    RecruitId       SERIAL PRIMARY KEY,
+    PlayerId        BIGINT NOT NULL REFERENCES fsu_roster.Player (PlayerId),
     Service         VARCHAR(50) NOT NULL,
     Stars           INT,
     Rating          NUMERIC(2, 1),
@@ -56,14 +56,14 @@ CREATE TABLE fsu_roster.Recruiting
 );
 
 CREATE TRIGGER set_rivals_timestamp
-    BEFORE UPDATE ON fsu_roster.Recruiting
+    BEFORE UPDATE ON fsu_roster.Recruit
     FOR EACH ROW
     EXECUTE PROCEDURE trigger_set_timestamp();
 
 -- Create the Coach table
 CREATE TABLE fsu_roster.Coach
 (
-    Id              SERIAL PRIMARY KEY,
+    CoachId         SERIAL PRIMARY KEY,
     Name            VARCHAR(100) NOT NULL DEFAULT '',
     Position        VARCHAR(100) NOT NULL DEFAULT '',
     Sport           VARCHAR(100) NOT NULL DEFAULT '',
@@ -77,7 +77,7 @@ CREATE TRIGGER set_coach_timestamp
 
 COMMIT;
 
-INSERT INTO fsu_roster.Coach (Id, Name, Position, Sport)
+INSERT INTO fsu_roster.Coach (CoachId, Name, Position, Sport)
 VALUES (1, 'Mike Norvell', 'Head Coach', 'Football'),
        (2, 'Kenny Dillingham', 'Offensive Coordinator/Quarterbacks Coach', 'Football'),
        (3, 'Adam Fuller', 'Defensive Coordinator', 'Football'),
@@ -95,7 +95,7 @@ VALUES (1, 'Mike Norvell', 'Head Coach', 'Football'),
 
 COMMIT;
 
-INSERT INTO fsu_roster.Player (Id, Name, Position, Year, Redshirt, Jersey, Sport, Status, Height, Weight, HomeTown, HighSchool, OtherCollege, DraftPick, NFLTeam, Notes)
+INSERT INTO fsu_roster.Player (PlayerId, Name, Position, Year, Redshirt, Jersey, Sport, Status, Height, Weight, HomeTown, HighSchool, OtherCollege, DraftPick, NFLTeam, Notes)
 VALUES (1, 'James Blackman', 'Quarterback', 2017, true, 1, 'Football', 'active', '6 5', 195, 'South Bay, Fla.', 'Glades Central', '', 0, '', ''),
        (2, 'Levonta Taylor', 'Defensive Back', 2016, false, 1, 'Football', 'active', '5 10', 190, 'Virginia Beach, Va.', 'Ocean Lakes', '', 0, '', ''),
        (3, 'Cam Akers', 'Running Back', 2017, false, 3, 'Football', 'active', '5 11', 212, 'Clinton, Miss.', 'Clinton', '', 0, '', ''),
@@ -224,7 +224,7 @@ VALUES (1, 'James Blackman', 'Quarterback', 2017, true, 1, 'Football', 'active',
        (126, 'Malachi Wideman', 'Wide Receiver', 2020, false, 0, 'Football', 'active', '6 5', 190, 'Venice, Fla.', 'Venice', '', 0, '', ''),
        (127, 'Jarrett Jackson', 'Defensive End', 2018, true, 0, 'Football', 'active', '6 6', 281, 'Palm Beach Gardens, Fla.', 'Palm Beach Gardens', 'Louisville', 0, '', '');
 
-INSERT INTO fsu_roster.Recruiting (Id, PlayerId, Service, Stars, Rating, RankNational, RankPosition, RankState, Link)
+INSERT INTO fsu_roster.Recruit (RecruitId, PlayerId, Service, Stars, Rating, RankNational, RankPosition, RankState, Link)
 VALUES (1, 109, 'Rivals', 3, 5.7, 0, 63, 66, 'https://n.rivals.com/content/prospects/2020/kentron-poitier-234254'),
        (2, 110, 'Rivals', 4, 5.9, 122, 25, 20, 'https://n.rivals.com/content/prospects/2020/bryan-robinson-202473'),
        (3, 111, 'Rivals', 4, 5.8, 0, 8, 11, 'https://n.rivals.com/content/prospects/2020/chubba-purdy-236376'),

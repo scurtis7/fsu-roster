@@ -25,19 +25,19 @@ class Coach extends Component {
             );
         } else {
             return this.state.players.map((player, index) => {
-                const {jersey, name, position, year, classStanding, height, weight, homeTown, highSchool, otherCollege} = player; //destructuring
+                const {jersey, name, position, classStanding, height, weight, stars, rating, rankPosition, rankState} = player; //destructuring
                 return (
                     <tr key={index}>
                         <td>{jersey}</td>
                         <td>{name}</td>
                         <td>{position}</td>
-                        <td>{year}</td>
                         <td>{classStanding}</td>
                         <td>{height}</td>
                         <td>{weight}</td>
-                        <td>{homeTown}</td>
-                        <td>{highSchool}</td>
-                        <td>{otherCollege}</td>
+                        <td>{stars}</td>
+                        <td>{rating}</td>
+                        <td>{rankPosition}</td>
+                        <td>{rankState}</td>
                     </tr>
                 );
             });
@@ -45,7 +45,7 @@ class Coach extends Component {
     }
 
     componentDidMount() {
-        axios(`http://localhost:8080/api/players`)
+        axios(`http://localhost:8080/api/recruits`)
             .then(players => this.setPlayers(players.data))
             .catch(error => error);
     }
@@ -59,13 +59,13 @@ class Coach extends Component {
                         <th>Jersey</th>
                         <th>Name</th>
                         <th>Position</th>
-                        <th>Year</th>
                         <th>Class</th>
                         <th>Height</th>
                         <th>Weight</th>
-                        <th>Home Town</th>
-                        <th>High School</th>
-                        <th>Other College</th>
+                        <th>Stars</th>
+                        <th>Rating</th>
+                        <th>Position Rank</th>
+                        <th>State Rank</th>
                     </tr>
                     </thead>
                     <tbody>
