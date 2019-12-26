@@ -11,28 +11,28 @@ import lombok.Data;
 @Builder
 public class PlayerDto {
 
-    private Long playerId;
+    private String playerId;
     private String name;
     private String position;
-    private int year;
-    private Boolean redshirt;
+    private String year;
+    private String redshirt;
     private String classStanding;
-    private int jersey;
+    private String jersey;
     private String sport;
     private String status;
     private String height;
-    private int weight;
+    private String weight;
     private String homeTown;
     private String highSchool;
     private String otherCollege;
-    private int draftPick;
+    private String draftPick;
     private String nflTeam;
     private String notes;
-    private int stars;
-    private double rating;
-    private int rankNational;
-    private int rankPosition;
-    private int rankState;
+    private String stars;
+    private String rating;
+    private String rankNational;
+    private String rankPosition;
+    private String rankState;
     private String link;
 
 }
