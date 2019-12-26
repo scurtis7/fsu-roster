@@ -73,12 +73,12 @@ public class PlayerConverter {
                     .draftPick(Integer.toString(recruit.getPlayer().getDraftPick()))
                     .nflTeam(recruit.getPlayer().getNflTeam())
                     .notes(recruit.getPlayer().getNotes())
-                    .stars(recruit.getStars() > 0 ? Integer.toString(recruit.getStars()) : "-")
-                    .rating(recruit.getRating() > 0 ? Double.toString(recruit.getRating()) : "-")
-                    .rankNational(recruit.getRankNational() > 0 ? Integer.toString(recruit.getRankNational()) : "-")
-                    .rankPosition(recruit.getRankPosition() > 0 ? Integer.toString(recruit.getRankPosition()) : "-")
-                    .rankState(recruit.getRankState() > 0 ? Integer.toString(recruit.getRankState()) : "-")
-                    .link(recruit.getLink())
+                    .rivalsStars(recruit.getRivalsStars() > 0 ? Integer.toString(recruit.getRivalsStars()) : "-")
+                    .rivalsRating(recruit.getRivalsRating() > 0 ? Double.toString(recruit.getRivalsRating()) : "-")
+                    .rivalsRankNational(recruit.getRivalsRankNational() > 0 ? Integer.toString(recruit.getRivalsRankNational()) : "-")
+                    .rivalsRankPosition(recruit.getRivalsRankPosition() > 0 ? Integer.toString(recruit.getRivalsRankPosition()) : "-")
+                    .rivalsRankState(recruit.getRivalsRankState() > 0 ? Integer.toString(recruit.getRivalsRankState()) : "-")
+                    .rivalsLink(recruit.getRivalsLink())
                     .build();
             playerDtos.add(playerDto);
         });

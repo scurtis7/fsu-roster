@@ -43,16 +43,15 @@ CREATE TRIGGER set_player_timestamp
 -- Create the Recruit table
 CREATE TABLE fsu_roster.Recruit
 (
-    RecruitId       SERIAL PRIMARY KEY,
-    PlayerId        BIGINT NOT NULL REFERENCES fsu_roster.Player (PlayerId),
-    Service         VARCHAR(50) NOT NULL,
-    Stars           INT,
-    Rating          NUMERIC(2, 1),
-    RankNational    INT,
-    RankPosition    INT,
-    RankState       INT,
-    Link            VARCHAR(100),
-    LastUpdateDate  TIMESTAMP NOT NULL DEFAULT now()
+    RecruitId           SERIAL PRIMARY KEY,
+    PlayerId            BIGINT NOT NULL REFERENCES fsu_roster.Player (PlayerId),
+    RivalsStars         INT,
+    RivalsRating        NUMERIC(2, 1),
+    RivalsRankNational  INT,
+    RivalsRankPosition  INT,
+    RivalsRankState     INT,
+    RivalsLink          VARCHAR(100),
+    LastUpdateDate      TIMESTAMP NOT NULL DEFAULT now()
 );
 
 CREATE TRIGGER set_rivals_timestamp
@@ -224,25 +223,25 @@ VALUES (1, 'James Blackman', 'Quarterback', 2017, true, 1, 'Football', 'active',
        (126, 'Malachi Wideman', 'Wide Receiver', 2020, false, 0, 'Football', 'active', '6 5', 190, 'Venice, Fla.', 'Venice', '', 0, '', ''),
        (127, 'Jarrett Jackson', 'Defensive End', 2018, true, 0, 'Football', 'active', '6 6', 281, 'Palm Beach Gardens, Fla.', 'Palm Beach Gardens', 'Louisville', 0, '', '');
 
-INSERT INTO fsu_roster.Recruit (RecruitId, PlayerId, Service, Stars, Rating, RankNational, RankPosition, RankState, Link)
-VALUES (1, 109, 'Rivals', 3, 5.7, 0, 63, 66, 'https://n.rivals.com/content/prospects/2020/kentron-poitier-234254'),
-       (2, 110, 'Rivals', 4, 5.9, 122, 25, 20, 'https://n.rivals.com/content/prospects/2020/bryan-robinson-202473'),
-       (3, 111, 'Rivals', 4, 5.8, 0, 8, 11, 'https://n.rivals.com/content/prospects/2020/chubba-purdy-236376'),
-       (4, 112, 'Rivals', 3, 5.7, 0, 28, 100, 'https://n.rivals.com/content/prospects/2020/josh-griffis-208882'),
-       (5, 113, 'Rivals', 2, 5.2, 0, 0, 0, 'https://n.rivals.com/content/prospects/2020/alex-mastromanno-258721'),
-       (6, 114, 'Rivals', 3, 5.6, 0, 32, 72, 'https://n.rivals.com/content/prospects/2020/tate-rodemaker-236062'),
-       (7, 115, 'Rivals', 4, 5.8, 0, 23, 48, 'https://n.rivals.com/content/prospects/2020/tate-rodemaker-236062'),
-       (8, 116, 'Rivals', 3, 5.7, 0, 56, 88, 'https://n.rivals.com/content/prospects/2020/thomas-shrader-234622'),
-       (9, 117, 'Rivals', 3, 5.6, 0, 0, 0, 'https://n.rivals.com/content/prospects/2020/lloyd-willis-253711'),
-       (10, 118, 'Rivals', 4, 5.8, 0, 31, 49, 'https://n.rivals.com/content/prospects/2020/manny-rogers-234204'),
-       (11, 119, 'Rivals', 4, 5.8, 0, 8, 17, 'https://n.rivals.com/content/prospects/2020/ja-khi-douglas-186487'),
-       (12, 120, 'Rivals', 3, 5.6, 0, 0, 0, 'https://n.rivals.com/content/prospects/2020/carter-boatwright-237420'),
-       (13, 121, 'Rivals', 4, 5.8, 0, 21, 56, 'https://n.rivals.com/content/prospects/2020/jayion-mccluster-183456'),
-       (14, 122, 'Rivals', 3, 5.7, 0, 54, 86, 'https://n.rivals.com/content/prospects/2020/zane-herring-212453'),
-       (15, 123, 'Rivals', 4, 5.8, 168, 14, 29, 'https://n.rivals.com/content/prospects/2020/stephen-dix-192738'),
-       (16, 124, 'Rivals', 4, 5.9, 75, 6, 12, 'https://n.rivals.com/content/prospects/2020/demorie-tate-229273'),
-       (17, 125, 'Rivals', 4, 5.8, 0, 25, 62, 'https://n.rivals.com/content/prospects/2020/jadarius-green-mcknight-193744'),
-       (18, 126, 'Rivals', 4, 5.9, 95, 16, 0, 'https://n.rivals.com/content/prospects/2020/jadarius-green-mcknight-193744'),
-       (19, 127, 'Rivals', 3, 5.5, 0, 0, 0, 'https://n.rivals.com/content/prospects/2018/jarrett-jackson-65855');
+INSERT INTO fsu_roster.Recruit (RecruitId, PlayerId, RivalsStars, RivalsRating, RivalsRankNational, RivalsRankPosition, RivalsRankState, RivalsLink)
+VALUES (1, 109, 3, 5.7, 0, 63, 66, 'https://n.rivals.com/content/prospects/2020/kentron-poitier-234254'),
+       (2, 110, 4, 5.9, 122, 25, 20, 'https://n.rivals.com/content/prospects/2020/bryan-robinson-202473'),
+       (3, 111, 4, 5.8, 0, 8, 11, 'https://n.rivals.com/content/prospects/2020/chubba-purdy-236376'),
+       (4, 112, 3, 5.7, 0, 28, 100, 'https://n.rivals.com/content/prospects/2020/josh-griffis-208882'),
+       (5, 113, 2, 5.2, 0, 0, 0, 'https://n.rivals.com/content/prospects/2020/alex-mastromanno-258721'),
+       (6, 114, 3, 5.6, 0, 32, 72, 'https://n.rivals.com/content/prospects/2020/tate-rodemaker-236062'),
+       (7, 115, 4, 5.8, 0, 23, 48, 'https://n.rivals.com/content/prospects/2020/tate-rodemaker-236062'),
+       (8, 116, 3, 5.7, 0, 56, 88, 'https://n.rivals.com/content/prospects/2020/thomas-shrader-234622'),
+       (9, 117, 3, 5.6, 0, 0, 0, 'https://n.rivals.com/content/prospects/2020/lloyd-willis-253711'),
+       (10, 118, 4, 5.8, 0, 31, 49, 'https://n.rivals.com/content/prospects/2020/manny-rogers-234204'),
+       (11, 119, 4, 5.8, 0, 8, 17, 'https://n.rivals.com/content/prospects/2020/ja-khi-douglas-186487'),
+       (12, 120, 3, 5.6, 0, 0, 0, 'https://n.rivals.com/content/prospects/2020/carter-boatwright-237420'),
+       (13, 121, 4, 5.8, 0, 21, 56, 'https://n.rivals.com/content/prospects/2020/jayion-mccluster-183456'),
+       (14, 122, 3, 5.7, 0, 54, 86, 'https://n.rivals.com/content/prospects/2020/zane-herring-212453'),
+       (15, 123, 4, 5.8, 168, 14, 29, 'https://n.rivals.com/content/prospects/2020/stephen-dix-192738'),
+       (16, 124, 4, 5.9, 75, 6, 12, 'https://n.rivals.com/content/prospects/2020/demorie-tate-229273'),
+       (17, 125, 4, 5.8, 0, 25, 62, 'https://n.rivals.com/content/prospects/2020/jadarius-green-mcknight-193744'),
+       (18, 126, 4, 5.9, 95, 16, 0, 'https://n.rivals.com/content/prospects/2020/jadarius-green-mcknight-193744'),
+       (19, 127, 3, 5.5, 0, 0, 0, 'https://n.rivals.com/content/prospects/2018/jarrett-jackson-65855');
 
 COMMIT;

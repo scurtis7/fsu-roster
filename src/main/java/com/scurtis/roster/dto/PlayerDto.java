@@ -28,11 +28,11 @@ public class PlayerDto {
     private String draftPick;
     private String nflTeam;
     private String notes;
-    private String stars;
-    private String rating;
-    private String rankNational;
-    private String rankPosition;
-    private String rankState;
-    private String link;
+    private String rivalsStars;
+    private String rivalsRating;
+    private String rivalsRankNational;
+    private String rivalsRankPosition;
+    private String rivalsRankState;
+    private String rivalsLink;
 
 }

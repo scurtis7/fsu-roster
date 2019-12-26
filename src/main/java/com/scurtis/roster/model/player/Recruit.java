@@ -35,25 +35,22 @@ public class Recruit {
     @JoinColumn(name = "playerId", referencedColumnName = "playerId")
     private Player player;
 
-    @Column(name = "Service", nullable = false)
-    private String service;
+    @Column(name = "RivalsStars")
+    private int rivalsStars;
 
-    @Column(name = "Stars")
-    private int stars;
+    @Column(name = "RivalsRating")
+    private double rivalsRating;
 
-    @Column(name = "Rating")
-    private double rating;
+    @Column(name = "RivalsRankNational")
+    private int rivalsRankNational;
 
-    @Column(name = "RankNational")
-    private int rankNational;
+    @Column(name = "RivalsRankPosition")
+    private int rivalsRankPosition;
 
-    @Column(name = "RankPosition")
-    private int rankPosition;
+    @Column(name = "RivalsRankState")
+    private int rivalsRankState;
 
-    @Column(name = "RankState")
-    private int rankState;
-
-    @Column(name = "Link")
-    private String link;
+    @Column(name = "RivalsLink")
+    private String rivalsLink;
 
 }
