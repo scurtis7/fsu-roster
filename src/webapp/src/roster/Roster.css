@@ -6,3 +6,28 @@
 .Roster-table {
     color: #CEB888;
 }
+
+.dropdown-toggle {
+    background-color: #CEB888;
+    color: #782F40;
+}
+
+.dropdown-toggle:hover {
+    background-color: #CEB888;
+    color: #782F40;
+}
+
+.dropdown-toggle:active {
+    background-color: #CEB888;
+    color: #782F40;
+}
+
+.dropdown-toggle::selection {
+    background-color: #CEB888;
+    color: #782F40;
+}
+
+.dropdown-toggle-active {
+    background-color: #CEB888;
+    color: #782F40;
+}

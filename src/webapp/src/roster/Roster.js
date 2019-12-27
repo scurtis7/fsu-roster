@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import "./Roster.css"
 import axios from 'axios';
-import {Table} from 'reactstrap';
+import {Table, Dropdown, DropdownMenu, DropdownItem, DropdownToggle} from 'reactstrap';
 
 class Coach extends Component {
 
@@ -9,13 +9,28 @@ class Coach extends Component {
         super(props);
         this.state = {
             players: [],
+            dropdownOpen: false,
         };
         this.setPlayers = this.setPlayers.bind(this);
         this.loadTableData = this.loadTableData.bind(this);
+        this.getRecruits = this.getRecruits.bind(this);
+        this.toggle = this.toggle.bind(this);
+    }
+
+    toggle() {
+        this.setState({
+            dropdownOpen: !this.state.dropdownOpen
+        });
     }
 
     setPlayers(players) {
         this.setState({players});
+    }
+
+    getRecruits() {
+        axios(`http://localhost:8080/api/recruits`)
+            .then(players => this.setPlayers(players.data))
+            .catch(error => error);
     }
 
     loadTableData() {
@@ -45,14 +60,31 @@ class Coach extends Component {
     }
 
     componentDidMount() {
-        axios(`http://localhost:8080/api/recruits`)
-            .then(players => this.setPlayers(players.data))
-            .catch(error => error);
+        this.getRecruits();
     }
 
     render() {
         return (
             <div className="Roster-div">
+                <Table className="Roster-table">
+                    <tr>
+                        <td>
+                            <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                                <DropdownToggle className="dropdown-toggle" activeClassName="dropdown-toggle-active" caret>Select Position</DropdownToggle>
+                                <DropdownMenu right>
+                                    <DropdownItem onClick={this.getRecruits}>Quarterback</DropdownItem>
+                                    <DropdownItem>Running Back</DropdownItem>
+                                    <DropdownItem>Wide Receiver</DropdownItem>
+                                    <DropdownItem>Tight End</DropdownItem>
+                                    <DropdownItem>Offensive Line</DropdownItem>
+                                    <DropdownItem>Defensive Line</DropdownItem>
+                                    <DropdownItem>Linebacker</DropdownItem>
+                                    <DropdownItem>Cornerback</DropdownItem>
+                                </DropdownMenu>
+                            </Dropdown>
+                        </td>
+                    </tr>
+                </Table>
                 <Table className="Roster-table">
                     <thead>
                     <tr>
