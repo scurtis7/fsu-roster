@@ -34,5 +34,11 @@ public class PlayerDto {
     private String rivalsRankPosition;
     private String rivalsRankState;
     private String rivalsLink;
+    private String two47Stars;
+    private String two47Rating;
+    private String two47RankNational;
+    private String two47RankPosition;
+    private String two47RankState;
+    private String two47Link;
 
 }

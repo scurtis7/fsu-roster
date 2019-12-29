@@ -53,4 +53,22 @@ public class Recruit {
     @Column(name = "RivalsLink")
     private String rivalsLink;
 
+    @Column(name = "Two47Stars")
+    private int two47Stars;
+
+    @Column(name = "Two47Rating")
+    private double two47Rating;
+
+    @Column(name = "Two47RankNational")
+    private int two47RankNational;
+
+    @Column(name = "Two47RankPosition")
+    private int two47RankPosition;
+
+    @Column(name = "Two47RankState")
+    private int two47RankState;
+
+    @Column(name = "Two47Link")
+    private String two47Link;
+
 }

@@ -79,6 +79,12 @@ public class PlayerConverter {
                     .rivalsRankPosition(recruit.getRivalsRankPosition() > 0 ? Integer.toString(recruit.getRivalsRankPosition()) : "-")
                     .rivalsRankState(recruit.getRivalsRankState() > 0 ? Integer.toString(recruit.getRivalsRankState()) : "-")
                     .rivalsLink(recruit.getRivalsLink())
+                    .two47Stars(recruit.getRivalsStars() > 0 ? Integer.toString(recruit.getRivalsStars()) : "-")
+                    .two47Rating(recruit.getTwo47Rating() > 0 ? Double.toString(recruit.getTwo47Rating()) : "-")
+                    .two47RankNational(recruit.getTwo47RankNational() > 0 ? Integer.toString(recruit.getTwo47RankNational()) : "-")
+                    .two47RankPosition(recruit.getTwo47RankPosition() > 0 ? Integer.toString(recruit.getTwo47RankPosition()) : "-")
+                    .two47RankState(recruit.getTwo47RankState() > 0 ? Integer.toString(recruit.getTwo47RankState()) : "-")
+                    .two47Link(recruit.getTwo47Link())
                     .build();
             playerDtos.add(playerDto);
         });

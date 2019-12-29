@@ -40,7 +40,7 @@ class Coach extends Component {
             );
         } else {
             return this.state.players.map((player, index) => {
-                const {jersey, name, position, classStanding, height, weight, rivalsStars, rivalsRating, rivalsRankPosition, rivalsRankState} = player; //destructuring
+                const {jersey, name, position, classStanding, height, weight, rivalsStars, rivalsRating, rivalsRankPosition, rivalsRankState, two47Stars, two47Rating, two47RankNational, two47RankPosition, two47RankState} = player; //destructuring
                 return (
                     <tr key={index}>
                         <td>{jersey}</td>
@@ -53,6 +53,11 @@ class Coach extends Component {
                         <td>{rivalsRating}</td>
                         <td>{rivalsRankPosition}</td>
                         <td>{rivalsRankState}</td>
+                        <td>{two47Stars}</td>
+                        <td>{two47Rating}</td>
+                        <td>{two47RankNational}</td>
+                        <td>{two47RankPosition}</td>
+                        <td>{two47RankState}</td>
                     </tr>
                 );
             });
@@ -98,6 +103,11 @@ class Coach extends Component {
                         <th>Rivals Rating</th>
                         <th>Rivals Position Rank</th>
                         <th>Rivals State Rank</th>
+                        <th>247 Stars</th>
+                        <th>247 Rating</th>
+                        <th>247 National Rank</th>
+                        <th>247 Position Rank</th>
+                        <th>247 State Rank</th>
                     </tr>
                     </thead>
                     <tbody>
