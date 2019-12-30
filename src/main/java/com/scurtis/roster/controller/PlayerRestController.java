@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,9 +35,9 @@ public class PlayerRestController {
         return playerConverter.playerEntityToPlayerDto(playerRepository.findAll());
     }
 
-    @GetMapping(value = "/recruits", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<PlayerDto> getAllRecruits() {
-        log.info("Method: getAllRecruits");
+    @GetMapping(value = "/recruits/{position}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<PlayerDto> getRecruits(@PathVariable(value = "position") String position) {
+        log.info("Method: getRecruits({})", position);
         return playerConverter.recruitEntityToPlayerDto(recruitRepository.findAll());
     }
 

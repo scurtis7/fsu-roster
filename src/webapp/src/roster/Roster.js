@@ -10,11 +10,13 @@ class Coach extends Component {
         this.state = {
             players: [],
             dropdownOpen: false,
+            positions: [],
         };
         this.setPlayers = this.setPlayers.bind(this);
         this.loadTableData = this.loadTableData.bind(this);
         this.getRecruits = this.getRecruits.bind(this);
         this.toggle = this.toggle.bind(this);
+        this.positionSelected = this.positionSelected.bind(this);
     }
 
     toggle() {
@@ -27,8 +29,12 @@ class Coach extends Component {
         this.setState({players});
     }
 
-    getRecruits() {
-        axios(`http://localhost:8080/api/recruits`)
+    positionSelected(e) {
+        this.getRecruits(e.currentTarget.getAttribute("id"));
+    }
+
+    getRecruits(position) {
+        axios(`http://localhost:8080/api/recruits/` + position)
             .then(players => this.setPlayers(players.data))
             .catch(error => error);
     }
@@ -65,7 +71,7 @@ class Coach extends Component {
     }
 
     componentDidMount() {
-        this.getRecruits();
+        this.getRecruits('ALL');
     }
 
     render() {
@@ -77,14 +83,14 @@ class Coach extends Component {
                             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                                 <DropdownToggle className="dropdown-toggle" activeClassName="dropdown-toggle-active" caret>Select Position</DropdownToggle>
                                 <DropdownMenu right>
-                                    <DropdownItem onClick={this.getRecruits}>Quarterback</DropdownItem>
-                                    <DropdownItem>Running Back</DropdownItem>
-                                    <DropdownItem>Wide Receiver</DropdownItem>
-                                    <DropdownItem>Tight End</DropdownItem>
-                                    <DropdownItem>Offensive Line</DropdownItem>
-                                    <DropdownItem>Defensive Line</DropdownItem>
-                                    <DropdownItem>Linebacker</DropdownItem>
-                                    <DropdownItem>Cornerback</DropdownItem>
+                                    <DropdownItem id='QB' onClick={this.positionSelected}>Quarterback</DropdownItem>
+                                    <DropdownItem id='RB' onClick={this.positionSelected}>Running Back</DropdownItem>
+                                    <DropdownItem id='WR' onClick={this.positionSelected}>Wide Receiver</DropdownItem>
+                                    <DropdownItem id='TE' onClick={this.positionSelected}>Tight End</DropdownItem>
+                                    <DropdownItem id='OL' onClick={this.positionSelected}>Offensive Line</DropdownItem>
+                                    <DropdownItem id='DL' onClick={this.positionSelected}>Defensive Line</DropdownItem>
+                                    <DropdownItem id='LB' onClick={this.positionSelected}>Linebacker</DropdownItem>
+                                    <DropdownItem id='CB' onClick={this.positionSelected}>Cornerback</DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
                         </td>
