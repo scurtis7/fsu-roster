@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,8 +38,19 @@ public class PlayerRestController {
 
     @GetMapping(value = "/recruits/{position}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<PlayerDto> getRecruits(@PathVariable(value = "position") String position) {
-        log.info("Method: getRecruits({})", position);
-        return playerConverter.recruitEntityToPlayerDto(recruitRepository.findAll());
+        log.info("Method: getRecruits('{}')", position);
+        if (position.equalsIgnoreCase("ALL")) {
+            return playerConverter.recruitEntityToPlayerDto(recruitRepository.findAll());
+        }
+        return playerConverter.recruitEntityToPlayerDto(recruitRepository.findRecruitsByPosition(position));
+    }
+
+    @GetMapping(value = "/positions", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<String> getAllPositions() {
+        List<String> positions = new ArrayList<>();
+        positions.add("ALL");
+        positions.addAll(playerRepository.findAllPositions());
+        return positions;
     }
 
 }
