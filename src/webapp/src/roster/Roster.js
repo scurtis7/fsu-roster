@@ -9,14 +9,24 @@ class Coach extends Component {
         super(props);
         this.state = {
             players: [],
-            dropdownOpen: false,
             positions: [],
+            dropdownOpen: false,
         };
+        this.setPositions = this.setPositions.bind(this);
         this.setPlayers = this.setPlayers.bind(this);
-        this.loadTableData = this.loadTableData.bind(this);
+        this.loadPlayerTable = this.loadPlayerTable.bind(this);
+        this.getPositions = this.getPositions.bind(this);
         this.getRecruits = this.getRecruits.bind(this);
         this.toggle = this.toggle.bind(this);
         this.positionSelected = this.positionSelected.bind(this);
+    }
+
+    setPositions(positions) {
+        this.setState({positions});
+    }
+
+    setPlayers(players) {
+        this.setState({players});
     }
 
     toggle() {
@@ -25,12 +35,14 @@ class Coach extends Component {
         });
     }
 
-    setPlayers(players) {
-        this.setState({players});
-    }
-
     positionSelected(e) {
         this.getRecruits(e.currentTarget.getAttribute("id"));
+    }
+
+    getPositions() {
+        axios(`http://localhost:8080/api/positions`)
+            .then(positions => this.setPositions(positions.data))
+            .catch(error => error);
     }
 
     getRecruits(position) {
@@ -39,7 +51,19 @@ class Coach extends Component {
             .catch(error => error);
     }
 
-    loadTableData() {
+    loadPositionDropdown() {
+        if (this.state.positions === null) {
+            // do nothing
+        } else {
+            return this.state.positions.map((position, index) => {
+                return (
+                    <DropdownItem id={position} onClick={this.positionSelected}>{position}</DropdownItem>
+                );
+            });
+        }
+    }
+
+    loadPlayerTable() {
         if (this.state.players === null) {
             return (
                 <tr><td colSpan="6">Loading...</td></tr>
@@ -71,6 +95,7 @@ class Coach extends Component {
     }
 
     componentDidMount() {
+        this.getPositions();
         this.getRecruits('ALL');
     }
 
@@ -83,14 +108,7 @@ class Coach extends Component {
                             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                                 <DropdownToggle className="dropdown-toggle" activeClassName="dropdown-toggle-active" caret>Select Position</DropdownToggle>
                                 <DropdownMenu right>
-                                    <DropdownItem id='QB' onClick={this.positionSelected}>Quarterback</DropdownItem>
-                                    <DropdownItem id='RB' onClick={this.positionSelected}>Running Back</DropdownItem>
-                                    <DropdownItem id='WR' onClick={this.positionSelected}>Wide Receiver</DropdownItem>
-                                    <DropdownItem id='TE' onClick={this.positionSelected}>Tight End</DropdownItem>
-                                    <DropdownItem id='OL' onClick={this.positionSelected}>Offensive Line</DropdownItem>
-                                    <DropdownItem id='DL' onClick={this.positionSelected}>Defensive Line</DropdownItem>
-                                    <DropdownItem id='LB' onClick={this.positionSelected}>Linebacker</DropdownItem>
-                                    <DropdownItem id='CB' onClick={this.positionSelected}>Cornerback</DropdownItem>
+                                    {this.loadPositionDropdown()}
                                 </DropdownMenu>
                             </Dropdown>
                         </td>
@@ -117,7 +135,7 @@ class Coach extends Component {
                     </tr>
                     </thead>
                     <tbody>
-                    {this.loadTableData()}
+                    {this.loadPlayerTable()}
                     </tbody>
                 </Table>
             </div>
