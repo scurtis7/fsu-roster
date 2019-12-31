@@ -46,7 +46,10 @@ public class Player {
     @Column(name = "Sport", nullable = false)
     private String sport;
 
-    @Column(name = "Status", nullable = false)
+    @Column(name = "Active", nullable = false)
+    private Boolean active;
+
+    @Column(name = "Status")
     private String status;
 
     @Column(name = "Height")

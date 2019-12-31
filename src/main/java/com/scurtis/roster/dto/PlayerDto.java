@@ -19,6 +19,7 @@ public class PlayerDto {
     private String classStanding;
     private String jersey;
     private String sport;
+    private String active;
     private String status;
     private String height;
     private String weight;

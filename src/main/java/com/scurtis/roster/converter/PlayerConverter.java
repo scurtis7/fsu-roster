@@ -64,6 +64,7 @@ public class PlayerConverter {
                     .classStanding(setClassStanding(recruit.getPlayer().getYear(), recruit.getPlayer().getRedshirt()))
                     .jersey(Integer.toString(recruit.getPlayer().getJersey()))
                     .sport(recruit.getPlayer().getSport())
+                    .active(Boolean.toString(recruit.getPlayer().getActive()))
                     .status(recruit.getPlayer().getStatus())
                     .height(recruit.getPlayer().getHeight())
                     .weight(Integer.toString(recruit.getPlayer().getWeight()))
