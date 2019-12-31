@@ -25,10 +25,10 @@ class Coach extends Component {
             );
         } else {
             return this.state.coaches.map((coach, index) => {
-                const {id, name, position, sport} = coach; //destructuring
+                const {coachId, name, position, sport} = coach; //destructuring
                 return (
                     <tr key={index}>
-                        <td>{id}</td>
+                        <td>{coachId}</td>
                         <td>{name}</td>
                         <td>{position}</td>
                         <td>{sport}</td>

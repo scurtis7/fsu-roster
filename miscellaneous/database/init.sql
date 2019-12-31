@@ -85,19 +85,16 @@ COMMIT;
 
 INSERT INTO fsu_roster.Coach (CoachId, Name, Position, Sport)
 VALUES (1, 'Mike Norvell', 'Head Coach', 'Football'),
-       (2, 'Kenny Dillingham', 'Offensive Coordinator/Quarterbacks Coach', 'Football'),
-       (3, 'Adam Fuller', 'Defensive Coordinator', 'Football'),
-       (4, 'Odell Haggins', 'Defensive Lin Coach', 'Football'),
-       (5, 'Chris Thomsen', 'Deputy Head Coach', 'Football'),
-       (6, 'Ron Dugans', 'Wide Receivers Coach', 'Football'),
-       (7, 'Harlon Barnett', 'Defensive Coordinator/Defensive Backs Coach', 'Football'),
-       (8, 'Kendal Briles', 'Offensive Coordinator/Quarterbacks Coach', 'Football'),
-       (9, 'Mark Snyder', 'Special Teams Coordinator/Outside Linebackers Coach', 'Football'),
-       (10, 'Randy Clements', 'Offensive Line Coach', 'Football'),
-       (11, 'Telly Lockette', 'Tight Ends Coach', 'Football'),
-       (12, 'Donte Pimpleton', 'Running Backs Coach', 'Football'),
-       (13, 'Raymond Woodie', 'Inside Linebackers Coach', 'Football'),
-       (14, 'Raymond Woodie', 'Inside Linebackers Coach', 'Football');
+       (2, 'Odell Haggins', 'Defensive Lin Coach', 'Football'),
+       (3, 'Kenny Dillingham', 'Offensive Coordinator/Quarterbacks Coach', 'Football'),
+       (4, 'Adam Fuller', 'Defensive Coordinator', 'Football'),
+       (5, 'John Papuchis', 'Special Teams Coordinator/Defensive Ends Coach', 'Football'),
+       (6, 'Chris Thomsen', 'Deputy Head Coach', 'Football'),
+       (7, 'Alex Atkins', 'Offensive Line Coach', 'Football'),
+       (8, 'Ron Dugans', 'Wide Receivers Coach', 'Football'),
+       (9, 'Chris Marve', 'Linebackers Coach/Defensive Run Game Coordinator', 'Football'),
+       (10, 'TJ Rushing', 'Defensive Backs Coach', 'Football'),
+       (11, 'Bruce Warwick', 'Chief of Staff', 'Football');
 
 COMMIT;
 
