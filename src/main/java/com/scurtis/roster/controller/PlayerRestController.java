@@ -40,9 +40,9 @@ public class PlayerRestController {
     public List<PlayerDto> getRecruits(@PathVariable(value = "position") String position) {
         log.info("Method: getRecruits('{}')", position);
         if (position.equalsIgnoreCase("ALL")) {
-            return playerConverter.recruitEntityToPlayerDto(recruitRepository.findAll());
+            return playerConverter.recruitEntityToPlayerDto(recruitRepository.findAllActiveSorted());
         }
-        return playerConverter.recruitEntityToPlayerDto(recruitRepository.findRecruitsByPosition(position));
+        return playerConverter.recruitEntityToPlayerDto(recruitRepository.findRecruitsByPositionSorted(position));
     }
 
     @GetMapping(value = "/positions", produces = MediaType.APPLICATION_JSON_VALUE)

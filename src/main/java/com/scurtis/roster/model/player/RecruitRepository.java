@@ -15,7 +15,13 @@ import java.util.List;
 @Repository
 public interface RecruitRepository extends JpaRepository<Recruit, Long> {
 
+    @Query("SELECT r FROM Recruit r order by r.two47Rating DESC")
+    List<Recruit> findAllSorted();
+
+    @Query("SELECT r FROM Recruit r WHERE r.player.active = true order by r.two47Rating DESC")
+    List<Recruit> findAllActiveSorted();
+
     @Query("SELECT r FROM Recruit r WHERE r.player.position = :position and r.player.active = true order by r.two47Rating DESC")
-    List<Recruit> findRecruitsByPosition(@Param("position") String position);
+    List<Recruit> findRecruitsByPositionSorted(@Param("position") String position);
 
 }
