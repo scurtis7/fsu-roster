@@ -3,7 +3,7 @@ import "./Roster.css"
 import axios from 'axios';
 import {Table, Dropdown, DropdownMenu, DropdownItem, DropdownToggle} from 'reactstrap';
 
-class Coach extends Component {
+class Roster extends Component {
 
     constructor(props) {
         super(props);
@@ -199,4 +199,4 @@ class Coach extends Component {
     }
 }
 
-export default Coach;
+export default Roster;
