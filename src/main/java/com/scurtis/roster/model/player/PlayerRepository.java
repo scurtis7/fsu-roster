@@ -17,7 +17,7 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
     @Query("SELECT DISTINCT p.position FROM Player p ORDER BY p.position DESC")
     List<String> findAllPositions();
 
-    @Query("SELECT DISTINCT p.jersey FROM Player p ORDER BY p.jersey ASC")
+    @Query("SELECT DISTINCT p.jersey FROM Player p WHERE p.active = true ORDER BY p.jersey ASC")
     List<String> findAllJerseys();
 
 }

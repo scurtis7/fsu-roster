@@ -17,15 +17,17 @@ class Coach extends Component {
         this.setPositions = this.setPositions.bind(this);
         this.setJerseys = this.setJerseys.bind(this);
         this.setPlayers = this.setPlayers.bind(this);
-        this.loadPositionDropdown = this.loadPositionDropdown.bind(this);
-        this.loadJerseyDropdown = this.loadJerseyDropdown.bind(this);
-        this.loadPlayerTable = this.loadPlayerTable.bind(this);
-        this.getPositions = this.getPositions.bind(this);
-        this.getRecruits = this.getRecruits.bind(this);
         this.togglePositionDropdown = this.togglePositionDropdown.bind(this);
         this.toggleJerseyDropdown = this.toggleJerseyDropdown.bind(this);
         this.positionSelected = this.positionSelected.bind(this);
         this.jerseySelected = this.jerseySelected.bind(this);
+        this.getPositions = this.getPositions.bind(this);
+        this.getJerseys = this.getJerseys.bind(this);
+        this.getRecruits = this.getRecruits.bind(this);
+        this.getRecruitsByJersey = this.getRecruitsByJersey.bind(this);
+        this.loadPositionDropdown = this.loadPositionDropdown.bind(this);
+        this.loadJerseyDropdown = this.loadJerseyDropdown.bind(this);
+        this.loadPlayerTable = this.loadPlayerTable.bind(this);
     }
 
     setPositions(positions) {
