@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import "./Roster.css"
+import "./Player.css"
 import axios from 'axios';
 import {Table, Dropdown, DropdownMenu, DropdownItem, DropdownToggle, Container, Row, Badge} from 'reactstrap';
 
@@ -10,7 +10,7 @@ class Player extends Component {
                 <Container fluid>
                     <Row>
                         <h1><Badge className="Player-table">
-                            FSU Roster Application
+                            FSU Player Page
                         </Badge></h1>
                     </Row>
                     <Row>

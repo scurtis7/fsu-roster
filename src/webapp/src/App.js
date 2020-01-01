@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import "./App.css";
 import Home from "./home/Home";
 import Roster from "./roster/Roster";
+import Player from "./player/Player";
 import Coach from "./coach/Coach"
 import About from "./about/About";
 import {BrowserRouter, Route, NavLink, Link} from "react-router-dom";
@@ -31,6 +32,7 @@ class App extends Component {
                         <Collapse isOpen={this.state.isOpen} navbar>
                             <Nav className="mr-auto" navbar>
                                 <NavItem><NavLink className="navlink" activeClassName="navlinkactive" to="/roster">Roster</NavLink></NavItem>
+                                <NavItem><NavLink className="navlink" activeClassName="navlinkactive" to="/player">Player</NavLink></NavItem>
                                 <NavItem><NavLink className="navlink" activeClassName="navlinkactive" to="/coach">Coaches</NavLink></NavItem>
                             </Nav>
                             <Nav className="ml-auto" navbar>
@@ -42,6 +44,7 @@ class App extends Component {
                 <div className="content">
                     <Route exact path="/" component={Home}/>
                     <Route path="/roster" component={Roster}/>
+                    <Route path="/player" component={Player}/>
                     <Route path="/coach" component={Coach}/>
                     <Route path="/about" component={About}/>
                 </div>
