@@ -45,12 +45,26 @@ public class PlayerRestController {
         return playerConverter.recruitEntityToPlayerDto(recruitRepository.findRecruitsByPositionSorted(position));
     }
 
+    @GetMapping(value = "/recruits/jersey/{jersey}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<PlayerDto> getRecruitsByJersey(@PathVariable(value = "jersey") Integer jersey) {
+        log.info("Method: getRecruitsByJersey('{}')", jersey);
+        return playerConverter.recruitEntityToPlayerDto(recruitRepository.findRecruitsByJerseySorted(jersey));
+    }
+
     @GetMapping(value = "/positions", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<String> getAllPositions() {
         List<String> positions = new ArrayList<>();
         positions.add("ALL");
         positions.addAll(playerRepository.findAllPositions());
         return positions;
+    }
+
+    @GetMapping(value = "/jerseys", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<String> getAllJerseys() {
+        List<String> jerseys = new ArrayList<>();
+        jerseys.add("ALL");
+        jerseys.addAll(playerRepository.findAllJerseys());
+        return jerseys;
     }
 
 }

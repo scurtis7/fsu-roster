@@ -10,33 +10,54 @@ class Coach extends Component {
         this.state = {
             players: [],
             positions: [],
-            dropdownOpen: false,
+            jerseys: [],
+            positionDropdownOpen: false,
+            jerseyDropdownOpen: false,
         };
         this.setPositions = this.setPositions.bind(this);
+        this.setJerseys = this.setJerseys.bind(this);
         this.setPlayers = this.setPlayers.bind(this);
+        this.loadPositionDropdown = this.loadPositionDropdown.bind(this);
+        this.loadJerseyDropdown = this.loadJerseyDropdown.bind(this);
         this.loadPlayerTable = this.loadPlayerTable.bind(this);
         this.getPositions = this.getPositions.bind(this);
         this.getRecruits = this.getRecruits.bind(this);
-        this.toggle = this.toggle.bind(this);
+        this.togglePositionDropdown = this.togglePositionDropdown.bind(this);
+        this.toggleJerseyDropdown = this.toggleJerseyDropdown.bind(this);
         this.positionSelected = this.positionSelected.bind(this);
+        this.jerseySelected = this.jerseySelected.bind(this);
     }
 
     setPositions(positions) {
         this.setState({positions});
     }
 
+    setJerseys(jerseys) {
+        this.setState({jerseys});
+    }
+
     setPlayers(players) {
         this.setState({players});
     }
 
-    toggle() {
+    togglePositionDropdown() {
         this.setState({
-            dropdownOpen: !this.state.dropdownOpen
+            positionDropdownOpen: !this.state.positionDropdownOpen
+        });
+    }
+
+    toggleJerseyDropdown() {
+        this.setState({
+            jerseyDropdownOpen: !this.state.jerseyDropdownOpen
         });
     }
 
     positionSelected(e) {
         this.getRecruits(e.currentTarget.getAttribute("id"));
+    }
+
+    jerseySelected(e) {
+        this.getRecruitsByJersey(e.currentTarget.getAttribute("id"));
     }
 
     getPositions() {
@@ -45,8 +66,20 @@ class Coach extends Component {
             .catch(error => error);
     }
 
+    getJerseys() {
+        axios(`http://localhost:8080/api/jerseys`)
+            .then(jerseys => this.setJerseys(jerseys.data))
+            .catch(error => error);
+    }
+
     getRecruits(position) {
         axios(`http://localhost:8080/api/recruits/` + position)
+            .then(players => this.setPlayers(players.data))
+            .catch(error => error);
+    }
+
+    getRecruitsByJersey(jersey) {
+        axios(`http://localhost:8080/api/recruits/jersey/` + jersey)
             .then(players => this.setPlayers(players.data))
             .catch(error => error);
     }
@@ -58,6 +91,18 @@ class Coach extends Component {
             return this.state.positions.map((position, index) => {
                 return (
                     <DropdownItem id={position} onClick={this.positionSelected}>{position}</DropdownItem>
+                );
+            });
+        }
+    }
+
+    loadJerseyDropdown() {
+        if (this.state.jerseys === null) {
+            // do nothing
+        } else {
+            return this.state.jerseys.map((jersey, index) => {
+                return (
+                    <DropdownItem id={jersey} onClick={this.jerseySelected}>{jersey}</DropdownItem>
                 );
             });
         }
@@ -96,6 +141,7 @@ class Coach extends Component {
 
     componentDidMount() {
         this.getPositions();
+        this.getJerseys();
         this.getRecruits('ALL');
     }
 
@@ -105,10 +151,18 @@ class Coach extends Component {
                 <Table className="Roster-table">
                     <tr>
                         <td>
-                            <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                            <Dropdown isOpen={this.state.positionDropdownOpen} toggle={this.togglePositionDropdown}>
                                 <DropdownToggle className="dropdown-toggle" activeClassName="dropdown-toggle-active" caret>Select Position</DropdownToggle>
                                 <DropdownMenu right>
                                     {this.loadPositionDropdown()}
+                                </DropdownMenu>
+                            </Dropdown>
+                        </td>
+                        <td>
+                            <Dropdown isOpen={this.state.jerseyDropdownOpen} toggle={this.toggleJerseyDropdown}>
+                                <DropdownToggle className="dropdown-toggle" activeClassName="dropdown-toggle-active" caret>Select Jersey</DropdownToggle>
+                                <DropdownMenu right>
+                                    {this.loadJerseyDropdown()}
                                 </DropdownMenu>
                             </Dropdown>
                         </td>
