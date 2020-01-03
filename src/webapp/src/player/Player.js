@@ -1,23 +1,18 @@
 import React, {Component} from "react";
 import "./Player.css"
 import axios from 'axios';
-import {Form, FormGroup, Col, Label, Button, InputGroup, InputGroupAddon, InputGroupText, Input} from 'reactstrap';
+import {Form, FormGroup, Col, Badge, Button, InputGroup, InputGroupAddon, InputGroupText, Input, Row} from 'reactstrap';
 
 class Player extends Component {
     render() {
         return (
             <div className="Player-div">
                 <Form>
-                    <FormGroup row>
-                        <Col sm={{size: 10, offset: 1}}>
-                            <InputGroup>
-                                <InputGroupAddon addonType="prepend">
-                                    <InputGroupText className="Player-input-group-text">Id</InputGroupText>
-                                </InputGroupAddon>
-                                <Input placeholder="Id" disabled/>
-                            </InputGroup>
-                        </Col>
-                    </FormGroup>
+                    <Col sm={10}>
+                        <h1>
+                            <Badge className="About-badge">Player</Badge>
+                        </h1>
+                    </Col>
                     <FormGroup row>
                         <Col sm={{size: 10, offset: 1}}>
                             <InputGroup>
@@ -175,6 +170,136 @@ class Player extends Component {
                                     <InputGroupText className="Player-input-group-text">Notes</InputGroupText>
                                 </InputGroupAddon>
                                 <Input placeholder="Notes"/>
+                            </InputGroup>
+                        </Col>
+                    </FormGroup>
+                    <Col sm={10}>
+                        <h1>
+                            <Badge className="About-badge">Rivals</Badge>
+                        </h1>
+                    </Col>
+                    <FormGroup row>
+                        <Col sm={{size: 10, offset: 1}}>
+                            <InputGroup>
+                                <InputGroupAddon addonType="prepend">
+                                    <InputGroupText className="Player-input-group-text">Stars</InputGroupText>
+                                </InputGroupAddon>
+                                <Input placeholder="Stars" disabled/>
+                            </InputGroup>
+                        </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                        <Col sm={{size: 10, offset: 1}}>
+                            <InputGroup>
+                                <InputGroupAddon addonType="prepend">
+                                    <InputGroupText className="Player-input-group-text">Rating</InputGroupText>
+                                </InputGroupAddon>
+                                <Input placeholder="Rating" disabled/>
+                            </InputGroup>
+                        </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                        <Col sm={{size: 10, offset: 1}}>
+                            <InputGroup>
+                                <InputGroupAddon addonType="prepend">
+                                    <InputGroupText className="Player-input-group-text">National Rank</InputGroupText>
+                                </InputGroupAddon>
+                                <Input placeholder="National Rank" disabled/>
+                            </InputGroup>
+                        </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                        <Col sm={{size: 10, offset: 1}}>
+                            <InputGroup>
+                                <InputGroupAddon addonType="prepend">
+                                    <InputGroupText className="Player-input-group-text">Position Rank</InputGroupText>
+                                </InputGroupAddon>
+                                <Input placeholder="Position Rank" disabled/>
+                            </InputGroup>
+                        </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                        <Col sm={{size: 10, offset: 1}}>
+                            <InputGroup>
+                                <InputGroupAddon addonType="prepend">
+                                    <InputGroupText className="Player-input-group-text">State Rank</InputGroupText>
+                                </InputGroupAddon>
+                                <Input placeholder="State Rank" disabled/>
+                            </InputGroup>
+                        </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                        <Col sm={{size: 10, offset: 1}}>
+                            <InputGroup>
+                                <InputGroupAddon addonType="prepend">
+                                    <InputGroupText className="Player-input-group-text">Rivals Link</InputGroupText>
+                                </InputGroupAddon>
+                                <Input placeholder="Rivals Link" disabled/>
+                            </InputGroup>
+                        </Col>
+                    </FormGroup>
+                    <Col sm={10}>
+                        <h1>
+                            <Badge className="About-badge">247</Badge>
+                        </h1>
+                    </Col>
+                    <FormGroup row>
+                        <Col sm={{size: 10, offset: 1}}>
+                            <InputGroup>
+                                <InputGroupAddon addonType="prepend">
+                                    <InputGroupText className="Player-input-group-text">Stars</InputGroupText>
+                                </InputGroupAddon>
+                                <Input placeholder="Stars" disabled/>
+                            </InputGroup>
+                        </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                        <Col sm={{size: 10, offset: 1}}>
+                            <InputGroup>
+                                <InputGroupAddon addonType="prepend">
+                                    <InputGroupText className="Player-input-group-text">Rating</InputGroupText>
+                                </InputGroupAddon>
+                                <Input placeholder="Rating" disabled/>
+                            </InputGroup>
+                        </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                        <Col sm={{size: 10, offset: 1}}>
+                            <InputGroup>
+                                <InputGroupAddon addonType="prepend">
+                                    <InputGroupText className="Player-input-group-text">National Rank</InputGroupText>
+                                </InputGroupAddon>
+                                <Input placeholder="National Rank" disabled/>
+                            </InputGroup>
+                        </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                        <Col sm={{size: 10, offset: 1}}>
+                            <InputGroup>
+                                <InputGroupAddon addonType="prepend">
+                                    <InputGroupText className="Player-input-group-text">Position Rank</InputGroupText>
+                                </InputGroupAddon>
+                                <Input placeholder="Position Rank" disabled/>
+                            </InputGroup>
+                        </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                        <Col sm={{size: 10, offset: 1}}>
+                            <InputGroup>
+                                <InputGroupAddon addonType="prepend">
+                                    <InputGroupText className="Player-input-group-text">State Rank</InputGroupText>
+                                </InputGroupAddon>
+                                <Input placeholder="State Rank" disabled/>
+                            </InputGroup>
+                        </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                        <Col sm={{size: 10, offset: 1}}>
+                            <InputGroup>
+                                <InputGroupAddon addonType="prepend">
+                                    <InputGroupText className="Player-input-group-text">Rivals Link</InputGroupText>
+                                </InputGroupAddon>
+                                <Input placeholder="Rivals Link" disabled/>
                             </InputGroup>
                         </Col>
                     </FormGroup>
