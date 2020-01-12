@@ -66,7 +66,7 @@ CREATE TRIGGER set_rivals_timestamp
     FOR EACH ROW
     EXECUTE PROCEDURE trigger_set_timestamp();
 
--- Create the Coach table
+-- Create the Coaches table
 CREATE TABLE fsu_roster.Coach
 (
     CoachId         SERIAL PRIMARY KEY,
@@ -84,16 +84,16 @@ CREATE TRIGGER set_coach_timestamp
 COMMIT;
 
 INSERT INTO fsu_roster.Coach (CoachId, Name, Position, Sport)
-VALUES (1, 'Mike Norvell', 'Head Coach', 'Football'),
-       (2, 'Odell Haggins', 'Defensive Lin Coach', 'Football'),
-       (3, 'Kenny Dillingham', 'Offensive Coordinator/Quarterbacks Coach', 'Football'),
+VALUES (1, 'Mike Norvell', 'Head Coaches', 'Football'),
+       (2, 'Odell Haggins', 'Defensive Lin Coaches', 'Football'),
+       (3, 'Kenny Dillingham', 'Offensive Coordinator/Quarterbacks Coaches', 'Football'),
        (4, 'Adam Fuller', 'Defensive Coordinator', 'Football'),
-       (5, 'John Papuchis', 'Special Teams Coordinator/Defensive Ends Coach', 'Football'),
-       (6, 'Chris Thomsen', 'Deputy Head Coach', 'Football'),
-       (7, 'Alex Atkins', 'Offensive Line Coach', 'Football'),
-       (8, 'Ron Dugans', 'Wide Receivers Coach', 'Football'),
-       (9, 'Chris Marve', 'Linebackers Coach/Defensive Run Game Coordinator', 'Football'),
-       (10, 'TJ Rushing', 'Defensive Backs Coach', 'Football'),
+       (5, 'John Papuchis', 'Special Teams Coordinator/Defensive Ends Coaches', 'Football'),
+       (6, 'Chris Thomsen', 'Deputy Head Coaches', 'Football'),
+       (7, 'Alex Atkins', 'Offensive Line Coaches', 'Football'),
+       (8, 'Ron Dugans', 'Wide Receivers Coaches', 'Football'),
+       (9, 'Chris Marve', 'Linebackers Coaches/Defensive Run Game Coordinator', 'Football'),
+       (10, 'TJ Rushing', 'Defensive Backs Coaches', 'Football'),
        (11, 'Bruce Warwick', 'Chief of Staff', 'Football');
 
 COMMIT;

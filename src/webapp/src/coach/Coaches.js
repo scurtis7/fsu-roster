@@ -1,9 +1,9 @@
 import React, {Component} from "react";
-import "./Coach.css"
+import "./Coaches.css"
 import axios from 'axios';
 import {Table} from 'reactstrap';
 
-class Coach extends Component {
+class Coaches extends Component {
 
     constructor(props) {
         super(props);
@@ -65,4 +65,4 @@ class Coach extends Component {
     }
 }
 
-export default Coach;
+export default Coaches;

@@ -4,10 +4,58 @@ import axios from 'axios';
 import {Form, FormGroup, Col, Badge, Button, InputGroup, InputGroupAddon, InputGroupText, Input, Row} from 'reactstrap';
 
 class Player extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            playerId: '',
+            playerName: '',
+            position: '',
+            year: '',
+            redshirt: '',
+            classStanding: '',
+            jersey: '',
+            sport: '',
+            active: '',
+            status: '',
+            height: '',
+            weight: '',
+            homeTown: '',
+            highSchool: '',
+            otherCollege: '',
+            draftPick: '',
+            nflTeam: '',
+            notes: '',
+            rivalsStars: '',
+            rivalsRating: '',
+            rivalsRankNational: '',
+            rivalsRankPosition: '',
+            rivalsRankState: '',
+            rivalsLink: '',
+            two47Stars: '',
+            two47Rating: '',
+            two47RankNational: '',
+            two47RankPosition: '',
+            two47RankState: '',
+            two47Link: '',
+        };
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handlePlayerNameChange = this.handlePlayerNameChange.bind(this);
+    }
+
+    handleSubmit(event) {
+        console.log("playerName: " + this.state.playerName);
+    }
+
+    handlePlayerNameChange(event) {
+        this.setState({playerName: event.currentTarget.value});
+    }
+
     render() {
         return (
             <div className="Player-div">
-                <Form>
+                <Form onSubmit={this.handleSubmit}>
                     <Col sm={10}>
                         <h1>
                             <Badge className="About-badge">Player</Badge>
@@ -17,7 +65,7 @@ class Player extends Component {
                         <Col sm={{size: 10, offset: 1}}>
                             <InputGroup>
                                 <InputGroupAddon addonType="prepend">
-                                    <InputGroupText className="Player-input-group-text">Full Name</InputGroupText>
+                                    <InputGroupText value={this.state.playerName} onChange={this.handlePlayerNameChange} className="Player-input-group-text">Full Name</InputGroupText>
                                 </InputGroupAddon>
                                 <Input placeholder="Name"/>
                             </InputGroup>
