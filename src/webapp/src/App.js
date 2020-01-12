@@ -4,6 +4,7 @@ import Home from "./home/Home";
 import Roster from "./roster/Roster";
 import Player from "./player/Player";
 import Coaches from "./coach/Coaches"
+import Coach from "./coach/Coach"
 import About from "./about/About";
 import {BrowserRouter, Route, NavLink, Link} from "react-router-dom";
 import {Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem} from "reactstrap";
@@ -34,6 +35,7 @@ class App extends Component {
                                 <NavItem><NavLink className="navlink" activeClassName="navlinkactive" to="/roster">Roster</NavLink></NavItem>
                                 <NavItem><NavLink className="navlink" activeClassName="navlinkactive" to="/player">Player</NavLink></NavItem>
                                 <NavItem><NavLink className="navlink" activeClassName="navlinkactive" to="/coaches">Coaches</NavLink></NavItem>
+                                <NavItem><NavLink className="navlink" activeClassName="navlinkactive" to="/coach">Coach</NavLink></NavItem>
                             </Nav>
                             <Nav className="ml-auto" navbar>
                                 <NavItem><NavLink className="navlink" activeClassName="navlinkactive" to="/about">About</NavLink></NavItem>
@@ -46,6 +48,7 @@ class App extends Component {
                     <Route path="/roster" component={Roster}/>
                     <Route path="/player" component={Player}/>
                     <Route path="/coaches" component={Coaches}/>
+                    <Route path="/coach" component={Coach}/>
                     <Route path="/about" component={About}/>
                 </div>
             </BrowserRouter>

@@ -1,0 +1,79 @@
+.Coach-div {
+    margin: 10px;
+    padding: 10px;
+}
+
+.Coach-input-group {
+    /*width: 400px;*/
+}
+
+.Coach-input-group-text {
+    background-color: #782F40;
+    color: #CEB888;
+    width: 120px;
+}
+
+.Coach-checkbox {
+    margin-left: 130px;
+}
+
+.Coach-button {
+    background-color: #CEB888;
+    color: #782F40;
+    border-color: #782F40;
+}
+
+.Coach-button:hover {
+    background-color: #782F40;
+    color: #CEB888;
+    border-color: #CEB888;
+}
+
+.Coach-button:active {
+    background-color: #782F40;
+    color: #CEB888;
+    border-color: #CEB888;
+}
+
+.Coach-button:focus {
+    background-color: #782F40;
+    color: #CEB888;
+    border-color: #CEB888;
+}
+
+.Coach-button:active:focus {
+    background-color: #782F40;
+    color: #CEB888;
+    border-color: #CEB888;
+}
+
+.Coach-button-active {
+    background-color: #782F40;
+    color: #CEB888;
+    border-color: #CEB888;
+}
+
+/*.dropdown-toggle {*/
+/*    background-color: #CEB888;*/
+/*    color: #782F40;*/
+/*}*/
+
+/*.dropdown-toggle:hover {*/
+/*    background-color: #CEB888;*/
+/*    color: #782F40;*/
+/*}*/
+
+/*.dropdown-toggle:active {*/
+/*    background-color: #CEB888;*/
+/*    color: #782F40;*/
+/*}*/
+
+/*.dropdown-toggle::selection {*/
+/*    background-color: #CEB888;*/
+/*    color: #782F40;*/
+/*}*/
+
+/*.dropdown-toggle-active {*/
+/*    background-color: #CEB888;*/
+/*    color: #782F40;*/
+/*}*/
