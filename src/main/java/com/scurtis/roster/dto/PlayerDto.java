@@ -7,6 +7,7 @@ import lombok.Data;
  * Author: Steve Curtis
  * Date: Dec 23, 2019
  **/
+
 @Data
 @Builder
 public class PlayerDto {

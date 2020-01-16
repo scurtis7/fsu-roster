@@ -16,14 +16,38 @@ class Coach extends Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleCoachNameChange = this.handleCoachNameChange.bind(this);
+        this.handlePositionChange = this.handlePositionChange.bind(this);
+        this.handleSportChange = this.handleSportChange.bind(this);
     }
 
     handleSubmit(event) {
         console.log("coachName: " + this.state.playerName);
+        event.preventDefault();
+        // let coach = {coachId: 0, coachName: this.state.coachName, coachPosition: this.state.coachPosition, sport: 'Football'};
+        axios.post('http://localhost:8080/api/coach', {
+            coachId: '0',
+            name: this.state.coachName,
+            position: this.state.coachPosition,
+            sport: this.state.sport
+        })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     handleCoachNameChange(event) {
-        this.setState({playerName: event.currentTarget.value});
+        this.setState({coachName: event.currentTarget.value});
+    }
+
+    handlePositionChange(event) {
+        this.setState({coachPosition: event.currentTarget.value});
+    }
+
+    handleSportChange(event) {
+        this.setState({sport: event.currentTarget.value});
     }
 
     render() {
@@ -39,7 +63,7 @@ class Coach extends Component {
                         <Col sm={{size: 10, offset: 1}}>
                             <InputGroup>
                                 <InputGroupAddon addonType="prepend">
-                                    <InputGroupText value={this.state.playerName} onChange={this.handleCoachNameChange} className="Coach-input-group-text">Full Name</InputGroupText>
+                                    <InputGroupText value={this.state.coachName} onChange={this.handleCoachNameChange} className="Coach-input-group-text">Full Name</InputGroupText>
                                 </InputGroupAddon>
                                 <Input placeholder="Name"/>
                             </InputGroup>
@@ -49,7 +73,7 @@ class Coach extends Component {
                         <Col sm={{size: 10, offset: 1}}>
                             <InputGroup>
                                 <InputGroupAddon addonType="prepend">
-                                    <InputGroupText className="Coach-input-group-text">Position</InputGroupText>
+                                    <InputGroupText value={this.state.position} onChange={this.handlePositionChange} className="Coach-input-group-text">Position</InputGroupText>
                                 </InputGroupAddon>
                                 <Input placeholder="Position"/>
                             </InputGroup>
@@ -59,7 +83,7 @@ class Coach extends Component {
                         <Col sm={{size: 10, offset: 1}}>
                             <InputGroup>
                                 <InputGroupAddon addonType="prepend">
-                                    <InputGroupText className="Coach-input-group-text">Sport</InputGroupText>
+                                    <InputGroupText value={this.state.sport} onChange={this.handleSportChange} className="Coach-input-group-text">Sport</InputGroupText>
                                 </InputGroupAddon>
                                 <Input placeholder="Sport"/>
                             </InputGroup>
