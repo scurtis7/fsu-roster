@@ -3,15 +3,7 @@
 -- CREATE SCHEMA fsu_roster;
 
 DROP TABLE IF EXISTS
-    fsu_roster.Player, fsu_roster.Coach, fsu_roster.Recruit;
-
-CREATE OR REPLACE FUNCTION trigger_set_timestamp()
-              RETURNS TRIGGER AS $$
-BEGIN
-    NEW.LastUpdateDate = NOW();
-RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
+    fsu_roster.Player, fsu_roster.Coach, fsu_roster.Recruit CASCADE;
 
 -- Create the Player table
 CREATE TABLE fsu_roster.Player
@@ -36,11 +28,6 @@ CREATE TABLE fsu_roster.Player
     LastUpdateDate  TIMESTAMP NOT NULL DEFAULT now()
 );
 
-CREATE TRIGGER set_player_timestamp
-    BEFORE UPDATE ON fsu_roster.Player
-    FOR EACH ROW
-    EXECUTE PROCEDURE trigger_set_timestamp();
-
 -- Create the Recruit table
 CREATE TABLE fsu_roster.Recruit
 (
@@ -61,11 +48,6 @@ CREATE TABLE fsu_roster.Recruit
     LastUpdateDate      TIMESTAMP NOT NULL DEFAULT now()
 );
 
-CREATE TRIGGER set_rivals_timestamp
-    BEFORE UPDATE ON fsu_roster.Recruit
-    FOR EACH ROW
-    EXECUTE PROCEDURE trigger_set_timestamp();
-
 -- Create the Coaches table
 CREATE TABLE fsu_roster.Coach
 (
@@ -76,10 +58,28 @@ CREATE TABLE fsu_roster.Coach
     LastUpdateDate  TIMESTAMP NOT NULL DEFAULT now()
 );
 
+CREATE OR REPLACE FUNCTION fsu_roster.trigger_set_timestamp()
+              RETURNS TRIGGER AS $$
+BEGIN
+    NEW.LastUpdateDate = NOW();
+RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER set_player_timestamp
+    BEFORE UPDATE ON fsu_roster.Player
+    FOR EACH ROW
+    EXECUTE PROCEDURE fsu_roster.trigger_set_timestamp();
+
+CREATE TRIGGER set_rivals_timestamp
+    BEFORE UPDATE ON fsu_roster.Recruit
+    FOR EACH ROW
+    EXECUTE PROCEDURE fsu_roster.trigger_set_timestamp();
+
 CREATE TRIGGER set_coach_timestamp
     BEFORE UPDATE ON fsu_roster.Coach
     FOR EACH ROW
-    EXECUTE PROCEDURE trigger_set_timestamp();
+    EXECUTE PROCEDURE fsu_roster.trigger_set_timestamp();
 
 COMMIT;
 
