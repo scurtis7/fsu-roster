@@ -5,19 +5,9 @@ CREATE SCHEMA fsu_roster;
 DROP TABLE IF EXISTS
     fsu_roster.Player, fsu_roster.Coach, fsu_roster.Recruit CASCADE;
 
-CREATE SEQUENCE fsu_roster.coach_coachid_seq
-    AS INTEGER START 1 MINVALUE 1 INCREMENT 1;
-
-CREATE SEQUENCE fsu_roster.player_playerid_seq
-    AS INTEGER START 1 MINVALUE 1 INCREMENT 1;
-
-CREATE SEQUENCE fsu_roster.recruit_recruitid_seq
-    AS INTEGER START 1 MINVALUE 1 INCREMENT 1;
-
 -- Create the Player table
 CREATE TABLE fsu_roster.Player
 (
---     PlayerId        INTEGER PRIMARY KEY NOT NULL DEFAULT nextval('fsu_roster.player_playerid_seq'),
     PlayerId        SERIAL PRIMARY KEY,
     Name            VARCHAR(100) NOT NULL,
     Position        VARCHAR(50) NOT NULL,
