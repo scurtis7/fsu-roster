@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import "./Coach.css"
 import axios from 'axios';
 import {Form, FormGroup, Col, Badge, Button, InputGroup, InputGroupAddon, InputGroupText, Input, Row} from 'reactstrap';
+import {withRouter, Redirect} from 'react-router-dom'
 
 class Coach extends Component {
 
@@ -19,11 +20,15 @@ class Coach extends Component {
     }
 
     handleSubmit(event) {
-        console.log("coachName: " + this.state.coachName);
+        event.preventDefault();
         let coach = {coachId: 0, name: this.state.coachName, position: this.state.coachPosition, sport: this.state.sport};
         axios.post('http://localhost:8080/api/coach', coach)
             .then(function (response) {
                 console.log(response);
+                // this.setState({coachName: '', coachPosition: '', sport: ''});
+                // console.log(this.props.history);
+                // this.props.history.push('/coaches');
+                // return (<Redirect to='/coaches'/>);
             })
             .catch(function (error) {
                 console.log(error);
@@ -83,4 +88,4 @@ class Coach extends Component {
     }
 }
 
-export default Coach;
+export default withRouter(Coach);

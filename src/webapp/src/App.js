@@ -45,11 +45,11 @@ class App extends Component {
                 </div>
                 <div className="content">
                     <Route exact path="/" component={Home}/>
-                    <Route path="/roster" component={Roster}/>
-                    <Route path="/player" component={Player}/>
-                    <Route path="/coaches" component={Coaches}/>
-                    <Route path="/coach" component={Coach}/>
-                    <Route path="/about" component={About}/>
+                    <Route exact path="/roster" component={Roster}/>
+                    <Route exact path="/player" component={Player}/>
+                    <Route exact path="/coaches" component={Coaches}/>
+                    <Route exact path="/coach" component={Coach}/>
+                    <Route exact path="/about" component={About}/>
                 </div>
             </BrowserRouter>
         );
