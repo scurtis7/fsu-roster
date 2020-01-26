@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import "./Coaches.css"
 import axios from 'axios';
-import {Table} from 'reactstrap';
+import {Table, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import Button from "reactstrap/es/Button";
 
 class Coaches extends Component {
@@ -10,10 +10,16 @@ class Coaches extends Component {
         super(props);
         this.state = {
             coaches: [],
+            modal: false,
         };
         this.setCoaches = this.setCoaches.bind(this);
         this.loadTableData = this.loadTableData.bind(this);
         this.deleteCoach = this.deleteCoach.bind(this);
+        this.toggle = this.toggle.bind(this);
+    }
+
+    toggle() {
+        this.setState({modal: !this.state.modal});
     }
 
     setCoaches(coaches) {
@@ -42,7 +48,7 @@ class Coaches extends Component {
                         <td>{sport}</td>
                         <td>
                             <Button className="Player-button" classActiveName="Player-button-active" onClick={() => this.deleteCoach(coachId)}>Delete</Button>
-                            <Button className="Player-button" classActiveName="Player-button-active">Edit</Button>
+                            <Button className="Player-button" classActiveName="Player-button-active"onClick={() => this.toggle()}>Edit</Button>
                         </td>
                     </tr>
                 );
@@ -73,6 +79,16 @@ class Coaches extends Component {
                     {this.loadTableData()}
                     </tbody>
                 </Table>
+                <Modal isOpen={this.state.modal} toggle={this.toggle}>
+                    <ModalHeader toggle={this.toggle}>Edit Coach</ModalHeader>
+                    <ModalBody>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="primary" onClick={this.toggle}>Do Something</Button>{' '}
+                        <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                    </ModalFooter>
+                </Modal>
             </div>
         );
     }

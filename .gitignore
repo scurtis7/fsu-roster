@@ -13,6 +13,7 @@
 # dependencies
 src/webapp/node_modules
 src/webapp/.pnp
+src/webapp/build
 .pnp.js
 
 # testing
