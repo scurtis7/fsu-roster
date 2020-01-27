@@ -31,7 +31,12 @@ class Coaches extends Component {
         this.deleteCoach = this.deleteCoach.bind(this);
         this.toggle = this.toggle.bind(this);
         this.editCoach = this.editCoach.bind(this);
+        this.onChange = this.onChange.bind(this);
+        this.saveCoach = this.saveCoach.bind(this);
     }
+
+    onChange = (e) =>
+        this.setState({ [e.target.name]: e.target.value });
 
     editCoach(coach) {
         this.setState({coachId: coach.coachId});
@@ -39,6 +44,15 @@ class Coaches extends Component {
         this.setState({coachPosition: coach.position});
         this.setState({sport: coach.sport});
         this.toggle();
+    }
+
+    saveCoach() {
+        let coach = {coachId: this.state.coachId, name: this.state.coachName, position: this.state.coachPosition, sport: this.state.sport};
+        axios.post('http://localhost:8080/api/coach/' + coach.coachId, coach)
+            .then(this.props.history.push('/coaches'))
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     toggle() {
@@ -131,7 +145,7 @@ class Coaches extends Component {
                         </Col>
                     </ModalBody>
                     <ModalFooter>
-                        <Button className="Player-button" classActiveName="Player-button-active" onClick={this.toggle}>Save</Button>{' '}
+                        <Button className="Player-button" classActiveName="Player-button-active" onClick={this.saveCoach}>Save</Button>{' '}
                         <Button color="secondary" onClick={this.toggle}>Cancel</Button>
                     </ModalFooter>
                 </Modal>

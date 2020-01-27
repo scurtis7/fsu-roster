@@ -44,6 +44,18 @@ public class CoachRestController {
         coachRepository.save(coach);
     }
 
+    @PostMapping(value = "/coach/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void modifyCoach(@PathVariable(value = "id") Long id, @RequestBody CoachDto coachDto) {
+        log.info("Method: modifyCoach()");
+        coachRepository.findById(id)
+                .ifPresent(coach -> {
+                    coach.setName(coachDto.getName());
+                    coach.setPosition(coachDto.getPosition());
+                    coach.setSport(coachDto.getSport());
+                    coachRepository.save(coach);
+                });
+    }
+
     @DeleteMapping(value = "/coach/{id}")
     public List<Coach> deleteCoach(@PathVariable(value = "id") Long id) {
         log.info("Method: deleteCoach('{}')", id);
