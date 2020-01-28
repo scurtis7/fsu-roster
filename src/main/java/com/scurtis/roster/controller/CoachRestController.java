@@ -34,7 +34,7 @@ public class CoachRestController {
     @GetMapping(value = "/coaches", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Coach> getAllCoaches() {
         log.info("Method: getAllCoaches");
-        return coachRepository.findAll();
+        return coachRepository.findAllCoaches();
     }
 
     @PostMapping(value = "/coach", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -47,13 +47,20 @@ public class CoachRestController {
     @PostMapping(value = "/coach/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void modifyCoach(@PathVariable(value = "id") Long id, @RequestBody CoachDto coachDto) {
         log.info("Method: modifyCoach()");
-        coachRepository.findById(id)
-                .ifPresent(coach -> {
-                    coach.setName(coachDto.getName());
-                    coach.setPosition(coachDto.getPosition());
-                    coach.setSport(coachDto.getSport());
-                    coachRepository.save(coach);
-                });
+
+//        coachRepository.findById(id)
+//                .ifPresent(coach -> {
+//                    coach.setName(coachDto.getName());
+//                    coach.setPosition(coachDto.getPosition());
+//                    coach.setSport(coachDto.getSport());
+//                    coachRepository.save(coach);
+//                });
+
+        Coach coach = coachRepository.getOne(id);
+        coach.setName(coachDto.getName());
+        coach.setPosition(coachDto.getPosition());
+        coach.setSport(coachDto.getSport());
+        coachRepository.save(coach);
     }
 
     @DeleteMapping(value = "/coach/{id}")
@@ -61,7 +68,7 @@ public class CoachRestController {
         log.info("Method: deleteCoach('{}')", id);
         Coach coach = coachRepository.getOne(id);
         coachRepository.delete(coach);
-        return coachRepository.findAll();
+        return coachRepository.findAllCoaches();
     }
 
 }

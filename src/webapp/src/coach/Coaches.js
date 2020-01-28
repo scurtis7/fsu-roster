@@ -49,7 +49,7 @@ class Coaches extends Component {
     saveCoach() {
         let coach = {coachId: this.state.coachId, name: this.state.coachName, position: this.state.coachPosition, sport: this.state.sport};
         axios.post('http://localhost:8080/api/coach/' + coach.coachId, coach)
-            .then(this.props.history.push('/coaches'))
+            .then(() => this.toggle())
             .catch(function (error) {
                 console.log(error);
             });
