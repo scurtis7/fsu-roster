@@ -7,10 +7,9 @@ import {
     ModalHeader,
     ModalBody,
     ModalFooter,
-    FormGroup,
     Col,
     InputGroup,
-    InputGroupAddon, InputGroupText, Input, Form
+    InputGroupAddon, InputGroupText, Input
 } from 'reactstrap';
 import Button from "reactstrap/es/Button";
 
@@ -33,10 +32,17 @@ class Coaches extends Component {
         this.editCoach = this.editCoach.bind(this);
         this.onChange = this.onChange.bind(this);
         this.saveCoach = this.saveCoach.bind(this);
+        this.loadCoaches = this.loadCoaches.bind(this);
+    }
+
+    loadCoaches() {
+        axios('http://localhost:8080/api/coaches')
+            .then(coaches => this.setCoaches(coaches.data))
+            .catch(error => error);
     }
 
     onChange = (e) =>
-        this.setState({ [e.target.name]: e.target.value });
+        this.setState({[e.target.name]: e.target.value});
 
     editCoach(coach) {
         this.setState({coachId: coach.coachId});
@@ -47,9 +53,17 @@ class Coaches extends Component {
     }
 
     saveCoach() {
-        let coach = {coachId: this.state.coachId, name: this.state.coachName, position: this.state.coachPosition, sport: this.state.sport};
+        let coach = {
+            coachId: this.state.coachId,
+            name: this.state.coachName,
+            position: this.state.coachPosition,
+            sport: this.state.sport
+        };
         axios.post('http://localhost:8080/api/coach/' + coach.coachId, coach)
-            .then(() => this.toggle())
+            .then(() => {
+                this.toggle();
+                this.loadCoaches();
+            })
             .catch(function (error) {
                 console.log(error);
             });
@@ -72,7 +86,9 @@ class Coaches extends Component {
     loadTableData() {
         if (this.state.coaches === null) {
             return (
-                <tr><td colSpan="6">Loading...</td></tr>
+                <tr>
+                    <td colSpan="6">Loading...</td>
+                </tr>
             );
         } else {
             return this.state.coaches.map((coach, index) => {
@@ -84,8 +100,10 @@ class Coaches extends Component {
                         <td>{position}</td>
                         <td>{sport}</td>
                         <td>
-                            <Button className="Player-button" classActiveName="Player-button-active" onClick={() => this.deleteCoach(coachId)}>Delete</Button>
-                            <Button className="Player-button" classActiveName="Player-button-active" onClick={() => this.editCoach(coach)}>Edit</Button>
+                            <Button className="Player-button" classActiveName="Player-button-active"
+                                    onClick={() => this.deleteCoach(coachId)}>Delete</Button>
+                            <Button className="Player-button" classActiveName="Player-button-active"
+                                    onClick={() => this.editCoach(coach)}>Edit</Button>
                         </td>
                     </tr>
                 );
@@ -94,9 +112,7 @@ class Coaches extends Component {
     }
 
     componentDidMount() {
-        axios('http://localhost:8080/api/coaches')
-            .then(coaches => this.setCoaches(coaches.data))
-            .catch(error => error);
+        this.loadCoaches();
     }
 
     render() {
@@ -124,7 +140,8 @@ class Coaches extends Component {
                                 <InputGroupAddon addonType="prepend">
                                     <InputGroupText className="Coach-input-group-text">Full Name</InputGroupText>
                                 </InputGroupAddon>
-                                <Input placeholder="Name" value={this.state.coachName} name="coachName" onChange={this.onChange}/>
+                                <Input placeholder="Name" value={this.state.coachName} name="coachName"
+                                       onChange={this.onChange}/>
                             </InputGroup>
                         </Col>
                         <Col sm={{size: 10, offset: 1}}>
@@ -132,7 +149,8 @@ class Coaches extends Component {
                                 <InputGroupAddon addonType="prepend">
                                     <InputGroupText className="Coach-input-group-text">Position</InputGroupText>
                                 </InputGroupAddon>
-                                <Input placeholder="Position" value={this.state.coachPosition} name="coachPosition" onChange={this.onChange}/>
+                                <Input placeholder="Position" value={this.state.coachPosition} name="coachPosition"
+                                       onChange={this.onChange}/>
                             </InputGroup>
                         </Col>
                         <Col sm={{size: 10, offset: 1}}>
@@ -140,12 +158,14 @@ class Coaches extends Component {
                                 <InputGroupAddon addonType="prepend">
                                     <InputGroupText className="Coach-input-group-text">Sport</InputGroupText>
                                 </InputGroupAddon>
-                                <Input placeholder="Sport" value={this.state.sport} name="sport" onChange={this.onChange}/>
+                                <Input placeholder="Sport" value={this.state.sport} name="sport"
+                                       onChange={this.onChange}/>
                             </InputGroup>
                         </Col>
                     </ModalBody>
                     <ModalFooter>
-                        <Button className="Player-button" classActiveName="Player-button-active" onClick={this.saveCoach}>Save</Button>{' '}
+                        <Button className="Player-button" classActiveName="Player-button-active"
+                                onClick={this.saveCoach}>Save</Button>{' '}
                         <Button color="secondary" onClick={this.toggle}>Cancel</Button>
                     </ModalFooter>
                 </Modal>
