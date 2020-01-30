@@ -6,6 +6,7 @@ import com.scurtis.roster.model.coach.Coach;
 import com.scurtis.roster.model.coach.CoachRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,7 +35,7 @@ public class CoachRestController {
     @GetMapping(value = "/coaches", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Coach> getAllCoaches() {
         log.info("Method: getAllCoaches");
-        return coachRepository.findAllCoaches();
+        return coachRepository.findAll(Sort.by(Sort.Direction.ASC, "CoachId"));
     }
 
     @PostMapping(value = "/coach", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -54,12 +55,6 @@ public class CoachRestController {
                     coach.setSport(coachDto.getSport());
                     coachRepository.save(coach);
                 });
-
-//        Coach coach = coachRepository.getOne(id);
-//        coach.setName(coachDto.getName());
-//        coach.setPosition(coachDto.getPosition());
-//        coach.setSport(coachDto.getSport());
-//        coachRepository.save(coach);
     }
 
     @DeleteMapping(value = "/coach/{id}")

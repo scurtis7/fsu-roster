@@ -24,6 +24,9 @@ class Coach extends Component {
         let coach = {coachId: 0, name: this.state.coachName, position: this.state.coachPosition, sport: this.state.sport};
         axios.post('http://localhost:8080/api/coach', coach)
             .then(this.props.history.push('/coaches'))
+            .then(() => {
+                this.props.history.push('/coaches');
+            })
             .catch(function (error) {
                 console.log(error);
             });
