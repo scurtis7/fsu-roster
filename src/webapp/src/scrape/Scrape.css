@@ -4,7 +4,52 @@
     padding: 10px;
 }
 
-.Scrape-badge {
+.Scrape-input-group {
+    /*width: 400px;*/
+}
+
+.Scrape-input-group-text {
     background-color: #782F40;
     color: #CEB888;
+    width: 120px;
+}
+
+.Scrape-checkbox {
+    margin-left: 130px;
+}
+
+.Scrape-button {
+    background-color: #CEB888;
+    color: #782F40;
+    border-color: #782F40;
+}
+
+.Scrape-button:hover {
+    background-color: #782F40;
+    color: #CEB888;
+    border-color: #CEB888;
+}
+
+.Scrape-button:active {
+    background-color: #782F40;
+    color: #CEB888;
+    border-color: #CEB888;
+}
+
+.Scrape-button:focus {
+    background-color: #782F40;
+    color: #CEB888;
+    border-color: #CEB888;
+}
+
+.Scrape-button:active:focus {
+    background-color: #782F40;
+    color: #CEB888;
+    border-color: #CEB888;
+}
+
+.Scrape-button-active {
+    background-color: #782F40;
+    color: #CEB888;
+    border-color: #CEB888;
 }
