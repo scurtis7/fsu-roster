@@ -5,6 +5,7 @@ import Roster from "./roster/Roster";
 import Player from "./player/Player";
 import Coaches from "./coach/Coaches"
 import Coach from "./coach/Coach"
+import Scrape from "./scrape/Scrape"
 import About from "./about/About";
 import {BrowserRouter, Route, NavLink, Link} from "react-router-dom";
 import {Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem} from "reactstrap";
@@ -36,6 +37,7 @@ class App extends Component {
                                 <NavItem><NavLink className="navlink" activeClassName="navlinkactive" to="/player">Player</NavLink></NavItem>
                                 <NavItem><NavLink className="navlink" activeClassName="navlinkactive" to="/coaches">Coaches</NavLink></NavItem>
                                 <NavItem><NavLink className="navlink" activeClassName="navlinkactive" to="/coach">Coach</NavLink></NavItem>
+                                <NavItem><NavLink className="navlink" activeClassName="navlinkactive" to="/scrape">Scrape</NavLink></NavItem>
                             </Nav>
                             <Nav className="ml-auto" navbar>
                                 <NavItem><NavLink className="navlink" activeClassName="navlinkactive" to="/about">About</NavLink></NavItem>
@@ -49,6 +51,7 @@ class App extends Component {
                     <Route exact path="/player" component={Player}/>
                     <Route exact path="/coaches" component={Coaches}/>
                     <Route exact path="/coach" component={Coach}/>
+                    <Route exact path="/scrape" component={Scrape}/>
                     <Route exact path="/about" component={About}/>
                 </div>
             </BrowserRouter>
