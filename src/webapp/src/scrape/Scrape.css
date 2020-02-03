@@ -4,18 +4,8 @@
     padding: 10px;
 }
 
-.Scrape-input-group {
-    /*width: 400px;*/
-}
-
-.Scrape-input-group-text {
-    background-color: #782F40;
+.Coach-row {
     color: #CEB888;
-    width: 120px;
-}
-
-.Scrape-checkbox {
-    margin-left: 130px;
 }
 
 .Scrape-button {

@@ -8,22 +8,41 @@ class Scrape extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            coaches: [],
         };
         this.scrapeCoaches = this.scrapeCoaches.bind(this);
-        this.loadResults = this.loadResults.bind(this);
+        this.setCoaches = this.setCoaches.bind(this);
+        this.loadTableData = this.loadTableData.bind(this);
     }
 
     scrapeCoaches() {
         axios.get('http://localhost:8080/api/scrape/coach/')
-            .then(() => {
-                this.loadResults();
-            })
+            .then(coaches => this.setCoaches(coaches.data))
             .catch(function (error) {
                 console.log(error);
             });
     }
 
-    loadResults() {
+    setCoaches(coaches) {
+        this.setState({coaches});
+    }
+
+    loadTableData() {
+        if (this.state.coaches === null) {
+            return (
+                <Row>
+                    Results
+                </Row>
+            );
+        } else {
+            return this.state.coaches.map((coach, index) => {
+                return (
+                    <Row className="Coach-row">
+                        {coach}
+                    </Row>
+                );
+            });
+        }
     }
 
     render() {
@@ -33,6 +52,8 @@ class Scrape extends Component {
                     <Row>
                         <Button className="Scrape-button" classActiveName="Scrape-button-active" onClick={this.scrapeCoaches}>Get Coaches</Button>
                     </Row>
+                    <Row></Row>
+                    {this.loadTableData()}
                 </Container>
             </div>
         );

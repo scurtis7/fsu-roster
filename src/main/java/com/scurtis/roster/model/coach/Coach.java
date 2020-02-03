@@ -2,6 +2,7 @@ package com.scurtis.roster.model.coach;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,5 +37,11 @@ public class Coach {
 
     @Column(name = "Sport", nullable = false)
     private String sport;
+
+    public Coach(String name, String position, String sport) {
+        this.name = name;
+        this.position = position;
+        this.sport = sport;
+    }
 
 }
