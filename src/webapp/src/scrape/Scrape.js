@@ -8,37 +8,37 @@ class Scrape extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            coaches: [],
+            results: [],
         };
         this.scrapeCoaches = this.scrapeCoaches.bind(this);
-        this.setCoaches = this.setCoaches.bind(this);
+        this.setResults = this.setResults.bind(this);
         this.loadTableData = this.loadTableData.bind(this);
     }
 
     scrapeCoaches() {
         axios.get('http://localhost:8080/api/scrape/coach/')
-            .then(coaches => this.setCoaches(coaches.data))
+            .then(results => this.setResults(results.data))
             .catch(function (error) {
                 console.log(error);
             });
     }
 
-    setCoaches(coaches) {
-        this.setState({coaches});
+    setResults(results) {
+        this.setState({results});
     }
 
     loadTableData() {
-        if (this.state.coaches === null) {
+        if (this.state.results === null) {
             return (
-                <Row>
+                <Row className="Scrape-row">
                     Results
                 </Row>
             );
         } else {
-            return this.state.coaches.map((coach, index) => {
+            return this.state.results.map((result, index) => {
                 return (
-                    <Row className="Coach-row">
-                        {coach}
+                    <Row className="Scrape-row">
+                        {result}
                     </Row>
                 );
             });
