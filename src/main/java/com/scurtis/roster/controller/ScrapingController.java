@@ -1,6 +1,7 @@
 package com.scurtis.roster.controller;
 
 import com.scurtis.roster.model.coach.Coach;
+import com.scurtis.roster.model.coach.CoachRepository;
 import com.scurtis.roster.scrape.CoachScraper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,11 +25,14 @@ import java.util.stream.Collectors;
 public class ScrapingController {
 
     private final CoachScraper coachScraper;
+    private final CoachRepository coachRepository;
 
     @GetMapping(value = "/coach", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<String> getCoaches() {
         log.info("Method: getCoaches");
         List<Coach> coaches = coachScraper.scrapeCoaches();
+        coachRepository.deleteAll();
+        coaches.forEach(coachRepository::save);
         return convertCoaches(coaches);
     }
 

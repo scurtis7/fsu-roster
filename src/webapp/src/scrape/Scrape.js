@@ -52,7 +52,7 @@ class Scrape extends Component {
                     <Row>
                         <Button className="Scrape-button" classActiveName="Scrape-button-active" onClick={this.scrapeCoaches}>Get Coaches</Button>
                     </Row>
-                    <Row></Row>
+                    <Row><br/></Row>
                     {this.loadTableData()}
                 </Container>
             </div>
