@@ -11,12 +11,23 @@ class Scrape extends Component {
             results: [],
         };
         this.scrapeCoaches = this.scrapeCoaches.bind(this);
+        this.scrapePlayers = this.scrapePlayers.bind(this);
         this.setResults = this.setResults.bind(this);
         this.loadTableData = this.loadTableData.bind(this);
     }
 
     scrapeCoaches() {
+        this.setResults([]);
         axios.get('http://localhost:8080/api/scrape/coach/')
+            .then(results => this.setResults(results.data))
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    scrapePlayers() {
+        this.setResults([]);
+        axios.get('http://localhost:8080/api/scrape/player/')
             .then(results => this.setResults(results.data))
             .catch(function (error) {
                 console.log(error);
@@ -50,7 +61,12 @@ class Scrape extends Component {
             <div className="Scrape">
                 <Container fluid>
                     <Row>
-                        <Button className="Scrape-button" classActiveName="Scrape-button-active" onClick={this.scrapeCoaches}>Get Coaches</Button>
+                        <Col>
+                            <Button className="Scrape-button" classActiveName="Scrape-button-active" onClick={this.scrapeCoaches}>Get Coaches</Button>
+                        </Col>
+                        <Col>
+                            <Button className="Scrape-button" classActiveName="Scrape-button-active" onClick={this.scrapePlayers}>Get Players</Button>
+                        </Col>
                     </Row>
                     <Row><br/></Row>
                     {this.loadTableData()}
