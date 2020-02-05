@@ -2,7 +2,9 @@ package com.scurtis.roster.controller;
 
 import com.scurtis.roster.model.coach.Coach;
 import com.scurtis.roster.model.coach.CoachRepository;
+import com.scurtis.roster.model.player.Player;
 import com.scurtis.roster.scrape.CoachScraper;
+import com.scurtis.roster.scrape.PlayerScraper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +29,7 @@ public class ScrapingController {
 
     private final CoachScraper coachScraper;
     private final CoachRepository coachRepository;
+    private final PlayerScraper playerScraper;
 
     @GetMapping(value = "/coach", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<String> getCoaches() {
@@ -34,6 +38,16 @@ public class ScrapingController {
         coachRepository.deleteAll();
         coaches.forEach(coachRepository::save);
         return convertCoaches(coaches);
+    }
+
+    @GetMapping(value = "/player", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<String> getPlayers() {
+        log.info("Method: getPlayers");
+        List<Player> players = playerScraper.scrapePlayers();
+//        coachRepository.deleteAll();
+//        coaches.forEach(coachRepository::save);
+//        return convertCoaches(coaches);
+        return Collections.singletonList("Success");
     }
 
     private List<String> convertCoaches(List<Coach> coaches) {

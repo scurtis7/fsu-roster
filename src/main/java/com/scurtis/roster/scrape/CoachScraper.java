@@ -73,24 +73,4 @@ public class CoachScraper {
         }
     }
 
-    private List<Element> getRowElements(Element tbody) {
-        return tbody.getElementsByTag("tr");
-    }
-
-    private List<Element> getColumnElements(Element tr) {
-        return tr.getElementsByTag("td");
-    }
-
-//    private List<Node> getRowNodes(Element tbody) {
-//        return tbody.childNodes().stream()
-//                .filter(element -> element.nodeName().equals("tr"))
-//                .collect(Collectors.toList());
-//    }
-//
-//    private List<Node> getColumnNodes(Node trNode) {
-//        return trNode.childNodes().stream()
-//                .filter(element -> element.nodeName().equals("td"))
-//                .collect(Collectors.toList());
-//    }
-
 }

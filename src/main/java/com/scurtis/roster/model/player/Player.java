@@ -1,5 +1,6 @@
 package com.scurtis.roster.model.player;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
