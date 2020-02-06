@@ -1,6 +1,5 @@
 package com.scurtis.roster.model.player;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -36,28 +35,31 @@ public class Player {
     private String position;
 
     @Column(name = "Year", nullable = false)
-    private int year;
+    private String year;
+//    private int year;
 
-    @Column(name = "Redshirt", nullable = false)
-    private Boolean redshirt;
+//    @Column(name = "Redshirt", nullable = false)
+//    private Boolean redshirt;
 
     @Column(name = "Jersey", nullable = false)
-    private int jersey;
+    private String jersey;
+//    private int jersey;
 
-    @Column(name = "Sport", nullable = false)
-    private String sport;
+//    @Column(name = "Sport", nullable = false)
+//    private String sport;
 
-    @Column(name = "Active", nullable = false)
-    private Boolean active;
+//    @Column(name = "Active", nullable = false)
+//    private Boolean active;
 
-    @Column(name = "Status")
-    private String status;
+//    @Column(name = "Status")
+//    private String status;
 
     @Column(name = "Height")
     private String height;
 
     @Column(name = "Weight")
-    private int weight;
+    private String weight;
+//    private int weight;
 
     @Column(name = "HomeTown")
     private String homeTown;
@@ -69,7 +71,8 @@ public class Player {
     private String otherCollege;
 
     @Column(name = "DraftPick")
-    private int draftPick;
+    private String draftPick;
+//    private int draftPick;
 
     @Column(name = "NFLTeam")
     private String nflTeam;

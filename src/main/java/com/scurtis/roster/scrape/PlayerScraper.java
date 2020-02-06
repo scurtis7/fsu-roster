@@ -67,15 +67,18 @@ public class PlayerScraper {
                 otherCollege = "";
             }
             Player player = new Player();
-            player.setSport("Football");
-            player.setActive(true);
-            player.setJersey(convertJersey(jersey));
+//            player.setSport("Football");
+//            player.setActive(true);
+//            player.setJersey(convertJersey(jersey));
+            player.setJersey(jersey);
             player.setName(playerName);
             player.setHeight(height);
-            player.setWeight(convertWeight(weight));
+//            player.setWeight(convertWeight(weight));
+            player.setWeight(weight);
             player.setPosition(position);
-            player.setYear(convertYear(year));
-            player.setRedshirt(year.contains("Redshirt"));
+            player.setYear(year);
+//            player.setYear(convertYear(year));
+//            player.setRedshirt(year.contains("Redshirt"));
             player.setHomeTown(hometown);
             player.setOtherCollege(otherCollege);
             players.add(player);

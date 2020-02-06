@@ -36,37 +36,47 @@ public class Recruit {
     private Player player;
 
     @Column(name = "RivalsStars")
-    private int rivalsStars;
+    private String rivalsStars;
+//    private int rivalsStars;
 
     @Column(name = "RivalsRating")
-    private double rivalsRating;
+    private String rivalsRating;
+//    private double rivalsRating;
 
     @Column(name = "RivalsRankNational")
-    private int rivalsRankNational;
+    private String rivalsRankNational;
+//    private int rivalsRankNational;
 
     @Column(name = "RivalsRankPosition")
-    private int rivalsRankPosition;
+    private String rivalsRankPosition;
+//    private int rivalsRankPosition;
 
     @Column(name = "RivalsRankState")
-    private int rivalsRankState;
+    private String rivalsRankState;
+//    private int rivalsRankState;
 
     @Column(name = "RivalsLink")
     private String rivalsLink;
 
     @Column(name = "Two47Stars")
-    private int two47Stars;
+    private String two47Stars;
+//    private int two47Stars;
 
     @Column(name = "Two47Rating")
-    private double two47Rating;
+    private String two47Rating;
+//    private double two47Rating;
 
     @Column(name = "Two47RankNational")
-    private int two47RankNational;
+    private String two47RankNational;
+//    private int two47RankNational;
 
     @Column(name = "Two47RankPosition")
-    private int two47RankPosition;
+    private String two47RankPosition;
+//    private int two47RankPosition;
 
     @Column(name = "Two47RankState")
-    private int two47RankState;
+    private String two47RankState;
+//    private int two47RankState;
 
     @Column(name = "Two47Link")
     private String two47Link;
