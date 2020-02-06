@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/scrape/")
 @RequiredArgsConstructor
 @Slf4j
-public class ScrapingController {
+public class ScrapingRestController {
 
     private final CoachScraper coachScraper;
     private final CoachRepository coachRepository;
