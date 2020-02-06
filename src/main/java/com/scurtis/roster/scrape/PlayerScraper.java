@@ -43,6 +43,7 @@ public class PlayerScraper {
         String height;
         String weight;
         String position;
+        String classYear;
         String year;
         String hometown;
         String otherCollege;
@@ -57,7 +58,8 @@ public class PlayerScraper {
             List<Element> tds = trs.get(0).select("td");
             position = tds.get(1) != null ? tds.get(1).text() : "";
             tds = trs.get(1).select("td");
-            year = tds.get(1) != null ? tds.get(1).text() : "";
+            classYear = tds.get(1) != null ? tds.get(1).text() : "";
+            year = convertYear(classYear);
             tds = trs.get(2).select("td");
             hometown = tds.get(1) != null ? tds.get(1).text() : "";
             if (trs.size() > 3) {
@@ -67,18 +69,13 @@ public class PlayerScraper {
                 otherCollege = "";
             }
             Player player = new Player();
-//            player.setSport("Football");
-//            player.setActive(true);
-//            player.setJersey(convertJersey(jersey));
             player.setJersey(jersey);
             player.setName(playerName);
             player.setHeight(height);
-//            player.setWeight(convertWeight(weight));
             player.setWeight(weight);
             player.setPosition(position);
+            player.setClassYear(classYear);
             player.setYear(year);
-//            player.setYear(convertYear(year));
-//            player.setRedshirt(year.contains("Redshirt"));
             player.setHomeTown(hometown);
             player.setOtherCollege(otherCollege);
             players.add(player);
@@ -88,6 +85,7 @@ public class PlayerScraper {
             height = "";
             weight = "";
             position = "";
+            classYear = "";
             year = "";
             hometown = "";
             otherCollege = "";
@@ -113,25 +111,25 @@ public class PlayerScraper {
         }
     }
 
-    private int convertYear(String year) {
+    private String convertYear(String year) {
         if (year.equals("Freshman")) {
-            return 2020;
+            return "2020";
         } else if (year.equals("Redshirt Freshman")) {
-            return 2019;
+            return "2019";
         } else if (year.equals("Sophomore")) {
-            return 2019;
+            return "2019";
         } else if (year.equals("Redshirt Sophomore")) {
-            return 2018;
+            return "2018";
         } else if (year.equals("Junior")) {
-            return 2018;
+            return "2018";
         } else if (year.equals("Redshirt Junior")) {
-            return 2017;
+            return "2017";
         } else if (year.equals("Senior")) {
-            return 2017;
+            return "2017";
         } else if (year.equals("Redshirt Senior")) {
-            return 2016;
+            return "2016";
         }
-        return 2015;
+        return "2015";
     }
 
     private Document getPlayerWebsite(String season) {

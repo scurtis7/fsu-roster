@@ -4,8 +4,10 @@ import com.scurtis.roster.model.coach.Coach;
 import com.scurtis.roster.model.coach.CoachRepository;
 import com.scurtis.roster.model.player.Player;
 import com.scurtis.roster.model.player.PlayerRepository;
+import com.scurtis.roster.model.player.Recruit;
 import com.scurtis.roster.scrape.CoachScraper;
 import com.scurtis.roster.scrape.PlayerScraper;
+import com.scurtis.roster.scrape.RecruitScraper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -31,6 +33,7 @@ public class ScrapingController {
     private final CoachRepository coachRepository;
     private final PlayerScraper playerScraper;
     private final PlayerRepository playerRepository;
+    private final RecruitScraper recruitScraper;
 
     @GetMapping(value = "/coach", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<String> getCoaches() {
@@ -45,6 +48,7 @@ public class ScrapingController {
     public List<String> getPlayers() {
         log.info("Method: getPlayers");
         List<Player> players = playerScraper.scrapePlayers();
+        List<Recruit> recruits = recruitScraper.scrapeRecruits(players);
         playerRepository.deleteAll();
         players.forEach(playerRepository::save);
         return convertPlayers(players);
