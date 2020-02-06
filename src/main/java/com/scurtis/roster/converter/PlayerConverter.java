@@ -27,68 +27,78 @@ public class PlayerConverter {
     
     public List<PlayerDto> playerEntityToPlayerDto(List<Player> players) {
         List<PlayerDto> playerDtos = new ArrayList<>();
-//        players.forEach(player -> {
-//            PlayerDto playerDto = PlayerDto.builder()
-//                    .playerId(Long.toString(player.getPlayerId()))
-//                    .name(player.getName())
-//                    .position(player.getPosition())
-//                    .year(Integer.toString(player.getYear()))
+        players.forEach(player -> {
+            PlayerDto playerDto = PlayerDto.builder()
+                    .playerId(Long.toString(player.getPlayerId()))
+                    .name(player.getName())
+                    .position(player.getPosition())
+                    .year(player.getYear())
 //                    .redshirt(Boolean.toString(player.getRedshirt()))
 //                    .classStanding(setClassStanding(player.getYear(), player.getRedshirt()))
-//                    .jersey(Integer.toString(player.getJersey()))
+                    .jersey(player.getJersey())
 //                    .sport(player.getSport())
 //                    .status(player.getStatus())
-//                    .height(player.getHeight())
-//                    .weight(Integer.toString(player.getWeight()))
-//                    .homeTown(player.getHomeTown())
-//                    .highSchool(player.getHighSchool())
-//                    .otherCollege(player.getOtherCollege())
-//                    .draftPick(Integer.toString(player.getDraftPick()))
-//                    .nflTeam(player.getNflTeam())
-//                    .notes(player.getNotes())
-//                    .build();
-//            playerDtos.add(playerDto);
-//        });
+                    .height(player.getHeight())
+                    .weight(player.getWeight())
+                    .homeTown(player.getHomeTown())
+                    .highSchool(player.getHighSchool())
+                    .otherCollege(player.getOtherCollege())
+                    .draftPick(player.getDraftPick())
+                    .nflTeam(player.getNflTeam())
+                    .notes(player.getNotes())
+                    .build();
+            playerDtos.add(playerDto);
+        });
         return playerDtos;
     }
 
     public List<PlayerDto> recruitEntityToPlayerDto(List<Recruit> recruits) {
         List<PlayerDto> playerDtos = new ArrayList<>();
-//        recruits.forEach(recruit -> {
-//            PlayerDto playerDto = PlayerDto.builder()
-//                    .playerId(Long.toString(recruit.getPlayer().getPlayerId()))
-//                    .name(recruit.getPlayer().getName())
-//                    .position(recruit.getPlayer().getPosition())
-//                    .year(Integer.toString(recruit.getPlayer().getYear()))
+        recruits.forEach(recruit -> {
+            PlayerDto playerDto = PlayerDto.builder()
+                    .playerId(Long.toString(recruit.getPlayer().getPlayerId()))
+                    .name(recruit.getPlayer().getName())
+                    .position(recruit.getPlayer().getPosition())
+                    .year(recruit.getPlayer().getYear())
 //                    .redshirt(Boolean.toString(recruit.getPlayer().getRedshirt()))
 //                    .classStanding(setClassStanding(recruit.getPlayer().getYear(), recruit.getPlayer().getRedshirt()))
-//                    .jersey(Integer.toString(recruit.getPlayer().getJersey()))
+                    .jersey(recruit.getPlayer().getJersey())
 //                    .sport(recruit.getPlayer().getSport())
 //                    .active(Boolean.toString(recruit.getPlayer().getActive()))
 //                    .status(recruit.getPlayer().getStatus())
-//                    .height(recruit.getPlayer().getHeight())
-//                    .weight(Integer.toString(recruit.getPlayer().getWeight()))
-//                    .homeTown(recruit.getPlayer().getHomeTown())
-//                    .highSchool(recruit.getPlayer().getHighSchool())
-//                    .otherCollege(recruit.getPlayer().getOtherCollege())
-//                    .draftPick(Integer.toString(recruit.getPlayer().getDraftPick()))
-//                    .nflTeam(recruit.getPlayer().getNflTeam())
-//                    .notes(recruit.getPlayer().getNotes())
+                    .height(recruit.getPlayer().getHeight())
+                    .weight(recruit.getPlayer().getWeight())
+                    .homeTown(recruit.getPlayer().getHomeTown())
+                    .highSchool(recruit.getPlayer().getHighSchool())
+                    .otherCollege(recruit.getPlayer().getOtherCollege())
+                    .draftPick(recruit.getPlayer().getDraftPick())
+                    .nflTeam(recruit.getPlayer().getNflTeam())
+                    .notes(recruit.getPlayer().getNotes())
+                    .rivalsStars(recruit.getRivalsStars())
 //                    .rivalsStars(recruit.getRivalsStars() > 0 ? Integer.toString(recruit.getRivalsStars()) : "-")
+                    .rivalsRating(recruit.getRivalsRating())
 //                    .rivalsRating(recruit.getRivalsRating() > 0 ? Double.toString(recruit.getRivalsRating()) : "-")
+                    .rivalsRankNational(recruit.getRivalsRankNational())
 //                    .rivalsRankNational(recruit.getRivalsRankNational() > 0 ? Integer.toString(recruit.getRivalsRankNational()) : "-")
+                    .rivalsRankPosition(recruit.getRivalsRankPosition())
 //                    .rivalsRankPosition(recruit.getRivalsRankPosition() > 0 ? Integer.toString(recruit.getRivalsRankPosition()) : "-")
+                    .rivalsRankState(recruit.getRivalsRankState())
 //                    .rivalsRankState(recruit.getRivalsRankState() > 0 ? Integer.toString(recruit.getRivalsRankState()) : "-")
-//                    .rivalsLink(recruit.getRivalsLink())
+                    .rivalsLink(recruit.getRivalsLink())
+                    .two47Stars(recruit.getRivalsStars())
 //                    .two47Stars(recruit.getRivalsStars() > 0 ? Integer.toString(recruit.getRivalsStars()) : "-")
+                    .two47Rating(recruit.getTwo47Rating())
 //                    .two47Rating(recruit.getTwo47Rating() > 0 ? Double.toString(recruit.getTwo47Rating()) : "-")
+                    .two47RankNational(recruit.getTwo47RankNational())
 //                    .two47RankNational(recruit.getTwo47RankNational() > 0 ? Integer.toString(recruit.getTwo47RankNational()) : "-")
+                    .two47RankPosition(recruit.getTwo47RankPosition())
 //                    .two47RankPosition(recruit.getTwo47RankPosition() > 0 ? Integer.toString(recruit.getTwo47RankPosition()) : "-")
+                    .two47RankState(recruit.getTwo47RankState())
 //                    .two47RankState(recruit.getTwo47RankState() > 0 ? Integer.toString(recruit.getTwo47RankState()) : "-")
-//                    .two47Link(recruit.getTwo47Link())
-//                    .build();
-//            playerDtos.add(playerDto);
-//        });
+                    .two47Link(recruit.getTwo47Link())
+                    .build();
+            playerDtos.add(playerDto);
+        });
         return playerDtos;
     }
 

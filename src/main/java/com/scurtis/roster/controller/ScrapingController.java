@@ -45,7 +45,8 @@ public class ScrapingController {
     public List<String> getPlayers() {
         log.info("Method: getPlayers");
         List<Player> players = playerScraper.scrapePlayers();
-//        players.forEach(playerRepository::save);
+        playerRepository.deleteAll();
+        players.forEach(playerRepository::save);
         return convertPlayers(players);
     }
 
