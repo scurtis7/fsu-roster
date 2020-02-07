@@ -12,6 +12,8 @@ class Scrape extends Component {
         };
         this.scrapeCoaches = this.scrapeCoaches.bind(this);
         this.scrapePlayers = this.scrapePlayers.bind(this);
+        this.scrapeRivals = this.scrapeRivals.bind(this);
+        this.scrape247 = this.scrape247.bind(this);
         this.setResults = this.setResults.bind(this);
         this.loadTableData = this.loadTableData.bind(this);
     }
@@ -28,6 +30,24 @@ class Scrape extends Component {
     scrapePlayers() {
         this.setResults([]);
         axios.get('http://localhost:8080/api/scrape/player/')
+            .then(results => this.setResults(results.data))
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    scrapeRivals() {
+        this.setResults([]);
+        axios.get('http://localhost:8080/api/scrape/rivals/')
+            .then(results => this.setResults(results.data))
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    scrape247() {
+        this.setResults([]);
+        axios.get('http://localhost:8080/api/scrape/247/')
             .then(results => this.setResults(results.data))
             .catch(function (error) {
                 console.log(error);
@@ -66,6 +86,12 @@ class Scrape extends Component {
                         </Col>
                         <Col>
                             <Button className="Scrape-button" classActiveName="Scrape-button-active" onClick={this.scrapePlayers}>Get Players</Button>
+                        </Col>
+                        <Col>
+                            <Button className="Scrape-button" classActiveName="Scrape-button-active" onClick={this.scrapeRivals}>Get Rivals Recruits</Button>
+                        </Col>
+                        <Col>
+                            <Button className="Scrape-button" classActiveName="Scrape-button-active" onClick={this.scrape247}>Get 247 Recruits</Button>
                         </Col>
                     </Row>
                     <Row><br/></Row>

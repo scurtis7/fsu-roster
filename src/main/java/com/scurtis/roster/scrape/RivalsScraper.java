@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Author: Steve Curtis
@@ -34,8 +33,12 @@ public class RivalsScraper {
 
     private List<Rivals> processRivalsWebsite(Document doc) {
         List<Rivals> rivals = new ArrayList<>();
-        List<Element> anchors = doc.select("a").stream()
-                .filter(aTag -> !aTag.attr("data-sort").isEmpty()).collect(Collectors.toList());;
+        Element commitments = doc.select("rv-commitments").first();
+        String prospects = commitments.toString().replaceAll("&quot;", "");
+        log.info(prospects);
+
+        // todo: add code to get recruits
+
         return rivals;
     }
 
@@ -44,7 +47,7 @@ public class RivalsScraper {
         try {
             return Jsoup.connect(website).get();
         } catch (IOException exception) {
-            log.error("Unable to get players website: {}", exception.getMessage());
+            log.error("Unable to get rivals website: {}", exception.getMessage());
             return null;
         }
     }
