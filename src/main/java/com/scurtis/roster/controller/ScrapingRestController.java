@@ -59,7 +59,8 @@ public class ScrapingRestController {
     @GetMapping(value = "/rivals", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<String> getRivals() {
         log.info("Method: getRivals");
-        List<Rivals> rivals = rivalsScraper.scrapeRivals("2020");
+        List<Rivals> rivals = rivalsScraper.scrapeRivals("2019");
+//        List<Rivals> rivals = rivalsScraper.scrapeRivals("2020");
         rivalsRepository.deleteAll();
         rivalsRepository.saveAll(rivals);
         return convertRivals(rivals);
