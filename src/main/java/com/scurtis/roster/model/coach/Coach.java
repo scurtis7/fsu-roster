@@ -25,7 +25,7 @@ public class Coach {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence-generator")
-    @SequenceGenerator(name = "sequence-generator", sequenceName = "coach_coachid_seq", allocationSize = 1, initialValue = 500)
+    @SequenceGenerator(name = "sequence-generator", sequenceName = "coach_coachid_seq", allocationSize = 1, initialValue = 100)
     @Column(name = "CoachId", unique = true, nullable = false)
     private Long coachId;
 

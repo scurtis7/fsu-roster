@@ -1,6 +1,6 @@
 package com.scurtis.roster.converter;
 
-import com.scurtis.roster.dto.PlayerDto;
+import com.scurtis.roster.dto.RecruitDto;
 import com.scurtis.roster.model.player.Player;
 import com.scurtis.roster.model.player.Recruit;
 import org.springframework.stereotype.Service;
@@ -25,10 +25,10 @@ public class PlayerConverter {
     private static final String CLASS_SENIOR = "Senior";
     private static final String CLASS_REDSHIRT_SENIOR = "Redshirt Senior";
     
-    public List<PlayerDto> playerEntityToPlayerDto(List<Player> players) {
-        List<PlayerDto> playerDtos = new ArrayList<>();
+    public List<RecruitDto> playerEntityToPlayerDto(List<Player> players) {
+        List<RecruitDto> recruitDtos = new ArrayList<>();
         players.forEach(player -> {
-            PlayerDto playerDto = PlayerDto.builder()
+            RecruitDto recruitDto = RecruitDto.builder()
                     .playerId(Long.toString(player.getPlayerId()))
                     .name(player.getName())
                     .position(player.getPosition())
@@ -47,15 +47,15 @@ public class PlayerConverter {
                     .nflTeam(player.getNflTeam())
                     .notes(player.getNotes())
                     .build();
-            playerDtos.add(playerDto);
+            recruitDtos.add(recruitDto);
         });
-        return playerDtos;
+        return recruitDtos;
     }
 
-    public List<PlayerDto> recruitEntityToPlayerDto(List<Recruit> recruits) {
-        List<PlayerDto> playerDtos = new ArrayList<>();
+    public List<RecruitDto> recruitEntityToPlayerDto(List<Recruit> recruits) {
+        List<RecruitDto> recruitDtos = new ArrayList<>();
         recruits.forEach(recruit -> {
-            PlayerDto playerDto = PlayerDto.builder()
+            RecruitDto recruitDto = RecruitDto.builder()
                     .playerId(Long.toString(recruit.getPlayer().getPlayerId()))
                     .name(recruit.getPlayer().getName())
                     .position(recruit.getPlayer().getPosition())
@@ -97,9 +97,9 @@ public class PlayerConverter {
 //                    .two47RankState(recruit.getTwo47RankState() > 0 ? Integer.toString(recruit.getTwo47RankState()) : "-")
                     .two47Link(recruit.getTwo47Link())
                     .build();
-            playerDtos.add(playerDto);
+            recruitDtos.add(recruitDto);
         });
-        return playerDtos;
+        return recruitDtos;
     }
 
     private String setClassStanding(int year, boolean redshirt) {

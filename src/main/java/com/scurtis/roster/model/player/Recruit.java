@@ -27,7 +27,7 @@ public class Recruit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence-generator")
-    @SequenceGenerator(name = "sequence-generator", sequenceName = "recruit_recruitid_seq", allocationSize = 1, initialValue = 500)
+    @SequenceGenerator(name = "sequence-generator", sequenceName = "recruit_recruitid_seq", allocationSize = 1, initialValue = 100)
     @Column(name = "RecruitId", unique = true, nullable = false)
     private Long RecruitId;
 

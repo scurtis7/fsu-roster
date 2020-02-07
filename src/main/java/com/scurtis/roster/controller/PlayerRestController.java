@@ -1,7 +1,7 @@
 package com.scurtis.roster.controller;
 
 import com.scurtis.roster.converter.PlayerConverter;
-import com.scurtis.roster.dto.PlayerDto;
+import com.scurtis.roster.dto.RecruitDto;
 import com.scurtis.roster.model.player.PlayerRepository;
 import com.scurtis.roster.model.player.RecruitRepository;
 import lombok.AllArgsConstructor;
@@ -33,13 +33,13 @@ public class PlayerRestController {
     private final PlayerConverter playerConverter;
 
     @GetMapping(value = "/players", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<PlayerDto> getAllPlayers() {
+    public List<RecruitDto> getAllPlayers() {
         log.info("Method: getAllPlayers");
         return playerConverter.playerEntityToPlayerDto(playerRepository.findAll());
     }
 
     @GetMapping(value = "/recruits/{position}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<PlayerDto> getRecruits(@PathVariable(value = "position") String position) {
+    public List<RecruitDto> getRecruits(@PathVariable(value = "position") String position) {
         log.info("Method: getRecruits('{}')", position);
         if (position.equalsIgnoreCase("ALL")) {
             return playerConverter.recruitEntityToPlayerDto(recruitRepository.findAllSorted());
@@ -48,7 +48,7 @@ public class PlayerRestController {
     }
 
     @GetMapping(value = "/recruits/jersey/{jersey}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<PlayerDto> getRecruitsByJersey(@PathVariable(value = "jersey") Integer jersey) {
+    public List<RecruitDto> getRecruitsByJersey(@PathVariable(value = "jersey") Integer jersey) {
         log.info("Method: getRecruitsByJersey('{}')", jersey);
         return playerConverter.recruitEntityToPlayerDto(recruitRepository.findRecruitsByJerseySorted(jersey));
     }
@@ -72,7 +72,7 @@ public class PlayerRestController {
     }
 
     @PostMapping(value = "/player", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void addPlayer(@RequestBody PlayerDto playerDto) {
+    public void addPlayer(@RequestBody RecruitDto recruitDto) {
         log.info("Method: addPlayer()");
     }
 

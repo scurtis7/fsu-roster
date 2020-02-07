@@ -10,7 +10,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class PlayerDto {
+public class RecruitDto {
 
     private String playerId;
     private String name;

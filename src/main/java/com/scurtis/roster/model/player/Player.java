@@ -24,7 +24,7 @@ public class Player {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence-generator")
-    @SequenceGenerator(name = "sequence-generator", sequenceName = "player_playerid_seq", allocationSize = 1, initialValue = 500)
+    @SequenceGenerator(name = "sequence-generator", sequenceName = "player_playerid_seq", allocationSize = 1, initialValue = 100)
     @Column(name = "PlayerId", unique = true, nullable = false)
     private Long playerId;
 
@@ -39,30 +39,15 @@ public class Player {
 
     @Column(name = "Year", nullable = false)
     private String year;
-//    private int year;
-
-//    @Column(name = "Redshirt", nullable = false)
-//    private Boolean redshirt;
 
     @Column(name = "Jersey", nullable = false)
     private String jersey;
-//    private int jersey;
-
-//    @Column(name = "Sport", nullable = false)
-//    private String sport;
-
-//    @Column(name = "Active", nullable = false)
-//    private Boolean active;
-
-//    @Column(name = "Status")
-//    private String status;
 
     @Column(name = "Height")
     private String height;
 
     @Column(name = "Weight")
     private String weight;
-//    private int weight;
 
     @Column(name = "HomeTown")
     private String homeTown;
@@ -75,7 +60,6 @@ public class Player {
 
     @Column(name = "DraftPick")
     private String draftPick;
-//    private int draftPick;
 
     @Column(name = "NFLTeam")
     private String nflTeam;
