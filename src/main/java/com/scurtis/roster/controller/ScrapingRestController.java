@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -58,11 +59,11 @@ public class ScrapingRestController {
         return convertPlayers(players);
     }
 
-    @GetMapping(value = "/rivals", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<String> getRivals() {
+    @GetMapping(value = "/rivals/{year}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<String> getRivals(@PathVariable(value = "year") String year) {
         log.info("Method: getRivals");
         try {
-            List<RivalsDto> commits = rivalsScraper.scrapeRivals("2020");
+            List<RivalsDto> commits = rivalsScraper.scrapeRivals(year);
 //        List<Rivals> rivals = rivalsScraper.scrapeRivals("2020");
 //        rivalsRepository.deleteAll();
 //        rivalsRepository.saveAll(rivals);

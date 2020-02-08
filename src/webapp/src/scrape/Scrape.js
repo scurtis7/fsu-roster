@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import "./Scrape.css"
-import {Container, Row, Col, Button} from 'reactstrap';
+import {Container, Row, Col, Button, Input, InputGroup, InputGroupAddon, InputGroupText} from 'reactstrap';
 import axios from "axios";
 
 class Scrape extends Component {
@@ -9,6 +9,8 @@ class Scrape extends Component {
         super(props);
         this.state = {
             results: [],
+            rivalsYear: '',
+            two47Year: '',
         };
         this.scrapeCoaches = this.scrapeCoaches.bind(this);
         this.scrapePlayers = this.scrapePlayers.bind(this);
@@ -16,7 +18,11 @@ class Scrape extends Component {
         this.scrape247 = this.scrape247.bind(this);
         this.setResults = this.setResults.bind(this);
         this.loadTableData = this.loadTableData.bind(this);
+        this.onChange = this.onChange.bind(this);
     }
+
+    onChange = (e) =>
+        this.setState({ [e.target.name]: e.target.value });
 
     scrapeCoaches() {
         this.setResults([]);
@@ -38,7 +44,7 @@ class Scrape extends Component {
 
     scrapeRivals() {
         this.setResults([]);
-        axios.get('http://localhost:8080/api/scrape/rivals/')
+        axios.get('http://localhost:8080/api/scrape/rivals/' + this.state.rivalsYear)
             .then(results => this.setResults(results.data))
             .catch(function (error) {
                 console.log(error);
@@ -47,7 +53,7 @@ class Scrape extends Component {
 
     scrape247() {
         this.setResults([]);
-        axios.get('http://localhost:8080/api/scrape/247/')
+        axios.get('http://localhost:8080/api/scrape/247/' + this.state.two47Year)
             .then(results => this.setResults(results.data))
             .catch(function (error) {
                 console.log(error);
@@ -88,7 +94,23 @@ class Scrape extends Component {
                             <Button className="Scrape-button" classActiveName="Scrape-button-active" onClick={this.scrapePlayers}>Get Players</Button>
                         </Col>
                         <Col>
+                            <InputGroup>
+                                <InputGroupAddon addonType="prepend">
+                                    <InputGroupText className="Scrape-input-group-text">Year</InputGroupText>
+                                </InputGroupAddon>
+                                <Input placeholder="Year" value={this.state.rivalsYear} name="rivalsYear" onChange={this.onChange}  />
+                            </InputGroup>
+                        </Col>
+                        <Col>
                             <Button className="Scrape-button" classActiveName="Scrape-button-active" onClick={this.scrapeRivals}>Get Rivals Recruits</Button>
+                        </Col>
+                        <Col>
+                            <InputGroup>
+                                <InputGroupAddon addonType="prepend">
+                                    <InputGroupText className="Scrape-input-group-text">Year</InputGroupText>
+                                </InputGroupAddon>
+                                <Input placeholder="Year" value={this.state.two47Year} name="two47Year" onChange={this.onChange}  />
+                            </InputGroup>
                         </Col>
                         <Col>
                             <Button className="Scrape-button" classActiveName="Scrape-button-active" onClick={this.scrape247}>Get 247 Recruits</Button>
