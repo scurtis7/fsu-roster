@@ -39,20 +39,19 @@ public class RivalsScraper {
 
     public List<RivalsDto> scrapeRivals(String season) throws SoupConnectionException {
         log.info("scrapeRecruits()");
-        Document doc = getRivalsWebsite(season);
+        String website = "https://floridastate.rivals.com/commitments/football/" + season + "/";
+        Document doc = getRivalsWebsite(website);
         log.info(doc.title());
         return processRivalsWebsite(doc);
     }
 
-    private List<RivalsDto> processRivalsWebsite(Document doc) {
+    private List<RivalsDto> processRivalsWebsite(Document doc) throws SoupConnectionException {
         Element commitments = doc.select("rv-commitments").first();
         String temp = commitments.toString().replaceAll("&quot;", "");
-        log.info(temp);
         String temp1 = temp.substring(temp.indexOf('[') + 1, temp.indexOf(']'));
-        log.info(temp1);
         String[] prospects = temp1.split("},");
-        log.info("Number of prospects: {}", prospects.length);
-        return getRivalsProspects(prospects);
+        List<RivalsDto> commits = getRivalsProspects(prospects);
+        return setPlayerRankings(commits);
     }
 
     private List<RivalsDto> getRivalsProspects(String[] prospects) {
@@ -100,8 +99,19 @@ public class RivalsScraper {
         return commits;
     }
 
-    private Document getRivalsWebsite(String season) throws SoupConnectionException {
-        String website = "https://floridastate.rivals.com/commitments/football/" + season + "/";
+    private List<RivalsDto> setPlayerRankings(List<RivalsDto> commits) throws SoupConnectionException {
+        for (RivalsDto commit : commits) {
+            getRanking(commit);
+        }
+        return commits;
+    }
+
+    private void getRanking(RivalsDto commit) throws SoupConnectionException {
+        String rawRankings = getRivalsWebsite(commit.getUrl()).toString();
+        log.info("Size of raw rankings page: {}", rawRankings.length());
+    }
+
+    private Document getRivalsWebsite(String website) throws SoupConnectionException {
         log.info("Website: {}", website);
         try {
             return Jsoup.connect(website).get();
