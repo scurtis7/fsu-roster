@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import "./Scrape.css"
-import {Container, Row, Col, Button, ModalFooter} from 'reactstrap';
+import {Container, Row, Col, Button} from 'reactstrap';
 import axios from "axios";
 
 class Scrape extends Component {

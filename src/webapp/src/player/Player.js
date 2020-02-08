@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import "./Player.css"
-import axios from 'axios';
-import {Form, FormGroup, Col, Badge, Button, InputGroup, InputGroupAddon, InputGroupText, Input, Row} from 'reactstrap';
+import {Form, FormGroup, Col, Badge, Button, InputGroup, InputGroupAddon, InputGroupText, Input} from 'reactstrap';
 
 class Player extends Component {
 

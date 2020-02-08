@@ -1,10 +1,11 @@
 package com.scurtis.roster.controller;
 
+import com.scurtis.roster.dto.RivalsDto;
+import com.scurtis.roster.exception.SoupConnectionException;
 import com.scurtis.roster.model.coach.Coach;
 import com.scurtis.roster.model.coach.CoachRepository;
 import com.scurtis.roster.model.player.Player;
 import com.scurtis.roster.model.player.PlayerRepository;
-import com.scurtis.roster.model.player.Rivals;
 import com.scurtis.roster.model.player.RivalsRepository;
 import com.scurtis.roster.scrape.CoachScraper;
 import com.scurtis.roster.scrape.PlayerScraper;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,11 +61,16 @@ public class ScrapingRestController {
     @GetMapping(value = "/rivals", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<String> getRivals() {
         log.info("Method: getRivals");
-        List<Rivals> rivals = rivalsScraper.scrapeRivals("2019");
+        try {
+            List<RivalsDto> commits = rivalsScraper.scrapeRivals("2020");
 //        List<Rivals> rivals = rivalsScraper.scrapeRivals("2020");
-        rivalsRepository.deleteAll();
-        rivalsRepository.saveAll(rivals);
-        return convertRivals(rivals);
+//        rivalsRepository.deleteAll();
+//        rivalsRepository.saveAll(rivals);
+            return convertRivalsDtoToString(commits);
+        } catch (SoupConnectionException sce) {
+            log.error("Exception: {}", sce.getMessage());
+            return Collections.singletonList(sce.getMessage());
+        }
     }
 
     private List<String> convertCoaches(List<Coach> coaches) {
@@ -78,8 +85,16 @@ public class ScrapingRestController {
                 .collect(Collectors.toList());
     }
 
-    private List<String> convertRivals(List<Rivals> rivals) {
-        return new ArrayList<>();
+    private List<String> convertRivalsDtoToString(List<RivalsDto> commits) {
+        List<String> prospects = new ArrayList<>();
+        commits.forEach(commit -> {
+            prospects.add(commit.getRivalsId() + ", " + commit.getName() + ", " + commit.getCity() + ", " + commit.getState() + ", "
+                    + commit.getPosition() + ", " + commit.getHeight() + ", " + commit.getWeight() + ", " + commit.getSign() + ", "
+                    + commit.getStars() + ", " + commit.getRating() + ", " + commit.getCommitDate() + ", " + commit.getUrl() + ", "
+                    + commit.getStatus() + ", " + commit.getSport() + ", " + commit.getYear()
+            );
+        });
+        return prospects;
     }
 
 }

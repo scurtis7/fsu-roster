@@ -1,7 +1,7 @@
 package com.scurtis.roster.scrape;
 
 import com.scurtis.roster.dto.RivalsDto;
-import com.scurtis.roster.model.player.Rivals;
+import com.scurtis.roster.exception.SoupConnectionException;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -37,19 +37,14 @@ public class RivalsScraper {
     private static final String KEY_SPORT = "sport:";
     private static final String KEY_YEAR = "year:";
 
-    public List<Rivals> scrapeRivals(String season) {
+    public List<RivalsDto> scrapeRivals(String season) throws SoupConnectionException {
         log.info("scrapeRecruits()");
         Document doc = getRivalsWebsite(season);
-        if (doc != null) {
-            log.info(doc.title());
-            return processRivalsWebsite(doc);
-        }
-
-        return new ArrayList<>();
+        log.info(doc.title());
+        return processRivalsWebsite(doc);
     }
 
-    private List<Rivals> processRivalsWebsite(Document doc) {
-        List<Rivals> rivals = new ArrayList<>();
+    private List<RivalsDto> processRivalsWebsite(Document doc) {
         Element commitments = doc.select("rv-commitments").first();
         String temp = commitments.toString().replaceAll("&quot;", "");
         log.info(temp);
@@ -57,8 +52,7 @@ public class RivalsScraper {
         log.info(temp1);
         String[] prospects = temp1.split("},");
         log.info("Number of prospects: {}", prospects.length);
-        List<RivalsDto> commits = getRivalsProspects(prospects);
-        return rivals;
+        return getRivalsProspects(prospects);
     }
 
     private List<RivalsDto> getRivalsProspects(String[] prospects) {
@@ -106,14 +100,14 @@ public class RivalsScraper {
         return commits;
     }
 
-    private Document getRivalsWebsite(String season) {
+    private Document getRivalsWebsite(String season) throws SoupConnectionException {
         String website = "https://floridastate.rivals.com/commitments/football/" + season + "/";
         log.info("Website: {}", website);
         try {
             return Jsoup.connect(website).get();
         } catch (IOException exception) {
             log.error("Unable to get rivals website: {}", exception.getMessage());
-            return null;
+            throw new SoupConnectionException("Unable to get rivals website: " + exception.getMessage(), exception);
         }
     }
 

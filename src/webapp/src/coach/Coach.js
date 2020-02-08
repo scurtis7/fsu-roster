@@ -1,8 +1,8 @@
 import React, {Component} from "react";
 import "./Coach.css"
 import axios from 'axios';
-import {Form, FormGroup, Col, Badge, Button, InputGroup, InputGroupAddon, InputGroupText, Input, Row} from 'reactstrap';
-import {withRouter, Redirect} from 'react-router-dom'
+import {Form, FormGroup, Col, Badge, Button, InputGroup, InputGroupAddon, InputGroupText, Input} from 'reactstrap';
+import {withRouter} from 'react-router-dom'
 
 class Coach extends Component {
 
