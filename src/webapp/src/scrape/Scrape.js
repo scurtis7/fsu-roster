@@ -87,6 +87,26 @@ class Scrape extends Component {
             <div className="Scrape">
                 <Container fluid>
                     <Row>
+                        <Col/>
+                        <Col/>
+                        <Col>
+                            <InputGroup size="sm">
+                                <InputGroupAddon addonType="prepend">
+                                    <InputGroupText className="Scrape-input-group-text">Year</InputGroupText>
+                                </InputGroupAddon>
+                                <Input placeholder="Year" value={this.state.rivalsYear} name="rivalsYear" onChange={this.onChange} type="number" min={1990} max={2050} />
+                            </InputGroup>
+                        </Col>
+                        <Col>
+                            <InputGroup size="sm">
+                                <InputGroupAddon addonType="prepend">
+                                    <InputGroupText className="Scrape-input-group-text">Year</InputGroupText>
+                                </InputGroupAddon>
+                                <Input placeholder="Year" value={this.state.two47Year} name="two47Year" onChange={this.onChange} type="number" min={1990} max={2050} />
+                            </InputGroup>
+                        </Col>
+                    </Row>
+                    <Row>
                         <Col>
                             <Button className="Scrape-button" classActiveName="Scrape-button-active" onClick={this.scrapeCoaches}>Get Coaches</Button>
                         </Col>
@@ -94,23 +114,7 @@ class Scrape extends Component {
                             <Button className="Scrape-button" classActiveName="Scrape-button-active" onClick={this.scrapePlayers}>Get Players</Button>
                         </Col>
                         <Col>
-                            <InputGroup>
-                                <InputGroupAddon addonType="prepend">
-                                    <InputGroupText className="Scrape-input-group-text">Year</InputGroupText>
-                                </InputGroupAddon>
-                                <Input placeholder="Year" value={this.state.rivalsYear} name="rivalsYear" onChange={this.onChange}  />
-                            </InputGroup>
-                        </Col>
-                        <Col>
                             <Button className="Scrape-button" classActiveName="Scrape-button-active" onClick={this.scrapeRivals}>Get Rivals Recruits</Button>
-                        </Col>
-                        <Col>
-                            <InputGroup>
-                                <InputGroupAddon addonType="prepend">
-                                    <InputGroupText className="Scrape-input-group-text">Year</InputGroupText>
-                                </InputGroupAddon>
-                                <Input placeholder="Year" value={this.state.two47Year} name="two47Year" onChange={this.onChange}  />
-                            </InputGroup>
                         </Col>
                         <Col>
                             <Button className="Scrape-button" classActiveName="Scrape-button-active" onClick={this.scrape247}>Get 247 Recruits</Button>
