@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,7 +16,6 @@ import java.util.List;
  * Date: Feb 08, 2020
  **/
 @Slf4j
-@Service
 public class Two47Scraper {
 
     private static final String HTTPS = "https:";

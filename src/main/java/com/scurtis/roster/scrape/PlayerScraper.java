@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
@@ -19,7 +18,6 @@ import java.util.stream.Collectors;
  **/
 
 @Slf4j
-@Service
 public class PlayerScraper {
 
     public List<Player> scrapePlayers() {

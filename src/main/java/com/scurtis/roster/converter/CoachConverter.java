@@ -2,7 +2,6 @@ package com.scurtis.roster.converter;
 
 import com.scurtis.roster.dto.CoachDto;
 import com.scurtis.roster.model.coach.Coach;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +11,6 @@ import java.util.List;
  * Date: Jan 12, 2020
  **/
 
-@Service
 public class CoachConverter {
 
     public List<CoachDto> coachListToCoachDto(List<Coach> coaches) {

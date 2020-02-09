@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
@@ -18,7 +17,6 @@ import java.util.List;
  **/
 
 @Slf4j
-@Service
 public class CoachScraper {
 
     public List<Coach> scrapeCoaches() {

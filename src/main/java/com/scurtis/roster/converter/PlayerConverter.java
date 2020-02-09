@@ -3,7 +3,6 @@ package com.scurtis.roster.converter;
 import com.scurtis.roster.dto.RecruitDto;
 import com.scurtis.roster.model.player.Player;
 import com.scurtis.roster.model.player.Recruit;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ import java.util.List;
  * Author: Steve Curtis
  * Date: Dec 23, 2019
  **/
-@Service
+
 public class PlayerConverter {
 
     private static final String CLASS_FRESHMAN = "Freshman";
