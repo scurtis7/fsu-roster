@@ -16,17 +16,14 @@ public class CoachConverter {
     public List<CoachDto> coachListToCoachDto(List<Coach> coaches) {
         List<CoachDto> coachDtos = new ArrayList<>();
         coaches.forEach(coach -> {
-            CoachDto coachDto = CoachDto.builder()
-                    .coachId(Long.toString(coach.getCoachId()))
-                    .name(coach.getName())
-                    .position(coach.getPosition())
-                    .build();
+            CoachDto coachDto = new CoachDto(Long.toString(coach.getCoachId()),
+                    coach.getName(), coach.getPosition(), coach.getSport());
             coachDtos.add(coachDto);
         });
         return coachDtos;
     }
 
-    public List<Coach> CoachDtoListToCoachEntity(List<CoachDto> coachDtos) {
+    public List<Coach> coachDtoListToCoachEntity(List<CoachDto> coachDtos) {
         List<Coach> coaches = new ArrayList<>();
         coachDtos.forEach(coach -> {
             Coach coachEntity = new Coach();

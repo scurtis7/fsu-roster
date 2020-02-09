@@ -1,6 +1,6 @@
 package com.scurtis.roster.scrape;
 
-import com.scurtis.roster.model.coach.Coach;
+import com.scurtis.roster.dto.CoachDto;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -19,7 +19,7 @@ import java.util.List;
 @Slf4j
 public class CoachScraper {
 
-    public List<Coach> scrapeCoaches() {
+    public List<CoachDto> scrapeCoaches() {
         Document doc = getCoachWebsite();
         if (doc != null) {
             log.info(doc.title());
@@ -29,34 +29,18 @@ public class CoachScraper {
         return new ArrayList<>();
     }
 
-    private List<Coach> processCoachWebsite(Document doc) {
-        List<Coach> coaches = new ArrayList<>();
+    private List<CoachDto> processCoachWebsite(Document doc) {
+        List<CoachDto> coaches = new ArrayList<>();
         Element tbody = doc.select("tbody").first();
         List<Element> trElements = tbody.getElementsByTag("tr");
-        int count;
-        String coachName;
-        String coachPosition;
         for (Element tr : trElements) {
-            log.info("Row ====================================================");
             List<Element> tdElements = tr.getElementsByTag("td");
-            count = 0;
-            coachName = "";
-            coachPosition = "";
-            for (Element td : tdElements) {
-                count++;
-                if (count == 1) {
-                    if (td.childNodeSize() > 0) {
-                        Element anchor = td.firstElementSibling();
-                        coachName = anchor.text();
-                    }
-                } else if (count == 2) {
-                    coachPosition = td.text();
-                }
-                if (!StringUtils.isEmpty(coachName) && !StringUtils.isEmpty(coachPosition)) {
-                    log.info("   Coach:{}    Position:{}", coachName, coachPosition);
-                    coaches.add(new Coach(coachName, coachPosition, "football"));
-                    break;
-                }
+            CoachDto coachDto = new CoachDto();
+            coachDto.setName(tr.getElementsByTag("td").first().text());
+            coachDto.setPosition(tr.getElementsByTag("td").get(1).text());
+            coachDto.setSport("Football");
+            if (!StringUtils.isEmpty(coachDto.getName()) && !StringUtils.isEmpty(coachDto.getPosition())) {
+                coaches.add(coachDto);
             }
         }
         return coaches;

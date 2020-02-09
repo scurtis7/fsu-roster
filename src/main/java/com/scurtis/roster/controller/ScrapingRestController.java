@@ -1,5 +1,7 @@
 package com.scurtis.roster.controller;
 
+import com.scurtis.roster.converter.CoachConverter;
+import com.scurtis.roster.dto.CoachDto;
 import com.scurtis.roster.dto.RivalsDto;
 import com.scurtis.roster.dto.Two47Dto;
 import com.scurtis.roster.exception.SoupConnectionException;
@@ -39,6 +41,7 @@ public class ScrapingRestController {
 
     private final CoachScraper coachScraper;
     private final CoachRepository coachRepository;
+    private final CoachConverter coachConverter;
     private final PlayerScraper playerScraper;
     private final PlayerRepository playerRepository;
     private final RivalsScraper rivalsScraper;
@@ -49,7 +52,8 @@ public class ScrapingRestController {
     @GetMapping(value = "/coach", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<String> getCoaches() {
         log.info("Method: getCoaches");
-        List<Coach> coaches = coachScraper.scrapeCoaches();
+        List<CoachDto> coachDtos = coachScraper.scrapeCoaches();
+        List<Coach> coaches = coachConverter.coachDtoListToCoachEntity(coachDtos);
         coachRepository.deleteAll();
         coaches.forEach(coachRepository::save);
         return convertCoaches(coaches);
