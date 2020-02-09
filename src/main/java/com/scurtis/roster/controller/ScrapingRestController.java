@@ -1,15 +1,18 @@
 package com.scurtis.roster.controller;
 
 import com.scurtis.roster.dto.RivalsDto;
+import com.scurtis.roster.dto.Two47Dto;
 import com.scurtis.roster.exception.SoupConnectionException;
 import com.scurtis.roster.model.coach.Coach;
 import com.scurtis.roster.model.coach.CoachRepository;
 import com.scurtis.roster.model.player.Player;
 import com.scurtis.roster.model.player.PlayerRepository;
 import com.scurtis.roster.model.player.RivalsRepository;
+import com.scurtis.roster.model.player.Two47Repository;
 import com.scurtis.roster.scrape.CoachScraper;
 import com.scurtis.roster.scrape.PlayerScraper;
 import com.scurtis.roster.scrape.RivalsScraper;
+import com.scurtis.roster.scrape.Two47Scraper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -40,6 +43,8 @@ public class ScrapingRestController {
     private final PlayerRepository playerRepository;
     private final RivalsScraper rivalsScraper;
     private final RivalsRepository rivalsRepository;
+    private final Two47Scraper two47Scraper;
+    private final Two47Repository two47Repository;
 
     @GetMapping(value = "/coach", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<String> getCoaches() {
@@ -63,11 +68,26 @@ public class ScrapingRestController {
     public List<String> getRivals(@PathVariable(value = "year") String year) {
         log.info("Method: getRivals");
         try {
-            List<RivalsDto> commits = rivalsScraper.scrapeRivals(year);
+            List<RivalsDto> commits = rivalsScraper.scrape(year);
 //        List<Rivals> rivals = rivalsScraper.scrapeRivals("2020");
 //        rivalsRepository.deleteAll();
 //        rivalsRepository.saveAll(rivals);
             return convertRivalsDtoToString(commits);
+        } catch (SoupConnectionException sce) {
+            log.error("Exception: {}", sce.getMessage());
+            return Collections.singletonList(sce.getMessage());
+        }
+    }
+
+    @GetMapping(value = "/247/{year}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<String> getTwo47(@PathVariable(value = "year") String year) {
+        log.info("Method: getTwo47");
+        try {
+            List<Two47Dto> commits = two47Scraper.scrape(year);
+//        List<Rivals> rivals = rivalsScraper.scrapeRivals("2020");
+//        rivalsRepository.deleteAll();
+//        rivalsRepository.saveAll(rivals);
+            return convertTwo47DtoToString(commits);
         } catch (SoupConnectionException sce) {
             log.error("Exception: {}", sce.getMessage());
             return Collections.singletonList(sce.getMessage());
@@ -94,6 +114,17 @@ public class ScrapingRestController {
                     + commit.getStars() + ", " + commit.getRating() + ", " + commit.getCommitDate() + ", " + commit.getUrl() + ", "
                     + commit.getStatus() + ", " + commit.getSport() + ", " + commit.getYear()
             );
+        });
+        return prospects;
+    }
+
+    private List<String> convertTwo47DtoToString(List<Two47Dto> commits) {
+        List<String> prospects = new ArrayList<>();
+        commits.forEach(commit -> {
+            prospects.add(commit.getTwo47Id() + ", " + commit.getName() + ", " + commit.getPosition() + ", " + commit.getHeight()
+                    + ", " + commit.getWeight() + ", " + commit.getHomeTown() + ", " + commit.getHighSchool() + ", " + commit.getYear()
+                    + ", " + commit.getCompositeRank() + ", " + commit.getRankNational() + ", " + commit.getRankPosition()
+                    + ", " + commit.getRankState() + ", " + commit.getStars() + ", " + commit.getUrl());
         });
         return prospects;
     }

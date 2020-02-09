@@ -37,15 +37,15 @@ public class RivalsScraper {
     private static final String KEY_SPORT = "sport:";
     private static final String KEY_YEAR = "year:";
 
-    public List<RivalsDto> scrapeRivals(String season) throws SoupConnectionException {
-        log.info("scrapeRecruits()");
+    public List<RivalsDto> scrape(String season) throws SoupConnectionException {
+        log.info("scrape()");
         String website = "https://floridastate.rivals.com/commitments/football/" + season + "/";
-        Document doc = getRivalsWebsite(website);
-        log.info(doc.title());
-        return processRivalsWebsite(doc);
+        Document doc = connect(website);
+        return parse(doc);
     }
 
-    private List<RivalsDto> processRivalsWebsite(Document doc) throws SoupConnectionException {
+    private List<RivalsDto> parse(Document doc) throws SoupConnectionException {
+        log.info("Document Title: {}", doc.title());
         Element commitments = doc.select("rv-commitments").first();
         String temp = commitments.toString().replaceAll("&quot;", "");
         String temp1 = temp.substring(temp.indexOf('[') + 1, temp.indexOf(']'));
@@ -107,12 +107,12 @@ public class RivalsScraper {
     }
 
     private void getRanking(RivalsDto commit) throws SoupConnectionException {
-        String rawRankings = getRivalsWebsite(commit.getUrl()).toString();
+        String rawRankings = connect(commit.getUrl()).toString();
         log.info("Size of raw rankings page: {}", rawRankings.length());
     }
 
-    private Document getRivalsWebsite(String website) throws SoupConnectionException {
-        log.info("Website: {}", website);
+    private Document connect(String website) throws SoupConnectionException {
+        log.info("Connect to Website: {}", website);
         try {
             return Jsoup.connect(website).get();
         } catch (IOException exception) {

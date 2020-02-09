@@ -9,8 +9,8 @@ class Scrape extends Component {
         super(props);
         this.state = {
             results: [],
-            rivalsYear: '',
-            two47Year: '',
+            rivalsYear: '2020',
+            two47Year: '2020',
         };
         this.scrapeCoaches = this.scrapeCoaches.bind(this);
         this.scrapePlayers = this.scrapePlayers.bind(this);
