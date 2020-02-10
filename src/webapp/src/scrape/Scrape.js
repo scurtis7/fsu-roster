@@ -9,6 +9,7 @@ class Scrape extends Component {
         super(props);
         this.state = {
             results: [],
+            playerYear: '2020',
             rivalsYear: '2020',
             two47Year: '2020',
         };
@@ -35,7 +36,7 @@ class Scrape extends Component {
 
     scrapePlayers() {
         this.setResults([]);
-        axios.get('http://localhost:8080/api/scrape/player/')
+        axios.get('http://localhost:8080/api/scrape/player/' + this.state.playerYear)
             .then(results => this.setResults(results.data))
             .catch(function (error) {
                 console.log(error);
@@ -88,7 +89,14 @@ class Scrape extends Component {
                 <Container fluid>
                     <Row>
                         <Col/>
-                        <Col/>
+                        <Col>
+                            <InputGroup size="sm">
+                                <InputGroupAddon addonType="prepend">
+                                    <InputGroupText className="Scrape-input-group-text">Year</InputGroupText>
+                                </InputGroupAddon>
+                                <Input placeholder="Year" value={this.state.playerYear} name="playerYear" onChange={this.onChange} type="number" min={2012} max={2050} />
+                            </InputGroup>
+                        </Col>
                         <Col>
                             <InputGroup size="sm">
                                 <InputGroupAddon addonType="prepend">

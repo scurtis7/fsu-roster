@@ -2,6 +2,7 @@ package com.scurtis.roster.model.player;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,5 +20,8 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
 
     @Query("SELECT DISTINCT p.jersey FROM Player p ORDER BY p.jersey ASC")
     List<String> findAllJerseys();
+
+    @Query("SELECT p FROM Player p WHERE p.name = :name AND p.year = :year")
+    Player findPlayer(@Param("name") String name, @Param("year") String year);
 
 }

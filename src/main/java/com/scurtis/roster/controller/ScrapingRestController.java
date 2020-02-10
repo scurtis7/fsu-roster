@@ -1,13 +1,13 @@
 package com.scurtis.roster.controller;
 
 import com.scurtis.roster.converter.CoachConverter;
+import com.scurtis.roster.converter.PlayerConverter;
 import com.scurtis.roster.dto.CoachDto;
 import com.scurtis.roster.dto.RivalsDto;
 import com.scurtis.roster.dto.Two47Dto;
 import com.scurtis.roster.exception.SoupConnectionException;
 import com.scurtis.roster.model.coach.Coach;
 import com.scurtis.roster.model.coach.CoachRepository;
-import com.scurtis.roster.model.player.Player;
 import com.scurtis.roster.model.player.PlayerRepository;
 import com.scurtis.roster.model.player.RivalsRepository;
 import com.scurtis.roster.model.player.Two47Repository;
@@ -44,6 +44,7 @@ public class ScrapingRestController {
     private final CoachConverter coachConverter;
     private final PlayerScraper playerScraper;
     private final PlayerRepository playerRepository;
+    private final PlayerConverter playerConverter;
     private final RivalsScraper rivalsScraper;
     private final RivalsRepository rivalsRepository;
     private final Two47Scraper two47Scraper;
@@ -59,13 +60,10 @@ public class ScrapingRestController {
         return convertCoaches(coaches);
     }
 
-    @GetMapping(value = "/player", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<String> getPlayers() {
+    @GetMapping(value = "/player/{year}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<String> getPlayers(@PathVariable(value = "year") String year) {
         log.info("Method: getPlayers");
-        List<Player> players = playerScraper.scrapePlayers();
-        playerRepository.deleteAll();
-        players.forEach(playerRepository::save);
-        return convertPlayers(players);
+        return playerScraper.scrapePlayers(year);
     }
 
     @GetMapping(value = "/rivals/{year}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -104,11 +102,11 @@ public class ScrapingRestController {
                 .collect(Collectors.toList());
     }
 
-    private List<String> convertPlayers(List<Player> players) {
-        return players.stream()
-                .map(player -> player.getJersey() + ", " + player.getName() + ", " + player.getYear())
-                .collect(Collectors.toList());
-    }
+//    private List<String> convertPlayers(List<Player> players) {
+//        return players.stream()
+//                .map(player -> player.getJersey() + ", " + player.getName() + ", " + player.getYear())
+//                .collect(Collectors.toList());
+//    }
 
     private List<String> convertRivalsDtoToString(List<RivalsDto> commits) {
         List<String> prospects = new ArrayList<>();

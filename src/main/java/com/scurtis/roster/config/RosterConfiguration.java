@@ -2,6 +2,7 @@ package com.scurtis.roster.config;
 
 import com.scurtis.roster.converter.CoachConverter;
 import com.scurtis.roster.converter.PlayerConverter;
+import com.scurtis.roster.model.player.PlayerRepository;
 import com.scurtis.roster.scrape.CoachScraper;
 import com.scurtis.roster.scrape.PlayerScraper;
 import com.scurtis.roster.scrape.RivalsScraper;
@@ -33,8 +34,8 @@ public class RosterConfiguration {
     }
 
     @Bean
-    public PlayerScraper playerScraper() {
-        return new PlayerScraper();
+    public PlayerScraper playerScraper(PlayerConverter playerConverter, PlayerRepository playerRepository) {
+        return new PlayerScraper(playerConverter, playerRepository);
     }
 
     @Bean

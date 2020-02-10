@@ -1,5 +1,6 @@
 package com.scurtis.roster.converter;
 
+import com.scurtis.roster.dto.PlayerDto;
 import com.scurtis.roster.dto.RecruitDto;
 import com.scurtis.roster.model.player.Player;
 import com.scurtis.roster.model.player.Recruit;
@@ -23,6 +24,23 @@ public class PlayerConverter {
     private static final String CLASS_REDSHIRT_JUNIOR = "Redshirt Junior";
     private static final String CLASS_SENIOR = "Senior";
     private static final String CLASS_REDSHIRT_SENIOR = "Redshirt Senior";
+
+    public List<Player> playerDtoToPlayer(List<PlayerDto> playerDtos) {
+        List<Player> players = new ArrayList<>();
+        playerDtos.forEach(dto -> {
+            Player player = new Player();
+            player.setName(dto.getName());
+            player.setPosition(dto.getPosition());
+            player.setYear(dto.getYear());
+            player.setJersey(dto.getJersey());
+            player.setHeight(dto.getHeight());
+            player.setWeight(dto.getWeight());
+            player.setHomeTown(dto.getHomeTown());
+            player.setOtherCollege(dto.getOtherCollege());
+            players.add(player);
+        });
+        return players;
+    }
     
     public List<RecruitDto> playerEntityToPlayerDto(List<Player> players) {
         List<RecruitDto> recruitDtos = new ArrayList<>();

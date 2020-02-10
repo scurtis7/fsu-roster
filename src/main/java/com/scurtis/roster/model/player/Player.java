@@ -31,14 +31,11 @@ public class Player {
     @Column(name = "Name", nullable = false)
     private String name;
 
-    @Column(name = "Position", nullable = false)
-    private String position;
-
-    @Column(name = "ClassYear", nullable = false)
-    private String classYear;
-
     @Column(name = "Year", nullable = false)
     private String year;
+
+    @Column(name = "Position", nullable = false)
+    private String position;
 
     @Column(name = "Jersey", nullable = false)
     private String jersey;
