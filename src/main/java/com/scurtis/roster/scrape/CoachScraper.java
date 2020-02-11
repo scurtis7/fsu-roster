@@ -1,6 +1,10 @@
 package com.scurtis.roster.scrape;
 
+import com.scurtis.roster.converter.CoachConverter;
 import com.scurtis.roster.dto.CoachDto;
+import com.scurtis.roster.model.coach.Coach;
+import com.scurtis.roster.model.coach.CoachRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -10,6 +14,7 @@ import org.springframework.util.StringUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Author: Steve Curtis
@@ -17,16 +22,24 @@ import java.util.List;
  **/
 
 @Slf4j
+@RequiredArgsConstructor
 public class CoachScraper {
 
-    public List<CoachDto> scrapeCoaches() {
+    private final CoachRepository coachRepository;
+    private final CoachConverter coachConverter;
+
+    public List<String> scrapeCoaches() {
         Document doc = getCoachWebsite();
-        if (doc != null) {
-            log.info(doc.title());
-            return processCoachWebsite(doc);
+        if (doc == null) {
+            return new ArrayList<>();
         }
 
-        return new ArrayList<>();
+        log.info(doc.title());
+        List<CoachDto> coachDtos = processCoachWebsite(doc);
+        List<Coach> coaches = coachConverter.coachDtoListToCoachEntity(coachDtos);
+        coachRepository.deleteAll();
+        coaches.forEach(coachRepository::save);
+        return convertCoaches(coaches);
     }
 
     private List<CoachDto> processCoachWebsite(Document doc) {
@@ -44,6 +57,12 @@ public class CoachScraper {
             }
         }
         return coaches;
+    }
+
+    private List<String> convertCoaches(List<Coach> coaches) {
+        return coaches.stream()
+                .map(coach -> coach.getName() + ", " + coach.getPosition() + ", " + coach.getSport())
+                .collect(Collectors.toList());
     }
 
     private Document getCoachWebsite() {

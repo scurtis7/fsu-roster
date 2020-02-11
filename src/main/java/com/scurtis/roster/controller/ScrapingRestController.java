@@ -1,14 +1,8 @@
 package com.scurtis.roster.controller;
 
-import com.scurtis.roster.converter.CoachConverter;
-import com.scurtis.roster.converter.PlayerConverter;
-import com.scurtis.roster.dto.CoachDto;
 import com.scurtis.roster.dto.RivalsDto;
 import com.scurtis.roster.dto.Two47Dto;
 import com.scurtis.roster.exception.SoupConnectionException;
-import com.scurtis.roster.model.coach.Coach;
-import com.scurtis.roster.model.coach.CoachRepository;
-import com.scurtis.roster.model.player.PlayerRepository;
 import com.scurtis.roster.model.player.RivalsRepository;
 import com.scurtis.roster.model.player.Two47Repository;
 import com.scurtis.roster.scrape.CoachScraper;
@@ -26,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Author: Steve Curtis
@@ -40,11 +33,7 @@ import java.util.stream.Collectors;
 public class ScrapingRestController {
 
     private final CoachScraper coachScraper;
-    private final CoachRepository coachRepository;
-    private final CoachConverter coachConverter;
     private final PlayerScraper playerScraper;
-    private final PlayerRepository playerRepository;
-    private final PlayerConverter playerConverter;
     private final RivalsScraper rivalsScraper;
     private final RivalsRepository rivalsRepository;
     private final Two47Scraper two47Scraper;
@@ -53,11 +42,7 @@ public class ScrapingRestController {
     @GetMapping(value = "/coach", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<String> getCoaches() {
         log.info("Method: getCoaches");
-        List<CoachDto> coachDtos = coachScraper.scrapeCoaches();
-        List<Coach> coaches = coachConverter.coachDtoListToCoachEntity(coachDtos);
-        coachRepository.deleteAll();
-        coaches.forEach(coachRepository::save);
-        return convertCoaches(coaches);
+        return coachScraper.scrapeCoaches();
     }
 
     @GetMapping(value = "/player/{year}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -96,12 +81,12 @@ public class ScrapingRestController {
         }
     }
 
-    private List<String> convertCoaches(List<Coach> coaches) {
-        return coaches.stream()
-                .map(coach -> coach.getName() + ", " + coach.getPosition() + ", " + coach.getSport())
-                .collect(Collectors.toList());
-    }
-
+//    private List<String> convertCoaches(List<Coach> coaches) {
+//        return coaches.stream()
+//                .map(coach -> coach.getName() + ", " + coach.getPosition() + ", " + coach.getSport())
+//                .collect(Collectors.toList());
+//    }
+//
 //    private List<String> convertPlayers(List<Player> players) {
 //        return players.stream()
 //                .map(player -> player.getJersey() + ", " + player.getName() + ", " + player.getYear())
