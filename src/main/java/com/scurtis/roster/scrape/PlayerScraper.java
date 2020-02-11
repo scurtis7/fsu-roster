@@ -46,8 +46,8 @@ public class PlayerScraper {
             log.info(doc.title());
             List<PlayerDto> playerDtos = processPlayerWebsite(doc, playerYear);
             List<Player> players = playerConverter.playerDtoToPlayer(playerDtos);
-            savePlayers(players);
-            playerList = convertPlayers(players);
+            playerList = savePlayers(players);
+//            playerList = convertPlayers(players);
         } catch (SoupConnectionException exception) {
             playerList = Collections.singletonList(exception.getMessage());
         }
@@ -108,18 +108,25 @@ public class PlayerScraper {
         return String.valueOf(playerYear - 5);
     }
 
-    private void savePlayers(List<Player> players) {
-        players.forEach(player -> {
+    private List<String> savePlayers(List<Player> players) {
+        List<String> playerList = new ArrayList<>();
+        playerList.add("   === Players Added ===   ");
+        for (Player player : players) {
             if (playerRepository.findPlayer(player.getName(), player.getYear()) == null) {
                 playerRepository.save(player);
+                playerList.add(convertPlayer(player));
             }
-        });
+        }
+        if (playerList.size() == 1) {
+            playerList = Collections.singletonList("   === No Players Added ===   ");
+        }
+        return playerList;
     }
 
-    private List<String> convertPlayers(List<Player> players) {
-        return players.stream()
-                .map(player -> player.getJersey() + ", " + player.getName() + ", " + player.getYear())
-                .collect(Collectors.toList());
+    private String convertPlayer(Player player) {
+        return player.getName() + ", " + player.getYear() + ", " + player.getJersey() + ", " + player.getPosition()
+                + ", " + player.getHeight() + ", " + player.getWeight() + ", " + player.getHomeTown()
+                + ", " + player.getOtherCollege();
     }
 
 }
