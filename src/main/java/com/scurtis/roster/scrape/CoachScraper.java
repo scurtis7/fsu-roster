@@ -41,7 +41,7 @@ public class CoachScraper {
             }
 
             log.info(doc.title());
-            List<CoachDto> coachDtos = processCoachWebsite(doc);
+            List<CoachDto> coachDtos = parse(doc);
             List<Coach> coaches = coachConverter.coachDtoListToCoachEntity(coachDtos);
             coachRepository.deleteAll();
             coaches.forEach(coachRepository::save);
@@ -52,7 +52,7 @@ public class CoachScraper {
         return coachList;
     }
 
-    private List<CoachDto> processCoachWebsite(Document doc) {
+    private List<CoachDto> parse(Document doc) {
         List<CoachDto> coaches = new ArrayList<>();
         Element tbody = doc.select("tbody").first();
         List<Element> trElements = tbody.getElementsByTag("tr");

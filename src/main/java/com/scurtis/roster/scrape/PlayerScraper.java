@@ -45,7 +45,7 @@ public class PlayerScraper {
             }
 
             log.info(doc.title());
-            List<PlayerDto> playerDtos = processPlayerWebsite(doc, playerYear);
+            List<PlayerDto> playerDtos = parse(doc, playerYear);
             List<Player> players = playerConverter.playerDtoToPlayer(playerDtos);
             playerList = savePlayers(players);
         } catch (SoupConnectionException exception) {
@@ -54,7 +54,7 @@ public class PlayerScraper {
         return playerList;
     }
 
-    private List<PlayerDto> processPlayerWebsite(Document doc, int playerYear) {
+    private List<PlayerDto> parse(Document doc, int playerYear) {
         List<PlayerDto> players = new ArrayList<>();
         List<Element> anchors = doc.select("a").stream()
                 .filter(aTag -> !aTag.attr("data-sort").isEmpty()).collect(Collectors.toList());;
