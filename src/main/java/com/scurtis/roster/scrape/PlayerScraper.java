@@ -2,17 +2,17 @@ package com.scurtis.roster.scrape;
 
 import com.scurtis.roster.converter.PlayerConverter;
 import com.scurtis.roster.dto.PlayerDto;
+import com.scurtis.roster.exception.SoupConnectionException;
 import com.scurtis.roster.model.player.Player;
 import com.scurtis.roster.model.player.PlayerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.springframework.util.StringUtils;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,24 +25,33 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PlayerScraper {
 
+    private static final String BASE_URL = "https://seminoles.com/sports/football/roster/season/";
+
+    private final ScrapingService scrapingService;
     private final PlayerConverter playerConverter;
     private final PlayerRepository playerRepository;
 
     public List<String> scrapePlayers(String year) {
-        String lastTwo = Integer.toString(Integer.parseInt(year.substring(2)) + 1);
-        String season = year + "-" + lastTwo;
-        log.info("Player season: {}", season);
-        int playerYear = Integer.parseInt(year);
-        Document doc = getPlayerWebsite(season);
-        if (doc == null) {
-            return new ArrayList<>();
-        }
+        List<String> playerList = new ArrayList<>();
+        try {
+            String lastTwo = Integer.toString(Integer.parseInt(year.substring(2)) + 1);
+            String season = year + "-" + lastTwo;
+            log.info("Player season: {}", season);
+            int playerYear = Integer.parseInt(year);
+            Document doc = scrapingService.connect(BASE_URL + season + "/");
+            if (doc == null) {
+                return playerList;
+            }
 
-        log.info(doc.title());
-        List<PlayerDto> playerDtos = processPlayerWebsite(doc, playerYear);
-        List<Player> players = playerConverter.playerDtoToPlayer(playerDtos);
-        savePlayers(players);
-        return convertPlayers(players);
+            log.info(doc.title());
+            List<PlayerDto> playerDtos = processPlayerWebsite(doc, playerYear);
+            List<Player> players = playerConverter.playerDtoToPlayer(playerDtos);
+            savePlayers(players);
+            playerList = convertPlayers(players);
+        } catch (SoupConnectionException exception) {
+            playerList = Collections.singletonList(exception.getMessage());
+        }
+        return playerList;
     }
 
     private List<PlayerDto> processPlayerWebsite(Document doc, int playerYear) {
@@ -111,16 +120,6 @@ public class PlayerScraper {
         return players.stream()
                 .map(player -> player.getJersey() + ", " + player.getName() + ", " + player.getYear())
                 .collect(Collectors.toList());
-    }
-
-    private Document getPlayerWebsite(String season) {
-        String website = "https://seminoles.com/sports/football/roster/season/" + season + "/";
-        try {
-            return Jsoup.connect(website).get();
-        } catch (IOException exception) {
-            log.error("Unable to get players website: {}", exception.getMessage());
-            return null;
-        }
     }
 
 }

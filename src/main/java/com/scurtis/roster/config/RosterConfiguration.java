@@ -41,8 +41,8 @@ public class RosterConfiguration {
     }
 
     @Bean
-    public PlayerScraper playerScraper(PlayerConverter playerConverter, PlayerRepository playerRepository) {
-        return new PlayerScraper(playerConverter, playerRepository);
+    public PlayerScraper playerScraper(ScrapingService scrapingService, PlayerConverter playerConverter, PlayerRepository playerRepository) {
+        return new PlayerScraper(scrapingService, playerConverter, playerRepository);
     }
 
     @Bean
