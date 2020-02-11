@@ -45,6 +45,9 @@ public class RivalsScraper {
         List<String> rivalsList = new ArrayList<>();
         try {
             Document doc = scrapingService.connect(BASE_URL + season + "/");
+            if (doc == null) {
+                return rivalsList;
+            }
             List<RivalsDto> commits =  parse(doc);
             rivalsList = convertRivalsDtoToString(commits);
         } catch (SoupConnectionException exception) {

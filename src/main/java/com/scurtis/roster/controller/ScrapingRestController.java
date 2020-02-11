@@ -1,7 +1,5 @@
 package com.scurtis.roster.controller;
 
-import com.scurtis.roster.dto.Two47Dto;
-import com.scurtis.roster.exception.SoupConnectionException;
 import com.scurtis.roster.scrape.CoachScraper;
 import com.scurtis.roster.scrape.PlayerScraper;
 import com.scurtis.roster.scrape.RivalsScraper;
@@ -14,8 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -55,27 +51,7 @@ public class ScrapingRestController {
     @GetMapping(value = "/247/{year}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<String> getTwo47(@PathVariable(value = "year") String year) {
         log.info("Method: getTwo47");
-        try {
-            List<Two47Dto> commits = two47Scraper.scrape(year);
-//        List<Rivals> rivals = rivalsScraper.scrapeRivals("2020");
-//        rivalsRepository.deleteAll();
-//        rivalsRepository.saveAll(rivals);
-            return convertTwo47DtoToString(commits);
-        } catch (SoupConnectionException sce) {
-            log.error("Exception: {}", sce.getMessage());
-            return Collections.singletonList(sce.getMessage());
-        }
-    }
-
-    private List<String> convertTwo47DtoToString(List<Two47Dto> commits) {
-        List<String> prospects = new ArrayList<>();
-        commits.forEach(commit -> {
-            prospects.add(commit.getTwo47Id() + ", " + commit.getName() + ", " + commit.getPosition() + ", " + commit.getHeight()
-                    + ", " + commit.getWeight() + ", " + commit.getHomeTown() + ", " + commit.getHighSchool() + ", " + commit.getYear()
-                    + ", " + commit.getCompositeRank() + ", " + commit.getRankNational() + ", " + commit.getRankPosition()
-                    + ", " + commit.getRankState() + ", " + commit.getStars() + ", " + commit.getUrl());
-        });
-        return prospects;
+        return two47Scraper.scrape(year);
     }
 
 }

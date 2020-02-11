@@ -51,8 +51,8 @@ public class RosterConfiguration {
     }
 
     @Bean
-    public Two47Scraper two47Scraper() {
-        return new Two47Scraper();
+    public Two47Scraper two47Scraper(ScrapingService scrapingService) {
+        return new Two47Scraper(scrapingService);
     }
 
 }

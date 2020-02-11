@@ -2,29 +2,45 @@ package com.scurtis.roster.scrape;
 
 import com.scurtis.roster.dto.Two47Dto;
 import com.scurtis.roster.exception.SoupConnectionException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * Author: Steve Curtis
  * Date: Feb 08, 2020
  **/
+
 @Slf4j
+@RequiredArgsConstructor
 public class Two47Scraper {
 
     private static final String HTTPS = "https:";
+    private static final String BASE_URL = "https://247sports.com/college/florida-state/Season/";
+    private static final String FOOTBALL_COMMITS = "-Football/Commits/";
 
-    public List<Two47Dto> scrape(String season) throws SoupConnectionException {
+    private final ScrapingService scrapingService;
+
+    public List<String> scrape(String season) {
         log.info("scrape()");
-        String website = "https://247sports.com/college/florida-state/Season/" + season + "-Football/Commits/";
-        Document doc = connect(website);
-        return parse(doc, season);
+        List<String> two47List = new ArrayList<>();
+        try {
+            Document doc = scrapingService.connect(BASE_URL + season + FOOTBALL_COMMITS);
+            if (doc == null) {
+                return two47List;
+            }
+
+            List<Two47Dto> commits =  parse(doc, season);
+            two47List = convertTwo47DtoToString(commits);
+        } catch (SoupConnectionException exception) {
+            two47List = Collections.singletonList(exception.getMessage());
+        }
+        return two47List;
     }
 
     private List<Two47Dto> parse(Document doc, String season) {
@@ -40,10 +56,11 @@ public class Two47Scraper {
             String id = href.substring(href.lastIndexOf('-') + 1);
             String website = HTTPS + href;
             try {
-                Document doc = connect(website);
+                Document doc = scrapingService.connect(website);
                 commits.add(getPlayer(doc, id, season, website));
             } catch (SoupConnectionException sce) {
                 // Just ignore for now
+                log.error(sce.getMessage());
             }
         });
         return commits;
@@ -102,15 +119,15 @@ public class Two47Scraper {
         return player;
     }
 
-    private Document connect(String website) throws SoupConnectionException {
-        log.info("Connect to Website: {}", website);
-        try {
-            return Jsoup.connect(website).get();
-        } catch (IOException exception) {
-            log.error("Unable to get rivals website: {}", exception.getMessage());
-            throw new SoupConnectionException("Unable to get rivals website: " + exception.getMessage(), exception);
-        }
+    private List<String> convertTwo47DtoToString(List<Two47Dto> commits) {
+        List<String> prospects = new ArrayList<>();
+        commits.forEach(commit -> {
+            prospects.add(commit.getTwo47Id() + ", " + commit.getName() + ", " + commit.getPosition() + ", " + commit.getHeight()
+                    + ", " + commit.getWeight() + ", " + commit.getHomeTown() + ", " + commit.getHighSchool() + ", " + commit.getYear()
+                    + ", " + commit.getCompositeRank() + ", " + commit.getRankNational() + ", " + commit.getRankPosition()
+                    + ", " + commit.getRankState() + ", " + commit.getStars() + ", " + commit.getUrl());
+        });
+        return prospects;
     }
-
 
 }
