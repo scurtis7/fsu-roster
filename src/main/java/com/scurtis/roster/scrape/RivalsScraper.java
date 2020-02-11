@@ -123,6 +123,7 @@ public class RivalsScraper {
             String rawRankings = scrapingService.connect(commit.getUrl()).toString();
             log.info("Size of raw rankings page: {}", rawRankings.length());
         } catch (SoupConnectionException exception) {
+            // Just ignore for now
             log.error("Exception getting raw rankings: {}", exception.getMessage());
         }
     }
