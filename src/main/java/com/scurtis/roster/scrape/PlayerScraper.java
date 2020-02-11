@@ -31,7 +31,8 @@ public class PlayerScraper {
     private final PlayerConverter playerConverter;
     private final PlayerRepository playerRepository;
 
-    public List<String> scrapePlayers(String year) {
+    public List<String> scrape(String year) {
+        log.info("Method: scrape()");
         List<String> playerList = new ArrayList<>();
         try {
             String lastTwo = Integer.toString(Integer.parseInt(year.substring(2)) + 1);
@@ -47,7 +48,6 @@ public class PlayerScraper {
             List<PlayerDto> playerDtos = processPlayerWebsite(doc, playerYear);
             List<Player> players = playerConverter.playerDtoToPlayer(playerDtos);
             playerList = savePlayers(players);
-//            playerList = convertPlayers(players);
         } catch (SoupConnectionException exception) {
             playerList = Collections.singletonList(exception.getMessage());
         }

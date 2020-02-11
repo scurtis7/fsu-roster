@@ -41,7 +41,7 @@ public class RivalsScraper {
     private final ScrapingService scrapingService;
 
     public List<String> scrape(String season) {
-        log.info("scrape()");
+        log.info("Method: scrape()");
         List<String> rivalsList = new ArrayList<>();
         try {
             Document doc = scrapingService.connect(BASE_URL + season + "/");

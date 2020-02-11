@@ -33,13 +33,13 @@ public class ScrapingRestController {
     @GetMapping(value = "/coach", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<String> getCoaches() {
         log.info("Method: getCoaches");
-        return coachScraper.scrapeCoaches();
+        return coachScraper.scrape();
     }
 
     @GetMapping(value = "/player/{year}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<String> getPlayers(@PathVariable(value = "year") String year) {
         log.info("Method: getPlayers");
-        return playerScraper.scrapePlayers(year);
+        return playerScraper.scrape(year);
     }
 
     @GetMapping(value = "/rivals/{year}", produces = MediaType.APPLICATION_JSON_VALUE)
