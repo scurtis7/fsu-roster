@@ -7,6 +7,7 @@ import com.scurtis.roster.model.player.PlayerRepository;
 import com.scurtis.roster.scrape.CoachScraper;
 import com.scurtis.roster.scrape.PlayerScraper;
 import com.scurtis.roster.scrape.RivalsScraper;
+import com.scurtis.roster.scrape.ScrapingService;
 import com.scurtis.roster.scrape.Two47Scraper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,8 +31,13 @@ public class RosterConfiguration {
     }
 
     @Bean
-    public CoachScraper coachScraper(CoachRepository coachRepository, CoachConverter coachConverter) {
-        return new CoachScraper(coachRepository, coachConverter);
+    public ScrapingService scrapingService() {
+        return new ScrapingService();
+    }
+
+    @Bean
+    public CoachScraper coachScraper(ScrapingService scrapingService, CoachRepository coachRepository, CoachConverter coachConverter) {
+        return new CoachScraper(scrapingService, coachRepository, coachConverter);
     }
 
     @Bean
