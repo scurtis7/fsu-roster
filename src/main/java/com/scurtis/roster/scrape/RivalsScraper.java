@@ -136,14 +136,4 @@ public class RivalsScraper {
         return prospects;
     }
 
-//    private Document connect(String website) throws SoupConnectionException {
-//        log.info("Connect to Website: {}", website);
-//        try {
-//            return Jsoup.connect(website).get();
-//        } catch (IOException exception) {
-//            log.error("Unable to get rivals website: {}", exception.getMessage());
-//            throw new SoupConnectionException("Unable to get rivals website: " + exception.getMessage(), exception);
-//        }
-//    }
-
 }
