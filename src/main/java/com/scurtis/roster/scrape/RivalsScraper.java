@@ -2,13 +2,13 @@ package com.scurtis.roster.scrape;
 
 import com.scurtis.roster.dto.RivalsDto;
 import com.scurtis.roster.exception.SoupConnectionException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -17,7 +17,10 @@ import java.util.List;
  **/
 
 @Slf4j
+@RequiredArgsConstructor
 public class RivalsScraper {
+
+    private static final String BASE_URL = "https://floridastate.rivals.com/commitments/football/";
 
     private static final String KEY_ID = "{id:";
     private static final String KEY_NAME = "name:";
@@ -35,14 +38,22 @@ public class RivalsScraper {
     private static final String KEY_SPORT = "sport:";
     private static final String KEY_YEAR = "year:";
 
-    public List<RivalsDto> scrape(String season) throws SoupConnectionException {
+    private final ScrapingService scrapingService;
+
+    public List<String> scrape(String season) {
         log.info("scrape()");
-        String website = "https://floridastate.rivals.com/commitments/football/" + season + "/";
-        Document doc = connect(website);
-        return parse(doc);
+        List<String> rivalsList = new ArrayList<>();
+        try {
+            Document doc = scrapingService.connect(BASE_URL + season + "/");
+            List<RivalsDto> commits =  parse(doc);
+            rivalsList = convertRivalsDtoToString(commits);
+        } catch (SoupConnectionException exception) {
+            rivalsList = Collections.singletonList(exception.getMessage());
+        }
+        return rivalsList;
     }
 
-    private List<RivalsDto> parse(Document doc) throws SoupConnectionException {
+    private List<RivalsDto> parse(Document doc) {
         log.info("Document Title: {}", doc.title());
         Element commitments = doc.select("rv-commitments").first();
         String temp = commitments.toString().replaceAll("&quot;", "");
@@ -97,26 +108,42 @@ public class RivalsScraper {
         return commits;
     }
 
-    private List<RivalsDto> setPlayerRankings(List<RivalsDto> commits) throws SoupConnectionException {
+    private List<RivalsDto> setPlayerRankings(List<RivalsDto> commits) {
         for (RivalsDto commit : commits) {
             getRanking(commit);
         }
         return commits;
     }
 
-    private void getRanking(RivalsDto commit) throws SoupConnectionException {
-        String rawRankings = connect(commit.getUrl()).toString();
-        log.info("Size of raw rankings page: {}", rawRankings.length());
-    }
-
-    private Document connect(String website) throws SoupConnectionException {
-        log.info("Connect to Website: {}", website);
+    private void getRanking(RivalsDto commit) {
         try {
-            return Jsoup.connect(website).get();
-        } catch (IOException exception) {
-            log.error("Unable to get rivals website: {}", exception.getMessage());
-            throw new SoupConnectionException("Unable to get rivals website: " + exception.getMessage(), exception);
+            String rawRankings = scrapingService.connect(commit.getUrl()).toString();
+            log.info("Size of raw rankings page: {}", rawRankings.length());
+        } catch (SoupConnectionException exception) {
+            log.error("Exception getting raw rankings: {}", exception.getMessage());
         }
     }
+
+    private List<String> convertRivalsDtoToString(List<RivalsDto> commits) {
+        List<String> prospects = new ArrayList<>();
+        commits.forEach(commit -> {
+            prospects.add(commit.getRivalsId() + ", " + commit.getName() + ", " + commit.getCity() + ", " + commit.getState() + ", "
+                    + commit.getPosition() + ", " + commit.getHeight() + ", " + commit.getWeight() + ", " + commit.getSign() + ", "
+                    + commit.getStars() + ", " + commit.getRating() + ", " + commit.getCommitDate() + ", " + commit.getUrl() + ", "
+                    + commit.getStatus() + ", " + commit.getSport() + ", " + commit.getYear()
+            );
+        });
+        return prospects;
+    }
+
+//    private Document connect(String website) throws SoupConnectionException {
+//        log.info("Connect to Website: {}", website);
+//        try {
+//            return Jsoup.connect(website).get();
+//        } catch (IOException exception) {
+//            log.error("Unable to get rivals website: {}", exception.getMessage());
+//            throw new SoupConnectionException("Unable to get rivals website: " + exception.getMessage(), exception);
+//        }
+//    }
 
 }

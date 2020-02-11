@@ -32,6 +32,7 @@ public class CoachScraper {
     private final CoachConverter coachConverter;
 
     public List<String> scrapeCoaches() {
+
         List<String> coachList = new ArrayList<>();
         try {
             Document doc = scrapingService.connect(WEBSITE);

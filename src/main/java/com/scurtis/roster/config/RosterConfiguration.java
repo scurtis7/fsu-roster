@@ -46,8 +46,8 @@ public class RosterConfiguration {
     }
 
     @Bean
-    public RivalsScraper rivalsScraper() {
-        return new RivalsScraper();
+    public RivalsScraper rivalsScraper(ScrapingService scrapingService) {
+        return new RivalsScraper(scrapingService);
     }
 
     @Bean
