@@ -149,6 +149,7 @@ public class Two47Scraper {
                     two47.setRankState(commit.getRankState());
                     two47.setStars(commit.getStars());
                     two47.setLink(commit.getLink());
+                    two47Repository.save(two47);
                     commitList.add(convertTwo47DtoToString(commit));
                 }
             }
