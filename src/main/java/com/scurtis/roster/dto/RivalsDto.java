@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 public class RivalsDto {
-    private String rivalsId;
+    private String siteId;
     private String name;
     private String city;
     private String state;
@@ -20,7 +20,7 @@ public class RivalsDto {
     private String stars;
     private String rating;
     private String commitDate;
-    private String url;
+    private String link;
     private String status;
     private String sport;
     private String year;

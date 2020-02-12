@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class Two47Dto {
 
-    private String two47Id;
+    private String siteId;
     private String name;
     private String position;
     private String height;
@@ -23,6 +23,6 @@ public class Two47Dto {
     private String rankPosition;
     private String rankState;
     private String stars;
-    private String url;
+    private String link;
 
 }

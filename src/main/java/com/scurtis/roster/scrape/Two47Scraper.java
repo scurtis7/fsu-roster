@@ -2,6 +2,10 @@ package com.scurtis.roster.scrape;
 
 import com.scurtis.roster.dto.Two47Dto;
 import com.scurtis.roster.exception.SoupConnectionException;
+import com.scurtis.roster.model.player.Player;
+import com.scurtis.roster.model.player.PlayerRepository;
+import com.scurtis.roster.model.player.Two47;
+import com.scurtis.roster.model.player.Two47Repository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.nodes.Document;
@@ -25,10 +29,13 @@ public class Two47Scraper {
     private static final String FOOTBALL_COMMITS = "-Football/Commits/";
 
     private final ScrapingService scrapingService;
+    private final Two47Repository two47Repository;
+    private final PlayerRepository playerRepository;
 
     public List<String> scrape(String season) {
         log.info("Method: scrape()");
         List<String> two47List = new ArrayList<>();
+        two47List.add("   === Noles 247 Commits Added ===   ");
         try {
             Document doc = scrapingService.connect(BASE_URL + season + FOOTBALL_COMMITS);
             if (doc == null) {
@@ -36,7 +43,7 @@ public class Two47Scraper {
             }
 
             List<Two47Dto> commits =  parse(doc, season);
-            two47List = convertTwo47DtoToString(commits);
+            two47List = saveCommits(commits);
         } catch (SoupConnectionException exception) {
             two47List = Collections.singletonList(exception.getMessage());
         }
@@ -68,9 +75,9 @@ public class Two47Scraper {
 
     private Two47Dto getPlayer(Document doc, String id, String season, String url) {
         Two47Dto player = new Two47Dto();
-        player.setTwo47Id(id);
+        player.setSiteId(id);
         player.setYear(season);
-        player.setUrl(url);
+        player.setLink(url);
         List<Element> headers = doc.getElementsByClass("profile-header");
         log.info("Number of headers: {}", headers.size());
         player.setName(doc.getElementsByClass("name").first().text());
@@ -119,15 +126,44 @@ public class Two47Scraper {
         return player;
     }
 
-    private List<String> convertTwo47DtoToString(List<Two47Dto> commits) {
-        List<String> prospects = new ArrayList<>();
-        commits.forEach(commit -> {
-            prospects.add(commit.getTwo47Id() + ", " + commit.getName() + ", " + commit.getPosition() + ", " + commit.getHeight()
-                    + ", " + commit.getWeight() + ", " + commit.getHomeTown() + ", " + commit.getHighSchool() + ", " + commit.getYear()
-                    + ", " + commit.getCompositeRank() + ", " + commit.getRankNational() + ", " + commit.getRankPosition()
-                    + ", " + commit.getRankState() + ", " + commit.getStars() + ", " + commit.getUrl());
-        });
-        return prospects;
+    private List<String> saveCommits(List<Two47Dto> commits) {
+        List<String> commitList = new ArrayList<>();
+        commitList.add("   === Noles 247 Commits Added ===   ");
+        for (Two47Dto commit : commits) {
+            if (two47Repository.find247Player(commit.getSiteId()) == null) {
+                Player player = playerRepository.findPlayer(commit.getName(), commit.getYear());
+                if (player != null) {
+                    Two47 two47 = new Two47();
+                    two47.setPlayer(player);
+                    two47.setSiteId(commit.getSiteId());
+                    two47.setName(commit.getName());
+                    two47.setPosition(commit.getPosition());
+                    two47.setHeight(commit.getHeight());
+                    two47.setWeight(commit.getWeight());
+                    two47.setHomeTown(commit.getHomeTown());
+                    two47.setHighSchool(commit.getHighSchool());
+                    two47.setYear(commit.getYear());
+                    two47.setCompositeRank(commit.getCompositeRank());
+                    two47.setRankNational(commit.getRankNational());
+                    two47.setRankPosition(commit.getRankPosition());
+                    two47.setRankState(commit.getRankState());
+                    two47.setStars(commit.getStars());
+                    two47.setLink(commit.getLink());
+                    commitList.add(convertTwo47DtoToString(commit));
+                }
+            }
+        }
+        if (commitList.size() == 1) {
+            commitList = Collections.singletonList("   === No Noles 247 Commits Added ===   ");
+        }
+        return commitList;
+    }
+
+    private String convertTwo47DtoToString(Two47Dto commit) {
+        return commit.getSiteId() + ", " + commit.getName() + ", " + commit.getPosition() + ", " + commit.getHeight()
+                + ", " + commit.getWeight() + ", " + commit.getHomeTown() + ", " + commit.getHighSchool() + ", " + commit.getYear()
+                + ", " + commit.getCompositeRank() + ", " + commit.getRankNational() + ", " + commit.getRankPosition()
+                + ", " + commit.getRankState() + ", " + commit.getStars() + ", " + commit.getLink();
     }
 
 }

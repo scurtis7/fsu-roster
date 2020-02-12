@@ -4,6 +4,8 @@ import com.scurtis.roster.converter.CoachConverter;
 import com.scurtis.roster.converter.PlayerConverter;
 import com.scurtis.roster.model.coach.CoachRepository;
 import com.scurtis.roster.model.player.PlayerRepository;
+import com.scurtis.roster.model.player.RivalsRepository;
+import com.scurtis.roster.model.player.Two47Repository;
 import com.scurtis.roster.scrape.CoachScraper;
 import com.scurtis.roster.scrape.PlayerScraper;
 import com.scurtis.roster.scrape.RivalsScraper;
@@ -46,13 +48,13 @@ public class RosterConfiguration {
     }
 
     @Bean
-    public RivalsScraper rivalsScraper(ScrapingService scrapingService) {
-        return new RivalsScraper(scrapingService);
+    public RivalsScraper rivalsScraper(ScrapingService scrapingService, RivalsRepository rivalsRepository, PlayerRepository playerRepository) {
+        return new RivalsScraper(scrapingService, rivalsRepository, playerRepository);
     }
 
     @Bean
-    public Two47Scraper two47Scraper(ScrapingService scrapingService) {
-        return new Two47Scraper(scrapingService);
+    public Two47Scraper two47Scraper(ScrapingService scrapingService, Two47Repository two47Repository, PlayerRepository playerRepository) {
+        return new Two47Scraper(scrapingService, two47Repository, playerRepository);
     }
 
 }

@@ -35,11 +35,32 @@ public class Two47 {
     @JoinColumn(name = "playerId", referencedColumnName = "playerId")
     private Player player;
 
-    @Column(name = "Stars")
-    private String stars;
+    @Column(name = "siteId")
+    private String siteId;
 
-    @Column(name = "Rating")
-    private String rating;
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "position")
+    private String position;
+
+    @Column(name = "height")
+    private String height;
+
+    @Column(name = "weight")
+    private String weight;
+
+    @Column(name = "homeTown")
+    private String homeTown;
+
+    @Column(name = "highSchool")
+    private String highSchool;
+
+    @Column(name = "year")
+    private String year;
+
+    @Column(name = "compositeRank")
+    private String compositeRank;
 
     @Column(name = "RankNational")
     private String rankNational;
@@ -49,6 +70,9 @@ public class Two47 {
 
     @Column(name = "RankState")
     private String rankState;
+
+    @Column(name = "Stars")
+    private String stars;
 
     @Column(name = "Link")
     private String link;

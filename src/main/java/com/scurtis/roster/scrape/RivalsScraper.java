@@ -2,6 +2,10 @@ package com.scurtis.roster.scrape;
 
 import com.scurtis.roster.dto.RivalsDto;
 import com.scurtis.roster.exception.SoupConnectionException;
+import com.scurtis.roster.model.player.Player;
+import com.scurtis.roster.model.player.PlayerRepository;
+import com.scurtis.roster.model.player.Rivals;
+import com.scurtis.roster.model.player.RivalsRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.nodes.Document;
@@ -39,6 +43,8 @@ public class RivalsScraper {
     private static final String KEY_YEAR = "year:";
 
     private final ScrapingService scrapingService;
+    private final RivalsRepository rivalsRepository;
+    private final PlayerRepository playerRepository;
 
     public List<String> scrape(String season) {
         log.info("Method: scrape()");
@@ -49,7 +55,7 @@ public class RivalsScraper {
                 return rivalsList;
             }
             List<RivalsDto> commits =  parse(doc);
-            rivalsList = convertRivalsDtoToString(commits);
+            rivalsList = saveCommits(commits);
         } catch (SoupConnectionException exception) {
             rivalsList = Collections.singletonList(exception.getMessage());
         }
@@ -75,7 +81,7 @@ public class RivalsScraper {
             log.debug("Players size: {}", players.length);
             for (String player : players) {
                 if (player.contains(KEY_ID)) {
-                    dto.setRivalsId(player.substring(KEY_ID.length()));
+                    dto.setSiteId(player.substring(KEY_ID.length()));
                 } else if (player.contains(KEY_NAME)) {
                     dto.setName(player.substring(KEY_NAME.length()));
                 } else if (player.contains(KEY_CITY)) {
@@ -97,7 +103,7 @@ public class RivalsScraper {
                 } else if (player.contains(KEY_COMMIT_DATE)) {
                     dto.setCommitDate(player.substring(KEY_COMMIT_DATE.length()));
                 } else if (player.contains(KEY_URL)) {
-                    dto.setUrl(player.substring(KEY_URL.length()));
+                    dto.setLink(player.substring(KEY_URL.length()));
                 } else if (player.contains(KEY_STATUS)) {
                     dto.setStatus(player.substring(KEY_STATUS.length()));
                 } else if (player.contains(KEY_SPORT)) {
@@ -120,7 +126,7 @@ public class RivalsScraper {
 
     private void getRanking(RivalsDto commit) {
         try {
-            String rawRankings = scrapingService.connect(commit.getUrl()).toString();
+            String rawRankings = scrapingService.connect(commit.getLink()).toString();
             log.info("Size of raw rankings page: {}", rawRankings.length());
         } catch (SoupConnectionException exception) {
             // Just ignore for now
@@ -128,16 +134,49 @@ public class RivalsScraper {
         }
     }
 
-    private List<String> convertRivalsDtoToString(List<RivalsDto> commits) {
-        List<String> prospects = new ArrayList<>();
-        commits.forEach(commit -> {
-            prospects.add(commit.getRivalsId() + ", " + commit.getName() + ", " + commit.getCity() + ", " + commit.getState() + ", "
-                    + commit.getPosition() + ", " + commit.getHeight() + ", " + commit.getWeight() + ", " + commit.getSign() + ", "
-                    + commit.getStars() + ", " + commit.getRating() + ", " + commit.getCommitDate() + ", " + commit.getUrl() + ", "
-                    + commit.getStatus() + ", " + commit.getSport() + ", " + commit.getYear()
-            );
-        });
-        return prospects;
+    private List<String> saveCommits(List<RivalsDto> commits) {
+        List<String> commitList = new ArrayList<>();
+        commitList.add("   === Rivals Commits Added ===   ");
+        for (RivalsDto commit : commits) {
+            if (rivalsRepository.findRivalsPlayer(commit.getSiteId()) == null) {
+                Player player = playerRepository.findPlayer(commit.getName(), commit.getYear());
+                if (player != null) {
+                    Rivals rivalsCommit = new Rivals();
+                    rivalsCommit.setPlayer(player);
+                    rivalsCommit.setSiteId(commit.getSiteId());
+                    rivalsCommit.setName(commit.getName());
+                    rivalsCommit.setCity(commit.getCity());
+                    rivalsCommit.setState(commit.getState());
+                    rivalsCommit.setPosition(commit.getPosition());
+                    rivalsCommit.setHeight(commit.getHeight());
+                    rivalsCommit.setWeight(commit.getWeight());
+                    rivalsCommit.setSign(commit.getSign());
+                    rivalsCommit.setStars(commit.getStars());
+                    rivalsCommit.setRating(commit.getRating());
+                    rivalsCommit.setCommitDate(commit.getCommitDate());
+                    rivalsCommit.setLink(commit.getLink());
+                    rivalsCommit.setStatus(commit.getStatus());
+                    rivalsCommit.setSport(commit.getSport());
+                    rivalsCommit.setYear(commit.getYear());
+                    rivalsCommit.setRankNational(commit.getRankNational());
+                    rivalsCommit.setRankPosition(commit.getRankPosition());
+                    rivalsCommit.setRankState(commit.getRankState());
+                    rivalsRepository.save(rivalsCommit);
+                    commitList.add(convertRivalsDtoToString(commit));
+                }
+            }
+        }
+        if (commitList.size() == 1) {
+            commitList = Collections.singletonList("   === No Rivals Commits Added ===   ");
+        }
+        return commitList;
+    }
+
+    private String convertRivalsDtoToString(RivalsDto commit) {
+        return commit.getSiteId() + ", " + commit.getName() + ", " + commit.getCity() + ", " + commit.getState() + ", "
+                + commit.getPosition() + ", " + commit.getHeight() + ", " + commit.getWeight() + ", " + commit.getSign() + ", "
+                + commit.getStars() + ", " + commit.getRating() + ", " + commit.getCommitDate() + ", " + commit.getLink() + ", "
+                + commit.getStatus() + ", " + commit.getSport() + ", " + commit.getYear();
     }
 
 }
