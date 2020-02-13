@@ -79,7 +79,6 @@ public class Two47Scraper {
         player.setYear(season);
         player.setLink(url);
         List<Element> headers = doc.getElementsByClass("profile-header");
-        log.info("Number of headers: {}", headers.size());
         player.setName(doc.getElementsByClass("name").first().text());
         Element metrics = doc.getElementsByClass("metrics-list").first();
         List<Element> listItems = metrics.select("li");
@@ -127,12 +126,16 @@ public class Two47Scraper {
     }
 
     private List<String> saveCommits(List<Two47Dto> commits) {
+        log.info("Method: saveCommits(), number of commits: {}", commits.size());
         List<String> commitList = new ArrayList<>();
         commitList.add("   === Noles 247 Commits Added ===   ");
         for (Two47Dto commit : commits) {
+            log.info("Commit Name: {}", commit.getName());
             if (two47Repository.find247Player(commit.getSiteId()) == null) {
-                Player player = playerRepository.findPlayer(commit.getName(), commit.getYear());
+                log.info("  Commit not in database, save it now");
+                Player player = findPlayer(commit);
                 if (player != null) {
+                    log.info("  Player found in database, saving 247 Recruit");
                     Two47 two47 = new Two47();
                     two47.setPlayer(player);
                     two47.setSiteId(commit.getSiteId());
@@ -150,14 +153,43 @@ public class Two47Scraper {
                     two47.setStars(commit.getStars());
                     two47.setLink(commit.getLink());
                     two47Repository.save(two47);
+                    log.info("    Noles 247 Recruit added -> {}", two47.getName());
                     commitList.add(convertTwo47DtoToString(commit));
+                } else {
+                    log.info("  Player not found in database, will not save 247 Recruit");
+                    // todo: Add this commit to a not found list so we can look it up later
                 }
             }
         }
         if (commitList.size() == 1) {
+            log.info("=== No Noles 247 Commits Added ===");
             commitList = Collections.singletonList("   === No Noles 247 Commits Added ===   ");
         }
+        log.info("Number of commits added: {}", commitList.size());
         return commitList;
+    }
+
+    private Player findPlayer(Two47Dto commit) {
+        Player player = playerRepository.findPlayer(commit.getName(), commit.getYear());
+        if (player != null) {
+            log.info("Player found");
+            return player;
+        }
+        log.info("Player NOT found, comparing last name");
+        String[] names =commit.getName().split(" ");
+        String lastName = names[1];
+        List<Player> players = playerRepository.findAll();
+        for (Player person : players) {
+            if (person.getName().contains(lastName) && person.getYear().equals(commit.getYear())) {
+                log.info("Player found by looking for last name");
+                player = person;
+                break;
+            }
+        }
+        if (player == null) {
+            log.info("Player not found by looking for last name");
+        }
+        return player;
     }
 
     private String convertTwo47DtoToString(Two47Dto commit) {
