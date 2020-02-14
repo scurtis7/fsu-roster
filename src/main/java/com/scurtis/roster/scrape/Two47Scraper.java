@@ -6,6 +6,8 @@ import com.scurtis.roster.model.player.Player;
 import com.scurtis.roster.model.player.PlayerRepository;
 import com.scurtis.roster.model.player.Two47;
 import com.scurtis.roster.model.player.Two47Repository;
+import com.scurtis.roster.model.player.Two47Unmatched;
+import com.scurtis.roster.model.player.Two47UnmatchedRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.nodes.Document;
@@ -30,6 +32,7 @@ public class Two47Scraper {
 
     private final ScrapingService scrapingService;
     private final Two47Repository two47Repository;
+    private final Two47UnmatchedRepository two47UnmatchedRepository;
     private final PlayerRepository playerRepository;
 
     public List<String> scrape(String season) {
@@ -157,7 +160,7 @@ public class Two47Scraper {
                     commitList.add(convertTwo47DtoToString(commit));
                 } else {
                     log.info("  Player not found in database, will not save 247 Recruit");
-                    // todo: Add this commit to a not found list so we can look it up later
+                    saveUnmatched(commit);
                 }
             }
         }
@@ -167,6 +170,25 @@ public class Two47Scraper {
         }
         log.info("Number of commits added: {}", commitList.size());
         return commitList;
+    }
+
+    private void saveUnmatched(Two47Dto commit) {
+        Two47Unmatched unmatched = new Two47Unmatched();
+        unmatched.setSiteId(commit.getSiteId());
+        unmatched.setName(commit.getName());
+        unmatched.setPosition(commit.getPosition());
+        unmatched.setHeight(commit.getHeight());
+        unmatched.setWeight(commit.getWeight());
+        unmatched.setHomeTown(commit.getHomeTown());
+        unmatched.setHighSchool(commit.getHighSchool());
+        unmatched.setYear(commit.getYear());
+        unmatched.setCompositeRank(commit.getCompositeRank());
+        unmatched.setRankNational(commit.getRankNational());
+        unmatched.setRankPosition(commit.getRankPosition());
+        unmatched.setRankState(commit.getRankState());
+        unmatched.setStars(commit.getStars());
+        unmatched.setLink(commit.getLink());
+        two47UnmatchedRepository.save(unmatched);
     }
 
     private Player findPlayer(Two47Dto commit) {

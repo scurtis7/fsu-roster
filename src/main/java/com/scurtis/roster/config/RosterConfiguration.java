@@ -6,6 +6,7 @@ import com.scurtis.roster.model.coach.CoachRepository;
 import com.scurtis.roster.model.player.PlayerRepository;
 import com.scurtis.roster.model.player.RivalsRepository;
 import com.scurtis.roster.model.player.Two47Repository;
+import com.scurtis.roster.model.player.Two47UnmatchedRepository;
 import com.scurtis.roster.scrape.CoachScraper;
 import com.scurtis.roster.scrape.PlayerScraper;
 import com.scurtis.roster.scrape.RivalsScraper;
@@ -53,8 +54,8 @@ public class RosterConfiguration {
     }
 
     @Bean
-    public Two47Scraper two47Scraper(ScrapingService scrapingService, Two47Repository two47Repository, PlayerRepository playerRepository) {
-        return new Two47Scraper(scrapingService, two47Repository, playerRepository);
+    public Two47Scraper two47Scraper(ScrapingService scrapingService, Two47Repository two47Repository, Two47UnmatchedRepository two47UnmatchedRepository, PlayerRepository playerRepository) {
+        return new Two47Scraper(scrapingService, two47Repository, two47UnmatchedRepository, playerRepository);
     }
 
 }
