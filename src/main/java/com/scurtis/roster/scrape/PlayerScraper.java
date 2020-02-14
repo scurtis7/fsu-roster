@@ -69,7 +69,7 @@ public class PlayerScraper {
             List<Element> tds = trs.get(0).select("td");
             player.setPosition(tds.get(1) != null ? tds.get(1).text() : "");
             tds = trs.get(1).select("td");
-            player.setClassYear(tds.get(1) != null ? tds.get(1).text() : "");
+            player.setClassYear(tds.get(1) != null ? tds.get(1).text() : "****");
             player.setYear(convertYear(player.getClassYear(), playerYear));
             tds = trs.get(2).select("td");
             player.setHomeTown(tds.get(1) != null ? tds.get(1).text() : "");
@@ -94,6 +94,7 @@ public class PlayerScraper {
     }
 
     private String convertYear(String year, int playerYear) {
+        log.info("Class Year to convert: {}", year);
         if (year.equals("Freshman")) {
             return String.valueOf(playerYear);
         } else if (year.equals("Redshirt Freshman") || year.equals("Sophomore")) {
@@ -105,7 +106,8 @@ public class PlayerScraper {
         } else if (year.equals("Redshirt Senior")) {
             return String.valueOf(playerYear - 4);
         }
-        return String.valueOf(playerYear - 5);
+        log.info("Could not convert Class Year: {} - {}", playerYear, year);
+        return "** " + playerYear;
     }
 
     private List<String> savePlayers(List<Player> players) {

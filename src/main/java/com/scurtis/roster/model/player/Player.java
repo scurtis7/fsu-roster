@@ -34,6 +34,9 @@ public class Player {
     @Column(name = "Year", nullable = false)
     private String year;
 
+    @Column(name = "ClassYear", nullable = false)
+    private String classYear;
+
     @Column(name = "Position", nullable = false)
     private String position;
 
