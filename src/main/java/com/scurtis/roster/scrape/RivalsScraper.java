@@ -139,7 +139,7 @@ public class RivalsScraper {
         commitList.add("   === Rivals Commits Added ===   ");
         for (RivalsDto commit : commits) {
             if (rivalsRepository.findRivalsPlayer(commit.getSiteId()) == null) {
-                Player player = playerRepository.findPlayer(commit.getName(), commit.getYear());
+                Player player = playerRepository.findPlayerByNameUpperCase(commit.getName());
                 if (player != null) {
                     Rivals rivalsCommit = new Rivals();
                     rivalsCommit.setPlayer(player);

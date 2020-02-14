@@ -22,6 +22,9 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
     List<String> findAllJerseys();
 
     @Query("SELECT p FROM Player p WHERE p.name = :name AND p.year = :year")
-    Player findPlayer(@Param("name") String name, @Param("year") String year);
+    Player findPlayerByNameAndYear(@Param("name") String name, @Param("year") String year);
+
+    @Query("SELECT p FROM Player p WHERE upper(p.name) = :name")
+    Player findPlayerByNameUpperCase(@Param("name") String name);
 
 }

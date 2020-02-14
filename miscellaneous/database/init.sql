@@ -3,7 +3,7 @@
 -- CREATE SCHEMA fsu_roster;
 
 DROP TABLE IF EXISTS
-    fsu_roster.Player, fsu_roster.Coach, fsu_roster.Rivals, fsu_roster.Two47 CASCADE;
+    fsu_roster.Player, fsu_roster.Coach, fsu_roster.Rivals, fsu_roster.Two47, fsu_roster.Two47Unmatched CASCADE;
 
 -- Create the Player table
 CREATE TABLE fsu_roster.Player
@@ -60,8 +60,8 @@ CREATE TABLE fsu_roster.Two47
     Position       VARCHAR(50),
     Height         VARCHAR(10),
     Weight         VARCHAR(10),
-    HomeTown       VARCHAR(10),
-    HighSchool     VARCHAR(10),
+    HomeTown       VARCHAR(100),
+    HighSchool     VARCHAR(100),
     Year           VARCHAR(5),
     CompositeRank  VARCHAR(10),
     RankNational   VARCHAR(10),
@@ -70,6 +70,25 @@ CREATE TABLE fsu_roster.Two47
     Stars          VARCHAR(10),
     Link           VARCHAR(100),
     LastUpdateDate TIMESTAMP NOT NULL DEFAULT now()
+);
+
+-- Create the 247 table
+CREATE TABLE fsu_roster.Two47Unmatched
+(
+    SiteId         VARCHAR(50) PRIMARY KEY,
+    Name           VARCHAR(50),
+    Position       VARCHAR(50),
+    Height         VARCHAR(10),
+    Weight         VARCHAR(10),
+    HomeTown       VARCHAR(100),
+    HighSchool     VARCHAR(100),
+    Year           VARCHAR(5),
+    CompositeRank  VARCHAR(10),
+    RankNational   VARCHAR(10),
+    RankPosition   VARCHAR(10),
+    RankState      VARCHAR(10),
+    Stars          VARCHAR(10),
+    Link           VARCHAR(100)
 );
 
 -- Create the Coaches table

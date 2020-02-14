@@ -112,7 +112,7 @@ public class PlayerScraper {
         List<String> playerList = new ArrayList<>();
         playerList.add("   === Players Added ===   ");
         for (Player player : players) {
-            if (playerRepository.findPlayer(player.getName(), player.getYear()) == null) {
+            if (playerRepository.findPlayerByNameUpperCase(player.getName().toUpperCase()) == null) {
                 playerRepository.save(player);
                 playerList.add(convertPlayer(player));
             }

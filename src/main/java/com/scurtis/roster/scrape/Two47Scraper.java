@@ -192,7 +192,7 @@ public class Two47Scraper {
     }
 
     private Player findPlayer(Two47Dto commit) {
-        Player player = playerRepository.findPlayer(commit.getName(), commit.getYear());
+        Player player = playerRepository.findPlayerByNameUpperCase(commit.getName());
         if (player != null) {
             log.info("Player found");
             return player;
