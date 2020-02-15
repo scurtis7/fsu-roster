@@ -3,7 +3,7 @@
 -- CREATE SCHEMA fsu_roster;
 
 DROP TABLE IF EXISTS
-    fsu_roster.Player, fsu_roster.Coach, fsu_roster.Rivals, fsu_roster.Two47, fsu_roster.Two47Unmatched CASCADE;
+    fsu_roster.Player, fsu_roster.Coach, fsu_roster.Rivals, fsu_roster.Two47, fsu_roster.Two47Unmatched, fsu_roster.RivalsUnmatched CASCADE;
 
 -- Create the Player table
 CREATE TABLE fsu_roster.Player
