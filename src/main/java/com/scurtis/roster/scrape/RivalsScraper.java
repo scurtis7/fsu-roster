@@ -142,7 +142,7 @@ public class RivalsScraper {
                 Player player = playerRepository.findPlayerByNameUpperCase(commit.getName());
                 if (player != null) {
                     Rivals rivalsCommit = new Rivals();
-                    rivalsCommit.setPlayer(player);
+                    rivalsCommit.setPlayerId(player.getPlayerId());
                     rivalsCommit.setSiteId(commit.getSiteId());
                     rivalsCommit.setName(commit.getName());
                     rivalsCommit.setCity(commit.getCity());

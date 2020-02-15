@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,9 +32,8 @@ public class Two47 {
     @Column(name = "Two47Id", unique = true, nullable = false)
     private Long Two47Id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "playerId", referencedColumnName = "playerId")
-    private Player player;
+    @Column(name = "playerId")
+    private Long playerId;
 
     @Column(name = "siteId")
     private String siteId;

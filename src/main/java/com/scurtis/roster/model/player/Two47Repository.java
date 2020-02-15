@@ -9,9 +9,9 @@ import org.springframework.data.repository.query.Param;
  * Date: Feb 06, 2020
  **/
 
-public interface Two47Repository extends JpaRepository<Two47, Long> {
+public interface Two47Repository extends JpaRepository<Two47, String> {
 
     @Query("SELECT t FROM Two47 t WHERE t.siteId = :siteId")
-    Rivals find247Player(@Param("siteId") String siteId);
+    Two47 find247Player(@Param("siteId") String siteId);
 
 }

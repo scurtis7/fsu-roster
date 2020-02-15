@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
  **/
 
 @Repository
-public interface RivalsRepository extends JpaRepository<Rivals, Long> {
+public interface RivalsRepository extends JpaRepository<Rivals, String> {
 
     @Query("SELECT r FROM Rivals r WHERE r.siteId = :siteId")
     Rivals findRivalsPlayer(@Param("siteId") String siteId);

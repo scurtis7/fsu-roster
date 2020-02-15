@@ -105,25 +105,39 @@ public class Two47Scraper {
             }
         });
 
-        String rank = doc.getElementsByClass("composite-rank").first().text();
-        if (rank != null && rank.contains("i")) {
+        if (doc.getElementsByClass("composite-rank") != null &&
+                doc.getElementsByClass("composite-rank").first() != null &&
+                doc.getElementsByClass("composite-rank").first().text() != null) {
+            String rank = doc.getElementsByClass("composite-rank").first().text();
             player.setCompositeRank(rank.replaceAll("i", "").trim());
+        } else {
+            player.setCompositeRank("");
         }
         Element starsBlock = doc.getElementsByClass("stars-block").first();
-        List<Element> starElements = starsBlock.select("span");
-        long stars = starElements.stream().filter(span -> span.className().contains("yellow")).count();
-        player.setStars(Long.toString(stars));
+        if (starsBlock != null) {
+            List<Element> starElements = starsBlock.select("span");
+            long stars = starElements.stream().filter(span -> span.className().contains("yellow")).count();
+            player.setStars(Long.toString(stars));
+        } else {
+            player.setStars("0");
+        }
 
         Element rankList = doc.getElementsByClass("ranks-list").first();
-        rankList.select("li").forEach(rankItem -> {
-            if (rankItem.selectFirst("h5").text().contains("Natl")) {
-                player.setRankNational(rankItem.selectFirst("strong").text());
-            } else if (rankItem.selectFirst("a").attr("href").contains("Position=")) {
-                player.setRankPosition(rankItem.selectFirst("strong").text());
-            } else if (rankItem.selectFirst("a").attr("href").contains("State=")) {
-                player.setRankState(rankItem.selectFirst("strong").text());
-            }
-        });
+        if (rankList != null) {
+            rankList.select("li").forEach(rankItem -> {
+                if (rankItem.selectFirst("h5").text().contains("Natl")) {
+                    player.setRankNational(rankItem.selectFirst("strong").text());
+                } else if (rankItem.selectFirst("a").attr("href").contains("Position=")) {
+                    player.setRankPosition(rankItem.selectFirst("strong").text());
+                } else if (rankItem.selectFirst("a").attr("href").contains("State=")) {
+                    player.setRankState(rankItem.selectFirst("strong").text());
+                }
+            });
+        } else {
+            player.setRankNational("");
+            player.setRankPosition("");
+            player.setRankState("");
+        }
 
         return player;
     }
@@ -140,7 +154,7 @@ public class Two47Scraper {
                 if (player != null) {
                     log.info("  Player found in database, saving 247 Recruit");
                     Two47 two47 = new Two47();
-                    two47.setPlayer(player);
+                    two47.setPlayerId(player.getPlayerId());
                     two47.setSiteId(commit.getSiteId());
                     two47.setName(commit.getName());
                     two47.setPosition(commit.getPosition());
