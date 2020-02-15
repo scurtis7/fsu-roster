@@ -21,9 +21,6 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
     @Query("SELECT DISTINCT p.jersey FROM Player p ORDER BY p.jersey ASC")
     List<String> findAllJerseys();
 
-    @Query("SELECT p FROM Player p WHERE p.name = :name AND p.year = :year")
-    Player findPlayerByNameAndYear(@Param("name") String name, @Param("year") String year);
-
     @Query("SELECT p FROM Player p WHERE upper(p.name) = :name")
     Player findPlayerByNameUpperCase(@Param("name") String name);
 

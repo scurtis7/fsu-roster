@@ -95,16 +95,18 @@ public class PlayerScraper {
 
     private String convertYear(String year, int playerYear) {
         log.info("Class Year to convert: {}", year);
-        if (year.equals("Freshman")) {
+        if (year.equalsIgnoreCase("Freshman")) {
             return String.valueOf(playerYear);
-        } else if (year.equals("Redshirt Freshman") || year.equals("Sophomore")) {
+        } else if (year.equalsIgnoreCase("Redshirt Freshman") || year.equalsIgnoreCase("Sophomore")) {
             return String.valueOf(playerYear - 1);
-        } else if (year.equals("Redshirt Sophomore") || year.equals("Junior")) {
+        } else if (year.equalsIgnoreCase("Redshirt Sophomore") || year.equalsIgnoreCase("Junior")) {
             return String.valueOf(playerYear - 2);
-        } else if (year.equals("Redshirt Junior") || year.equals("Senior")) {
+        } else if (year.equalsIgnoreCase("Redshirt Junior") || year.equalsIgnoreCase("Senior")) {
             return String.valueOf(playerYear - 3);
-        } else if (year.equals("Redshirt Senior")) {
+        } else if (year.equalsIgnoreCase("Redshirt Senior")) {
             return String.valueOf(playerYear - 4);
+        } else if (year.equalsIgnoreCase("Graduate")) {
+            return "** " + playerYear;
         }
         log.info("Could not convert Class Year: {} - {}", playerYear, year);
         return "** " + playerYear;
