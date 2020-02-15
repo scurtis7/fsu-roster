@@ -51,6 +51,29 @@ CREATE TABLE fsu_roster.Rivals
     LastUpdateDate TIMESTAMP NOT NULL DEFAULT now()
 );
 
+-- Create the RivalsUnmatched table
+CREATE TABLE fsu_roster.RivalsUnmatched
+(
+    SiteId         VARCHAR(50) PRIMARY KEY,
+    Name           VARCHAR(50),
+    City           VARCHAR(50),
+    State          VARCHAR(10),
+    Stars          VARCHAR(10),
+    Position       VARCHAR(50),
+    Height         VARCHAR(10),
+    Weight         VARCHAR(10),
+    Sign           VARCHAR(10),
+    Rating         VARCHAR(10),
+    CommitDate     VARCHAR(10),
+    Link           VARCHAR(100),
+    Status         VARCHAR(10),
+    Sport          VARCHAR(50),
+    Year           VARCHAR(10),
+    RankNational   VARCHAR(10),
+    RankPosition   VARCHAR(10),
+    RankState      VARCHAR(10)
+);
+
 -- Create the 247 table
 CREATE TABLE fsu_roster.Two47
 (

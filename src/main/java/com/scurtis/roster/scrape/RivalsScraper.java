@@ -6,6 +6,8 @@ import com.scurtis.roster.model.player.Player;
 import com.scurtis.roster.model.player.PlayerRepository;
 import com.scurtis.roster.model.player.Rivals;
 import com.scurtis.roster.model.player.RivalsRepository;
+import com.scurtis.roster.model.player.RivalsUnmatched;
+import com.scurtis.roster.model.player.RivalsUnmatchedRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.nodes.Document;
@@ -44,6 +46,7 @@ public class RivalsScraper {
 
     private final ScrapingService scrapingService;
     private final RivalsRepository rivalsRepository;
+    private final RivalsUnmatchedRepository rivalsUnmatchedRepository;
     private final PlayerRepository playerRepository;
 
     public List<String> scrape(String season) {
@@ -52,9 +55,11 @@ public class RivalsScraper {
         try {
             Document doc = scrapingService.connect(BASE_URL + season + "/");
             if (doc == null) {
+                rivalsList.add("   === Unable to get website data ===   ");
                 return rivalsList;
             }
-            List<RivalsDto> commits =  parse(doc);
+
+            List<RivalsDto> commits = parse(doc, season);
             rivalsList = saveCommits(commits);
         } catch (SoupConnectionException exception) {
             rivalsList = Collections.singletonList(exception.getMessage());
@@ -62,17 +67,16 @@ public class RivalsScraper {
         return rivalsList;
     }
 
-    private List<RivalsDto> parse(Document doc) {
+    private List<RivalsDto> parse(Document doc, String season) {
         log.info("Document Title: {}", doc.title());
         Element commitments = doc.select("rv-commitments").first();
         String temp = commitments.toString().replaceAll("&quot;", "");
         String temp1 = temp.substring(temp.indexOf('[') + 1, temp.indexOf(']'));
         String[] prospects = temp1.split("},");
-        List<RivalsDto> commits = getRivalsProspects(prospects);
-        return setPlayerRankings(commits);
+        return getRivalsProspects(prospects, season);
     }
 
-    private List<RivalsDto> getRivalsProspects(String[] prospects) {
+    private List<RivalsDto> getRivalsProspects(String[] prospects, String season) {
         log.debug("getRivalsProspects()");
         List<RivalsDto> commits = new ArrayList<>();
         for (String entry : prospects) {
@@ -117,30 +121,34 @@ public class RivalsScraper {
         return commits;
     }
 
-    private List<RivalsDto> setPlayerRankings(List<RivalsDto> commits) {
-        for (RivalsDto commit : commits) {
-            getRanking(commit);
-        }
-        return commits;
-    }
-
-    private void getRanking(RivalsDto commit) {
-        try {
-            String rawRankings = scrapingService.connect(commit.getLink()).toString();
-            log.info("Size of raw rankings page: {}", rawRankings.length());
-        } catch (SoupConnectionException exception) {
-            // Just ignore for now
-            log.error("Exception getting raw rankings: {}", exception.getMessage());
-        }
-    }
+//    private List<RivalsDto> setPlayerRankings(List<RivalsDto> commits) {
+//        for (RivalsDto commit : commits) {
+//            getRanking(commit);
+//        }
+//        return commits;
+//    }
+//
+//    private void getRanking(RivalsDto commit) {
+//        try {
+//            String rawRankings = scrapingService.connect(commit.getLink()).toString();
+//            log.info("Size of raw rankings page: {}", rawRankings.length());
+//        } catch (SoupConnectionException exception) {
+//            // Just ignore for now
+//            log.error("Exception getting raw rankings: {}", exception.getMessage());
+//        }
+//    }
 
     private List<String> saveCommits(List<RivalsDto> commits) {
+        log.info("Method: saveCommits(), number of commits: {}", commits.size());
         List<String> commitList = new ArrayList<>();
         commitList.add("   === Rivals Commits Added ===   ");
         for (RivalsDto commit : commits) {
+            log.info("Commit Name: {}", commit.getName());
             if (rivalsRepository.findRivalsPlayer(commit.getSiteId()) == null) {
-                Player player = playerRepository.findPlayerByNameUpperCase(commit.getName());
+                log.info("  Commit not in database, save it now");
+                Player player = findPlayer(commit);
                 if (player != null) {
+                    log.info("  Player found in database, saving Rivals Recruit");
                     Rivals rivalsCommit = new Rivals();
                     rivalsCommit.setPlayerId(player.getPlayerId());
                     rivalsCommit.setSiteId(commit.getSiteId());
@@ -162,7 +170,11 @@ public class RivalsScraper {
                     rivalsCommit.setRankPosition(commit.getRankPosition());
                     rivalsCommit.setRankState(commit.getRankState());
                     rivalsRepository.save(rivalsCommit);
-                    commitList.add(convertRivalsDtoToString(commit));
+                    commitList.add(commit.toString());
+//                    commitList.add(convertRivalsDtoToString(commit));
+                } else {
+                    log.info("  Player not found in database, will not save Rivals Recruit");
+                    saveUnmatched(commit);
                 }
             }
         }
@@ -172,11 +184,57 @@ public class RivalsScraper {
         return commitList;
     }
 
-    private String convertRivalsDtoToString(RivalsDto commit) {
-        return commit.getSiteId() + ", " + commit.getName() + ", " + commit.getCity() + ", " + commit.getState() + ", "
-                + commit.getPosition() + ", " + commit.getHeight() + ", " + commit.getWeight() + ", " + commit.getSign() + ", "
-                + commit.getStars() + ", " + commit.getRating() + ", " + commit.getCommitDate() + ", " + commit.getLink() + ", "
-                + commit.getStatus() + ", " + commit.getSport() + ", " + commit.getYear();
+    private void saveUnmatched(RivalsDto commit) {
+        RivalsUnmatched unmatched = new RivalsUnmatched();
+        unmatched.setSiteId(commit.getSiteId());
+        unmatched.setName(commit.getName());
+        unmatched.setCity(commit.getCity());
+        unmatched.setState(commit.getState());
+        unmatched.setPosition(commit.getPosition());
+        unmatched.setHeight(commit.getHeight());
+        unmatched.setWeight(commit.getWeight());
+        unmatched.setSign(commit.getSign());
+        unmatched.setStars(commit.getStars());
+        unmatched.setRating(commit.getRating());
+        unmatched.setCommitDate(commit.getCommitDate());
+        unmatched.setLink(commit.getLink());
+        unmatched.setStatus(commit.getStatus());
+        unmatched.setSport(commit.getSport());
+        unmatched.setYear(commit.getYear());
+        unmatched.setRankNational(commit.getRankNational());
+        unmatched.setRankPosition(commit.getRankPosition());
+        unmatched.setRankState(commit.getRankState());
+        rivalsUnmatchedRepository.save(unmatched);
     }
+
+    private Player findPlayer(RivalsDto commit) {
+        Player player = playerRepository.findPlayerByNameUpperCase(commit.getName());
+        if (player != null) {
+            log.info("Player found");
+            return player;
+        }
+        log.info("Player NOT found, comparing last name");
+        String[] names = commit.getName().split(" ");
+        String lastName = names[1];
+        List<Player> players = playerRepository.findAll();
+        for (Player person : players) {
+            if (person.getName().contains(lastName) && person.getYear().equals(commit.getYear())) {
+                log.info("Player found by looking for last name");
+                player = person;
+                break;
+            }
+        }
+        if (player == null) {
+            log.info("Player not found by looking for last name");
+        }
+        return player;
+    }
+
+//    private String convertRivalsDtoToString(RivalsDto commit) {
+//        return commit.getSiteId() + ", " + commit.getName() + ", " + commit.getCity() + ", " + commit.getState() + ", "
+//                + commit.getPosition() + ", " + commit.getHeight() + ", " + commit.getWeight() + ", " + commit.getSign() + ", "
+//                + commit.getStars() + ", " + commit.getRating() + ", " + commit.getCommitDate() + ", " + commit.getLink() + ", "
+//                + commit.getStatus() + ", " + commit.getSport() + ", " + commit.getYear();
+//    }
 
 }

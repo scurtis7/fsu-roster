@@ -38,10 +38,10 @@ public class Two47Scraper {
     public List<String> scrape(String season) {
         log.info("Method: scrape()");
         List<String> two47List = new ArrayList<>();
-        two47List.add("   === Noles 247 Commits Added ===   ");
         try {
             Document doc = scrapingService.connect(BASE_URL + season + FOOTBALL_COMMITS);
             if (doc == null) {
+                two47List.add("   === Unable to get website data ===   ");
                 return two47List;
             }
 
@@ -81,7 +81,6 @@ public class Two47Scraper {
         player.setSiteId(id);
         player.setYear(season);
         player.setLink(url);
-        List<Element> headers = doc.getElementsByClass("profile-header");
         player.setName(doc.getElementsByClass("name").first().text());
         Element metrics = doc.getElementsByClass("metrics-list").first();
         List<Element> listItems = metrics.select("li");
