@@ -61,9 +61,14 @@ public class PlayerScraper {
         for (Element anchor : anchors) {
             List<Element> divs = anchor.select("div");
             PlayerDto player = new PlayerDto();
-            player.setJersey(divs.get(1).text());
+            String jersey = divs.get(1).text();
+            if (jersey.contains("#")) {
+                jersey = jersey.trim().replaceAll("#", "");
+            }
+            player.setJersey(jersey);
             player.setName(anchor.select("h3").text());
             player.setHeight(convertHeight(anchor.selectFirst("span") != null ? anchor.selectFirst("span").text() : ""));
+            // 'sapn' is not a typo
             player.setWeight(anchor.selectFirst("sapn") != null ? anchor.selectFirst("sapn").text() : "");
             List<Element> trs = anchor.select("tr");
             List<Element> tds = trs.get(0).select("td");
@@ -118,7 +123,7 @@ public class PlayerScraper {
         for (Player player : players) {
             if (playerRepository.findPlayerByNameUpperCase(player.getName().toUpperCase()) == null) {
                 playerRepository.save(player);
-                playerList.add(convertPlayer(player));
+                playerList.add(player.toString());
             }
         }
         if (playerList.size() == 1) {
@@ -127,10 +132,10 @@ public class PlayerScraper {
         return playerList;
     }
 
-    private String convertPlayer(Player player) {
-        return player.getName() + ", " + player.getYear() + ", " + player.getJersey() + ", " + player.getPosition()
-                + ", " + player.getHeight() + ", " + player.getWeight() + ", " + player.getHomeTown()
-                + ", " + player.getOtherCollege();
-    }
+//    private String convertPlayer(Player player) {
+//        return player.getName() + ", " + player.getYear() + ", " + player.getJersey() + ", " + player.getPosition()
+//                + ", " + player.getHeight() + ", " + player.getWeight() + ", " + player.getHomeTown()
+//                + ", " + player.getOtherCollege();
+//    }
 
 }

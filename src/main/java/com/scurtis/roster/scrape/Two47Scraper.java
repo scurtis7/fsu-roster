@@ -170,7 +170,7 @@ public class Two47Scraper {
                     two47.setLink(commit.getLink());
                     two47Repository.save(two47);
                     log.info("    Noles 247 Recruit added -> {}", two47.getName());
-                    commitList.add(convertTwo47DtoToString(commit));
+                    commitList.add(commit.toString());
                 } else {
                     log.info("  Player not found in database, will not save 247 Recruit");
                     saveUnmatched(commit);
@@ -205,33 +205,36 @@ public class Two47Scraper {
     }
 
     private Player findPlayer(Two47Dto commit) {
-        Player player = playerRepository.findPlayerByNameUpperCase(commit.getName());
+        String recruitName = commit.getName().toUpperCase();
+        Player player = playerRepository.findPlayerByNameUpperCase(recruitName);
         if (player != null) {
-            log.info("Player found");
+            log.info("{} - Player found", recruitName);
             return player;
         }
-        log.info("Player NOT found, comparing last name");
+        log.info("{} - Player NOT found, comparing last name", recruitName);
         String[] names =commit.getName().split(" ");
+        String firstName = names[0];
         String lastName = names[1];
+        log.info("First Name:{}  Last Name:{}  Year:{}  looking for player by last name and year.", firstName, lastName, commit.getYear());
         List<Player> players = playerRepository.findAll();
         for (Player person : players) {
-            if (person.getName().contains(lastName) && person.getYear().equals(commit.getYear())) {
-                log.info("Player found by looking for last name");
+            if (person.getName().contains(lastName) && person.getYear().contains(commit.getYear())) {
+                log.info("Player found by looking for last name and year");
                 player = person;
                 break;
             }
         }
         if (player == null) {
-            log.info("Player not found by looking for last name");
+            log.info("Player not found by looking for last name and year");
         }
         return player;
     }
 
-    private String convertTwo47DtoToString(Two47Dto commit) {
-        return commit.getSiteId() + ", " + commit.getName() + ", " + commit.getPosition() + ", " + commit.getHeight()
-                + ", " + commit.getWeight() + ", " + commit.getHomeTown() + ", " + commit.getHighSchool() + ", " + commit.getYear()
-                + ", " + commit.getCompositeRank() + ", " + commit.getRankNational() + ", " + commit.getRankPosition()
-                + ", " + commit.getRankState() + ", " + commit.getStars() + ", " + commit.getLink();
-    }
+//    private String convertTwo47DtoToString(Two47Dto commit) {
+//        return commit.getSiteId() + ", " + commit.getName() + ", " + commit.getPosition() + ", " + commit.getHeight()
+//                + ", " + commit.getWeight() + ", " + commit.getHomeTown() + ", " + commit.getHighSchool() + ", " + commit.getYear()
+//                + ", " + commit.getCompositeRank() + ", " + commit.getRankNational() + ", " + commit.getRankPosition()
+//                + ", " + commit.getRankState() + ", " + commit.getStars() + ", " + commit.getLink();
+//    }
 
 }
