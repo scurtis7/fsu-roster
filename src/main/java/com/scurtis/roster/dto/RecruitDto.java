@@ -12,35 +12,53 @@ import lombok.Data;
 @Builder
 public class RecruitDto {
 
+    // Player
     private String playerId;
+    private String season;
     private String name;
     private String position;
+    private String classYear;
     private String year;
-    private String redshirt;
-    private String classStanding;
     private String jersey;
-    private String sport;
-    private String active;
-    private String status;
     private String height;
     private String weight;
     private String homeTown;
-    private String highSchool;
     private String otherCollege;
-    private String draftPick;
-    private String nflTeam;
-    private String notes;
+
+    // Rivals
+    private String rivalsSiteId;
+    private String rivalsName;
+    private String rivalsCity;
+    private String rivalsState;
+    private String rivalsPosition;
+    private String rivalsHeight;
+    private String rivalsWeight;
+    private String rivalsSign;
     private String rivalsStars;
     private String rivalsRating;
+    private String rivalsCommitDate;
+    private String rivalsLink;
+    private String rivalsStatus;
+    private String rivalsSport;
+    private String rivalsYear;
     private String rivalsRankNational;
     private String rivalsRankPosition;
     private String rivalsRankState;
-    private String rivalsLink;
-    private String two47Stars;
-    private String two47Rating;
+
+    // Noles 247
+    private String two47SiteId;
+    private String two47Name;
+    private String two47Position;
+    private String two47Height;
+    private String two47Weight;
+    private String two47HomeTown;
+    private String two47HighSchool;
+    private String two47Year;
+    private String two47CompositeRank;
     private String two47RankNational;
     private String two47RankPosition;
     private String two47RankState;
+    private String two47Stars;
     private String two47Link;
 
 }
