@@ -46,21 +46,17 @@ public class PlayerConverter {
     public List<RecruitDto> playerEntityToPlayerDto(List<Player> players) {
         List<RecruitDto> recruitDtos = new ArrayList<>();
         players.forEach(player -> {
-            RecruitDto recruitDto = RecruitDto.builder()
-                    .playerId(Long.toString(player.getPlayerId()))
-                    .name(player.getName())
-                    .position(player.getPosition())
-                    .year(player.getYear())
-                    .jersey(player.getJersey())
-                    .height(player.getHeight())
-                    .weight(player.getWeight())
-                    .homeTown(player.getHomeTown())
-                    .highSchool(player.getHighSchool())
-                    .otherCollege(player.getOtherCollege())
-                    .draftPick(player.getDraftPick())
-                    .nflTeam(player.getNflTeam())
-                    .notes(player.getNotes())
-                    .build();
+            RecruitDto recruitDto = new RecruitDto();
+            recruitDto.setPlayerId(Long.toString(player.getPlayerId()));
+            recruitDto.setName(player.getName());
+            recruitDto.setPosition(player.getPosition());
+            recruitDto.setYear(player.getYear());
+            recruitDto.setJersey(player.getJersey());
+            recruitDto.setHeight(player.getHeight());
+            recruitDto.setWeight(player.getWeight());
+            recruitDto.setHomeTown(player.getHomeTown());
+            recruitDto.setTwo47HighSchool(player.getHighSchool());
+            recruitDto.setOtherCollege(player.getOtherCollege());
             recruitDtos.add(recruitDto);
         });
         return recruitDtos;
@@ -69,33 +65,28 @@ public class PlayerConverter {
     public List<RecruitDto> recruitEntityToPlayerDto(List<Recruit> recruits) {
         List<RecruitDto> recruitDtos = new ArrayList<>();
         recruits.forEach(recruit -> {
-            RecruitDto recruitDto = RecruitDto.builder()
-                    .playerId(Long.toString(recruit.getPlayer().getPlayerId()))
-                    .name(recruit.getPlayer().getName())
-                    .position(recruit.getPlayer().getPosition())
-                    .year(recruit.getPlayer().getYear())
-                    .jersey(recruit.getPlayer().getJersey())
-                    .height(recruit.getPlayer().getHeight())
-                    .weight(recruit.getPlayer().getWeight())
-                    .homeTown(recruit.getPlayer().getHomeTown())
-                    .highSchool(recruit.getPlayer().getHighSchool())
-                    .otherCollege(recruit.getPlayer().getOtherCollege())
-                    .draftPick(recruit.getPlayer().getDraftPick())
-                    .nflTeam(recruit.getPlayer().getNflTeam())
-                    .notes(recruit.getPlayer().getNotes())
-                    .rivalsStars(recruit.getRivalsStars())
-                    .rivalsRating(recruit.getRivalsRating())
-                    .rivalsRankNational(recruit.getRivalsRankNational())
-                    .rivalsRankPosition(recruit.getRivalsRankPosition())
-                    .rivalsRankState(recruit.getRivalsRankState())
-                    .rivalsLink(recruit.getRivalsLink())
-                    .two47Stars(recruit.getRivalsStars())
-                    .two47Rating(recruit.getTwo47Rating())
-                    .two47RankNational(recruit.getTwo47RankNational())
-                    .two47RankPosition(recruit.getTwo47RankPosition())
-                    .two47RankState(recruit.getTwo47RankState())
-                    .two47Link(recruit.getTwo47Link())
-                    .build();
+            RecruitDto recruitDto = new RecruitDto();
+            recruitDto.setPlayerId(Long.toString(recruit.getPlayer().getPlayerId()));
+            recruitDto.setName(recruit.getPlayer().getName());
+            recruitDto.setPosition(recruit.getPlayer().getPosition());
+            recruitDto.setYear(recruit.getPlayer().getYear());
+            recruitDto.setJersey(recruit.getPlayer().getJersey());
+            recruitDto.setHeight(recruit.getPlayer().getHeight());
+            recruitDto.setWeight(recruit.getPlayer().getWeight());
+            recruitDto.setHomeTown(recruit.getPlayer().getHomeTown());
+            recruitDto.setTwo47HighSchool(recruit.getPlayer().getHighSchool());
+            recruitDto.setOtherCollege(recruit.getPlayer().getOtherCollege());
+            recruitDto.setRivalsStars(recruit.getRivalsStars());
+            recruitDto.setRivalsRating(recruit.getRivalsRating());
+            recruitDto.setRivalsRankNational(recruit.getRivalsRankNational());
+            recruitDto.setRivalsRankPosition(recruit.getRivalsRankPosition());
+            recruitDto.setRivalsRankState(recruit.getRivalsRankState());
+            recruitDto.setRivalsLink(recruit.getRivalsLink());
+            recruitDto.setTwo47Stars(recruit.getRivalsStars());
+            recruitDto.setTwo47RankNational(recruit.getTwo47RankNational());
+            recruitDto.setTwo47RankPosition(recruit.getTwo47RankPosition());
+            recruitDto.setTwo47RankState(recruit.getTwo47RankState());
+            recruitDto.setTwo47Link(recruit.getTwo47Link());
             recruitDtos.add(recruitDto);
         });
         return recruitDtos;

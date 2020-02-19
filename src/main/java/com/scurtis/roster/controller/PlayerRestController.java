@@ -2,6 +2,7 @@ package com.scurtis.roster.controller;
 
 import com.scurtis.roster.converter.PlayerConverter;
 import com.scurtis.roster.dto.RecruitDto;
+import com.scurtis.roster.jdbc.RecruitJdbc;
 import com.scurtis.roster.model.player.PlayerRepository;
 import com.scurtis.roster.model.player.RecruitRepository;
 import lombok.AllArgsConstructor;
@@ -31,11 +32,18 @@ public class PlayerRestController {
     private final PlayerRepository playerRepository;
     private final RecruitRepository recruitRepository;
     private final PlayerConverter playerConverter;
+    private final RecruitJdbc recruitJdbc;
 
     @GetMapping(value = "/players", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<RecruitDto> getAllPlayers() {
         log.info("Method: getAllPlayers");
         return playerConverter.playerEntityToPlayerDto(playerRepository.findAll());
+    }
+
+    @GetMapping(value = "/recruits", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<RecruitDto> getAllRecruits() {
+        log.info("Method: getAllRecruits()");
+        return recruitJdbc.findAllRecruits();
     }
 
     @GetMapping(value = "/recruits/{position}", produces = MediaType.APPLICATION_JSON_VALUE)

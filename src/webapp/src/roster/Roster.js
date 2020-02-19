@@ -75,7 +75,8 @@ class Roster extends Component {
     }
 
     getRecruits(position) {
-        axios(`http://localhost:8080/api/recruits/` + position)
+        // axios(`http://localhost:8080/api/recruits/` + position)
+        axios(`http://localhost:8080/api/recruits/`)
             .then(players => this.setPlayers(players.data))
             .catch(error => error);
     }

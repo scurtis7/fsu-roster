@@ -2,6 +2,8 @@ package com.scurtis.roster.config;
 
 import com.scurtis.roster.converter.CoachConverter;
 import com.scurtis.roster.converter.PlayerConverter;
+import com.scurtis.roster.jdbc.RecruitJdbc;
+import com.scurtis.roster.jdbc.RecruitRowMapper;
 import com.scurtis.roster.model.coach.CoachRepository;
 import com.scurtis.roster.model.player.PlayerRepository;
 import com.scurtis.roster.model.player.RivalsRepository;
@@ -15,6 +17,7 @@ import com.scurtis.roster.scrape.ScrapingService;
 import com.scurtis.roster.scrape.Two47Scraper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
  * Author: Steve Curtis
@@ -57,6 +60,16 @@ public class RosterConfiguration {
     @Bean
     public Two47Scraper two47Scraper(ScrapingService scrapingService, Two47Repository two47Repository, Two47UnmatchedRepository two47UnmatchedRepository, PlayerRepository playerRepository) {
         return new Two47Scraper(scrapingService, two47Repository, two47UnmatchedRepository, playerRepository);
+    }
+
+    @Bean
+    public RecruitRowMapper recruitRowMapper() {
+        return new RecruitRowMapper();
+    }
+
+    @Bean
+    public RecruitJdbc recruitJdbc(JdbcTemplate jdbcTemplate, RecruitRowMapper recruitRowMapper) {
+        return new RecruitJdbc(jdbcTemplate, recruitRowMapper);
     }
 
 }
